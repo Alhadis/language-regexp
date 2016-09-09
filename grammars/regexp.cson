@@ -8,9 +8,45 @@ repository:
 		patterns: [
 			{include: "#oniguruma"}
 			{include: "#escape"}
+			{include: "#assertion"}
 			{include: "#group"}
 			{include: "#class"}
 		]
+
+	assertion:
+		patterns: [{
+			# Lookahead: Positive
+			name: "meta.assertion.positive.look-ahead.regexp"
+			begin: "\\(\\?="
+			end:   "\\)"
+			beginCaptures: 0: name: "punctuation.definition.assertion.begin.regexp"
+			endCaptures:   0: name: "punctuation.definition.assertion.end.regexp"
+			patterns: [include: "$self"]
+		},{
+			# Lookahead: Negative
+			name: "meta.assertion.negative.look-ahead.regexp"
+			begin: "\\(\\?!"
+			end:   "\\)"
+			beginCaptures: 0: name: "punctuation.definition.assertion.begin.regexp"
+			endCaptures:   0: name: "punctuation.definition.assertion.end.regexp"
+			patterns: [include: "$self"]
+		},{
+			# Lookbehind: Negative
+			name: "meta.assertion.negative.look-behind.regexp"
+			begin: "\\(\\?<!"
+			end:   "\\)"
+			beginCaptures: 0: name: "punctuation.definition.assertion.begin.regexp"
+			endCaptures:   0: name: "punctuation.definition.assertion.end.regexp"
+			patterns: [include: "$self"]
+		},{
+			# Lookbeind: Positive
+			name: "meta.assertion.positive.look-behind.regexp"
+			begin: "\\(\\?<="
+			end:   "\\)"
+			beginCaptures: 0: name: "punctuation.definition.assertion.begin.regexp"
+			endCaptures:   0: name: "punctuation.definition.assertion.end.regexp"
+			patterns: [include: "$self"]
+		}]
 
 
 	class:
