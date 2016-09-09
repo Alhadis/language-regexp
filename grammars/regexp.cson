@@ -257,13 +257,19 @@ repository:
 			
 			}, include: "$self"]
 		},{
+			# Non-capturing group
 			name: "meta.group.non-capturing.regexp"
-			begin: "\\(\\?:"
-			end:   "\\)"
-			beginCaptures: 0: name: "punctuation.definition.group.begin.regexp"
-			endCaptures:   0: name: "punctuation.definition.group.end.regexp"
 			patterns: [include: "$self"]
+			begin: "(\\(\\?)([-a-z^]*)(:)"
+			end:    "\\)"
+			beginCaptures:
+				1: name: "punctuation.definition.group.begin.regexp"
+				2: patterns: [include: "#scopedModifiers"]
+				3: name: "punctuation.separator.colon.regexp"
+			endCaptures:
+				0: name: "punctuation.definition.group.end.regexp"
 		},{
+			# Atomic group (no backtracking)
 			name: "meta.group.atomic.regexp"
 			begin: "\\(\\?>"
 			end:   "\\)"
@@ -271,6 +277,15 @@ repository:
 			endCaptures:   0: name: "punctuation.definition.group.end.regexp"
 			patterns: [include: "$self"]
 		},{
+			# Scoped modifiers
+			name: "meta.group.scoped-modifiers.regexp"
+			match: "(\\(\\?)([-a-z^]*)(\\))"
+			captures:
+				1: name: "punctuation.definition.group.begin.regexp"
+				2: patterns: [include: "#scopedModifiers"]
+				3: name: "punctuation.definition.group.end.regexp"
+		},{
+			# Regular group
 			name: "meta.group.regexp"
 			begin: "\\("
 			end:   "\\)"
@@ -282,3 +297,11 @@ repository:
 	quantifier:
 		name: "keyword.operator.quantifier.regexp"
 		match: "[*+?]|\\{(?:\\d+,?\\d*|,\\d+)\\}"
+
+
+	scopedModifiers:
+		patterns: [
+			{match: "(?<=\\?)\\^", name: "keyword.operator.modifier.reset.regexp"}
+			{match: "-",           name: "keyword.operator.modifier.negate.regexp"}
+			{match: "[a-z]",       name: "storage.modifier.flag.$0.regexp"}
+		]
