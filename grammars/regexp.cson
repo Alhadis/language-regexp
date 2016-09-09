@@ -8,9 +8,28 @@ repository:
 		patterns: [
 			{include: "#oniguruma"}
 			{include: "#escape"}
+			{include: "#alternation"}
+			{include: "#quantifier"}
 			{include: "#assertion"}
 			{include: "#group"}
 			{include: "#class"}
+			{include: "#anchor"}
+		]
+
+	alternation:
+		name: "keyword.operator.logical.or.regexp"
+		match: "\\|"
+
+	anchor:
+		patterns: [
+			{match: "\\^",   name: "keyword.control.anchor.line-start.regexp"}
+			{match: "\\$",   name: "keyword.control.anchor.line-end.regexp"}
+			{match: "\\\\A", name: "keyword.control.anchor.string-start.regexp"}
+			{match: "\\\\Z", name: "keyword.control.anchor.string-end-line.regexp"}
+			{match: "\\\\z", name: "keyword.control.anchor.string-end.regexp"}
+			{match: "\\\\G", name: "keyword.control.anchor.search-start.regexp"}
+			{match: "\\\\b", name: "keyword.control.anchor.word-boundary.regexp"}
+			{match: "\\\\B", name: "keyword.control.anchor.non-word-boundary.regex"}
 		]
 
 	assertion:
@@ -93,3 +112,8 @@ repository:
 			match: "\\\\."
 			name: "constant.escape.backslash.oniguruma"
 		]
+
+
+	quantifier:
+		name: "keyword.operator.quantifier.regexp"
+		match: "[*+?]|\\{(?:\\d+,?\\d*|,\\d+)\\}"
