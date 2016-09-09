@@ -7,13 +7,13 @@ repository:
 	main:
 		patterns: [
 			{include: "#oniguruma"}
+			{include: "#anchor"}
 			{include: "#escape"}
 			{include: "#alternation"}
 			{include: "#quantifier"}
 			{include: "#assertion"}
 			{include: "#group"}
 			{include: "#class"}
-			{include: "#anchor"}
 		]
 
 	alternation:
@@ -128,8 +128,56 @@ repository:
 		}]
 
 	escape:
-		name: "constant.character.escape.regexp"
-		match: "\\\\."
+		patterns: [
+			{match: "\\\\d",               name: "constant.character.escape.decimal.regexp"}
+			{match: "\\\\s",               name: "constant.character.escape.whitespace.regexp"}
+			{match: "\\\\w",               name: "constant.character.escape.word-char.regexp"}
+			{match: "\\\\n",               name: "constant.character.escape.newline.regexp"}
+			{match: "\\\\t",               name: "constant.character.escape.tab.regexp"}
+			{match: "\\\\r",               name: "constant.character.escape.return.regexp"}
+			{match: "\\\\D",               name: "constant.character.escape.non-decimal.regexp"}
+			{match: "\\\\S",               name: "constant.character.escape.non-whitespace.regexp"}
+			{match: "\\\\W",               name: "constant.character.escape.non-word-char.regexp"}
+			{match: "\\\\a",               name: "constant.character.escape.alarm.regexp"}
+			{match: "\\\\e",               name: "constant.character.escape.escape-char.regexp"}
+			{match: "\\\\f",               name: "constant.character.escape.form-feed.regexp"}
+			{match: "\\\\x[0-9A-Fa-f]{2}", name: "constant.character.escape.numeric.regexp"}
+			{
+				# \x{FFFFFF} - Variable-length codepoint
+				name: "constant.character.escape.wide.numeric.regexp"
+				match: "\\\\x(\\{)[0-9A-Fa-f]{2,}(\\})"
+				captures:
+					1: name: "punctuation.definition.unicode-escape.bracket.curly.begin.regexp"
+					2: name: "punctuation.definition.unicode-escape.bracket.curly.end.regexp"
+			},{
+				# \o{000000} - Variable-length octal (Perl)
+				name: "constant.character.escape.wide.octal.numeric.regexp"
+				match: "\\\\o(\\{)\\d{2,}(\\})"
+				captures:
+					1: name: "punctuation.definition.unicode-escape.bracket.curly.begin.regexp"
+					2: name: "punctuation.definition.unicode-escape.bracket.curly.end.regexp"
+			},{
+				# \N{NAME} - Named character/alias/sequence (Perl)
+				name: "constant.character.escape.named-char.regexp"
+				match: "\\\\N(\\{)([^{}]+)(\\})"
+				captures:
+					1: name: "punctuation.definition.unicode-escape.bracket.curly.begin.regexp"
+					3: name: "punctuation.definition.unicode-escape.bracket.curly.end.regexp"
+					2: name: "entity.character.name.regexp", patterns: [
+						{name: "punctuation.separator.colon.regexp",     match: ":"}
+						{name: "punctuation.separator.codepoint.regexp", match: "(?<=U)\\+(?=[A-Fa-f0-9])"}]
+			}
+			{match: "\\\\(?:\\d{3}|0\\d)", name: "constant.character.escape.octal.numeric.regexp"}
+			{match: "\\\\0",               name: "constant.character.escape.null-byte.numeric.regexp"}
+			{match: "\\\\(\\d{1,2})",      name: "keyword.other.back-reference.$1.regexp"}
+			{match: "\\\\(?:c|C-)[?-_]",   name: "constant.character.escape.control-char.regexp"}
+			{match: "\\\\h",               name: "constant.character.escape.hex-digit.regexp"}
+			{match: "\\\\H",               name: "constant.character.escape.non-hex-digit.regexp"}
+			{match: "\\\\M-\\\\C-[?-_]",   name: "constant.character.escape.meta-control.regexp"}
+			{match: "\\\\M-.",             name: "constant.character.escape.meta-char.regexp"}
+			{match: "\\\\.",               name: "constant.character.escape.misc.regexp"}
+		]
+
 
 	group:
 		patterns: [{
