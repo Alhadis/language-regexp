@@ -105,12 +105,16 @@ repository:
 			# Character range
 			name: "constant.other.character-class.range.regexp"
 			match: "(?x)
-				(\\\\(?:x[0-9A-Fa-f]{2}|x\\{[0-9A-Fa-f]+\\}|\\d{3}|.)) (-)
-				(\\\\(?:x[0-9A-Fa-f]{2}|x\\{[0-9A-Fa-f]+\\}|\\d{3}|.))"
+				([^\\\\]|\\\\(?:x[0-9A-Fa-f]{2}|x\\{[0-9A-Fa-f]+\\}|\\d{3}|.)) (-)
+				([^\\\\]|\\\\(?:x[0-9A-Fa-f]{2}|x\\{[0-9A-Fa-f]+\\}|\\d{3}|.))"
 			captures:
 				1: patterns: [include: "#escape"]
 				2: name: "punctuation.separator.range.dash.regexp"
 				3: patterns: [include: "#escape"]
+		},{
+			# Escaped [ or ]
+			name: "constant.character.escape.backslash.regexp"
+			match: "\\\\\\[|\\\\\\]"
 		},{
 			# Stop special characters being matched by other patterns
 			match: "\\^|\\$|\\(|\\)|\\["
