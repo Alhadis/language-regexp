@@ -1,5 +1,6 @@
 name: "Regular Expression (Extended)"
 scopeName: "source.regexp.extended"
+firstLineMatch: "^\\s*\\(\\?[im]*x[im]*\\)"
 patterns: [{
 	
 	begin: "#"
