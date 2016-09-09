@@ -29,7 +29,7 @@ repository:
 			{match: "\\\\z", name: "keyword.control.anchor.string-end.regexp"}
 			{match: "\\\\G", name: "keyword.control.anchor.search-start.regexp"}
 			{match: "\\\\b", name: "keyword.control.anchor.word-boundary.regexp"}
-			{match: "\\\\B", name: "keyword.control.anchor.non-word-boundary.regex"}
+			{match: "\\\\B", name: "keyword.control.anchor.non-word-boundary.regexp"}
 		]
 
 	assertion:
