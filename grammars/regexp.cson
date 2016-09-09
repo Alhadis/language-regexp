@@ -173,27 +173,30 @@ repository:
 			},{
 				# \p{Name} - Unicode character property
 				name: "constant.character.escape.unicode-property.regexp"
-				match: "\\\\[Pp](\\{)([^{}]+)(\\})"
+				match: "\\\\[Pp](\\{)(\\^?)([^{}]+)(\\})"
 				captures:
 					1: name: "punctuation.definition.unicode-escape.bracket.curly.begin.regexp"
-					2: name: "entity.property.name.regexp"
-					3: name: "punctuation.definition.unicode-escape.bracket.curly.end.regexp"
+					2: name: "keyword.operator.logical.not.regexp"
+					3: name: "entity.property.name.regexp"
+					4: name: "punctuation.definition.unicode-escape.bracket.curly.end.regexp"
 			},{
-				# \k<NAME>, \g<NAME> - Named group reference / Subexpression call
+				# \k<NAME>, \g<NAME> - Group reference / Subexpression call
 				name: "keyword.control.group-reference.regexp"
 				contentName: "entity.group.name.regexp"
 				begin: "\\\\[kg](<)"
 				end:   ">"
 				beginCaptures: 1: name: "punctuation.definition.group-reference.bracket.angle.begin.regexp"
 				endCaptures:   0: name: "punctuation.definition.group-reference.bracket.angle.end.regexp"
+				patterns: [include: "#groupRefInnards"]
 			},{
-				# \k'NAME', \g'NAME' - Named group reference / Subexpression call
+				# \k'NAME', \g'NAME' - Group reference / Subexpression call
 				name: "keyword.control.group-reference.regexp"
 				contentName: "entity.group.name.regexp"
 				begin: "\\\\[kg](')"
 				end:   "'"
 				beginCaptures: 1: name: "punctuation.definition.group-reference.quote.single.begin.regexp"
 				endCaptures:   0: name: "punctuation.definition.group-reference.quote.single.end.regexp"
+				patterns: [include: "#groupRefInnards"]
 			},{
 				# \g{NAME} - Match a named/numbered capture group (Perl)
 				name: "keyword.control.group-reference.regexp"
@@ -300,6 +303,15 @@ repository:
 			endCaptures:   0: name: "punctuation.definition.group.end.regexp"
 			patterns: [include: "$self"]
 		}]
+
+
+	# Patterns inside a group reference's name (Mostly Oniguruma-specific)
+	groupRefInnards:
+		patterns: [
+			{match: "\\-(?=\\d)", name: "keyword.operator.arithmetic.minus.regexp"}
+			{match: "\\+(?=\\d)", name: "keyword.operator.arithmetic.plus.regexp"}
+		]
+		
 
 	quantifier:
 		name: "keyword.operator.quantifier.regexp"
