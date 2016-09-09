@@ -1,0 +1,24 @@
+name: "Regular Expression"
+scopeName: "source.regexp"
+fileTypes: ["regexp", "regex"]
+patterns: [include: "#main"]
+
+repository:
+	main:
+		patterns: [
+			{include: "#oniguruma"}
+			{include: "#escapes"}
+		]
+
+	escapes:
+		match: "\\\\."
+		name: "constant.character.escape.regexp"
+
+	oniguruma:
+		begin: "\\(\\?#"
+		end:   "\\)"
+		name: "comment.block.oniguruma"
+		patterns: [
+			match: "\\\\."
+			name: "constant.escape.backslash.oniguruma"
+		]

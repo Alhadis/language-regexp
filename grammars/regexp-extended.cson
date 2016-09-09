@@ -1,0 +1,9 @@
+name: "Regular Expression (Extended)"
+scopeName: "source.regexp.extended"
+patterns: [{
+	
+	begin: "#"
+	end:   "$"
+	name: "comment.line.number-sign"
+
+}, include: "source.regexp"]
