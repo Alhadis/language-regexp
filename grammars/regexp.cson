@@ -74,7 +74,54 @@ repository:
 		end:   "\\]"
 		beginCaptures: 0: name: "punctuation.definition.character-class.set.begin.regexp"
 		endCaptures:   0: name: "punctuation.definition.character-class.set.end.regexp"
-		patterns: [include: "$self"]
+		patterns: [include: "#classInnards"]
+	
+	
+	classInnards:
+		patterns: [{
+			
+			# Negated expression
+			name: "keyword.operator.logical.not.regexp"
+			match: "\\G\\^"
+		},{
+			# Backspace character
+			name: "constant.character.escape.backspace.regexp"
+			match: "\\\\b"
+		},{
+			# Oniguruma: Intersection + Embedded subclass
+			begin: "(&&)(\\[)"
+			end:   "\\]"
+			beginCaptures:
+				1: name: "keyword.operator.logical.intersect.regexp"
+				2: name: "punctuation.definition.character-class.set.begin.regexp"
+			endCaptures:
+				0: name: "punctuation.definition.character-class.set.end.regexp"
+			patterns: [include: "#classInnards"]
+		},{
+			# Oniguruma: Intersection
+			name: "keyword.operator.logical.intersect.regexp"
+			match: "&&"
+		},{
+			# Character range
+			name: "constant.other.character-class.range.regexp"
+			match: "(?x)
+				(\\\\(?:x[0-9A-Fa-f]{2}|x\\{[0-9A-Fa-f]+\\}|\\d{3}|.)) (-)
+				(\\\\(?:x[0-9A-Fa-f]{2}|x\\{[0-9A-Fa-f]+\\}|\\d{3}|.))"
+			captures:
+				1: patterns: [include: "#escape"]
+				2: name: "punctuation.separator.range.dash.regexp"
+				3: patterns: [include: "#escape"]
+		},{
+			# Stop special characters being matched by other patterns
+			match: "\\^|\\$|\\(|\\)|\\["
+		},{
+			# Load the normal pattern set
+			include: "$self"
+		},{
+			# Anything else that didn't match, highlight as a constant
+			name: "constant.single.character.character-class.regexp"
+			match: "[^\\]]"
+		}]
 
 	escape:
 		name: "constant.character.escape.regexp"
