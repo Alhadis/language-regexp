@@ -6,7 +6,7 @@ patterns: [include: "#main"]
 repository:
 	main:
 		patterns: [
-			{include: "#oniguruma"}
+			{include: "#comment"}
 			{include: "#anchor"}
 			{include: "#escape"}
 			{include: "#alternation"}
@@ -126,6 +126,17 @@ repository:
 			name: "constant.single.character.character-class.regexp"
 			match: "[^\\]]"
 		}]
+
+
+	# (?# Comment)
+	comment:
+		begin: "\\(\\?#"
+		end:   "\\)"
+		name: "comment.block.regexp"
+		patterns: [
+			match: "\\\\."
+			name: "constant.character.escape.backslash.regexp"
+		]
 
 
 	# Metacharacters
@@ -267,16 +278,6 @@ repository:
 			endCaptures:   0: name: "punctuation.definition.group.end.regexp"
 			patterns: [include: "$self"]
 		}]
-
-	oniguruma:
-		begin: "\\(\\?#"
-		end:   "\\)"
-		name: "comment.block.oniguruma"
-		patterns: [
-			match: "\\\\."
-			name: "constant.escape.backslash.oniguruma"
-		]
-
 
 	quantifier:
 		name: "keyword.operator.quantifier.regexp"
