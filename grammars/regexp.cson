@@ -180,6 +180,12 @@ repository:
 					3: name: "entity.property.name.regexp"
 					4: name: "punctuation.definition.unicode-escape.bracket.curly.end.regexp"
 			},{
+				# \pP - Single-character Unicode property
+				name: "constant.character.escape.unicode-property.single-letter.regexp"
+				match: "\\\\[Pp](\\w)"
+				captures:
+					1: name: "entity.property.name.regexp"
+			},{
 				# \k<NAME>, \g<NAME> - Group reference / Subexpression call
 				name: "keyword.control.group-reference.regexp"
 				contentName: "entity.group.name.regexp"
@@ -205,6 +211,10 @@ repository:
 				end:   "}"
 				beginCaptures: 1: name: "punctuation.definition.group-reference.bracket.curly.begin.regexp"
 				endCaptures:   0: name: "punctuation.definition.group-reference.bracket.curly.end.regexp"
+			},{
+				# \gN - Single-digit numbered capture group (Perl)
+				name: "keyword.control.group-reference.regexp"
+				match: "\\\\g\\d"
 			},{
 				# \N{NAME} - Named character/alias/sequence (Perl)
 				name: "constant.character.escape.named-char.regexp"
