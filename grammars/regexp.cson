@@ -242,19 +242,26 @@ repository:
 			
 			# Named group
 			name: "meta.group.named.regexp"
-			begin: "\\(\\?(?=<)"
+			begin: "\\(\\?(?=[<'])"
 			end:   "\\)"
 			beginCaptures: 0: name: "punctuation.definition.group.begin.regexp"
 			endCaptures:   0: name: "punctuation.definition.group.end.regexp"
 			patterns: [{
 				
-				# Group's name
+				# <ANGLEBRACKETS> - Group's name
 				contentName: "entity.group.name.regexp"
 				begin: "\\G<"
 				end:   ">"
 				beginCaptures: 0: name: "punctuation.definition.named-group.bracket.angle.begin.regexp"
 				endCaptures:   0: name: "punctuation.definition.named-group.bracket.angle.end.regexp"
-			
+			},{
+				# 'QUOTES' - Group's name
+				contentName: "entity.group.name.regexp"
+				begin: "\\G'"
+				end:   "'"
+				beginCaptures: 0: name: "punctuation.definition.named-group.quote.single.begin.regexp"
+				endCaptures:   0: name: "punctuation.definition.named-group.quote.single.end.regexp"
+				
 			}, include: "$self"]
 		},{
 			# Non-capturing group
