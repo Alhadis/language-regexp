@@ -127,6 +127,8 @@ repository:
 			match: "[^\\]]"
 		}]
 
+
+	# Metacharacters
 	escape:
 		patterns: [
 			{match: "\\\\d",               name: "constant.character.escape.decimal.regexp"}
@@ -141,6 +143,7 @@ repository:
 			{match: "\\\\a",               name: "constant.character.escape.alarm.regexp"}
 			{match: "\\\\e",               name: "constant.character.escape.escape-char.regexp"}
 			{match: "\\\\f",               name: "constant.character.escape.form-feed.regexp"}
+			{match: "\\\\v",               name: "constant.character.escape.vertical-tab.regexp"}
 			{match: "\\\\x[0-9A-Fa-f]{2}", name: "constant.character.escape.numeric.regexp"}
 			{
 				# \x{FFFFFF} - Variable-length codepoint
@@ -173,6 +176,18 @@ repository:
 			{match: "\\\\(?:c|C-)[?-_]",   name: "constant.character.escape.control-char.regexp"}
 			{match: "\\\\h",               name: "constant.character.escape.hex-digit.regexp"}
 			{match: "\\\\H",               name: "constant.character.escape.non-hex-digit.regexp"}
+			{match: "\\\\E",               name: "keyword.control.end-mode.regexp"}
+			{match: "\\\\Q",               name: "keyword.control.quote-mode.regexp"}
+			{match: "\\\\F",               name: "keyword.control.foldcase-mode.regexp"}
+			{match: "\\\\L",               name: "keyword.control.lowercase-mode.regexp"}
+			{match: "\\\\U",               name: "keyword.control.titlecase-mode.regexp"}
+			{match: "\\\\K",               name: "keyword.control.keep-out.regexp"}
+			{match: "\\\\l",               name: "constant.character.escape.lowercase-next.regexp"}
+			{match: "\\\\u",               name: "constant.character.escape.titlecase-next.regexp"}
+			{match: "\\\\N",               name: "constant.character.escape.non-newline.regexp"}
+			{match: "\\\\X",               name: "constant.character.escape.extended-grapheme.regexp"}
+			{match: "\\\\R",               name: "constnat.character.escape.linebreak-grapheme.regexp"}
+			{match: "\\\\V",               name: "constant.character.escape.non-vertical-whitespace.regexp"}
 			{match: "\\\\M-\\\\C-[?-_]",   name: "constant.character.escape.meta-control.regexp"}
 			{match: "\\\\M-.",             name: "constant.character.escape.meta-char.regexp"}
 			{match: "\\\\.",               name: "constant.character.escape.misc.regexp"}
