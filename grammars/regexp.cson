@@ -228,6 +228,24 @@ repository:
 
 	group:
 		patterns: [{
+			
+			# Named group
+			name: "meta.group.named.regexp"
+			begin: "\\(\\?(?=<)"
+			end:   "\\)"
+			beginCaptures: 0: name: "punctuation.definition.group.begin.regexp"
+			endCaptures:   0: name: "punctuation.definition.group.end.regexp"
+			patterns: [{
+				
+				# Group's name
+				contentName: "entity.group.name.regexp"
+				begin: "\\G<"
+				end:   ">"
+				beginCaptures: 0: name: "punctuation.definition.named-group.bracket.angle.begin.regexp"
+				endCaptures:   0: name: "punctuation.definition.named-group.bracket.angle.end.regexp"
+			
+			}, include: "$self"]
+		},{
 			name: "meta.group.non-capturing.regexp"
 			begin: "\\(\\?:"
 			end:   "\\)"
