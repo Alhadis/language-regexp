@@ -7,12 +7,47 @@ repository:
 	main:
 		patterns: [
 			{include: "#oniguruma"}
-			{include: "#escapes"}
+			{include: "#escape"}
+			{include: "#group"}
+			{include: "#class"}
 		]
 
-	escapes:
-		match: "\\\\."
+
+	class:
+		name: "meta.character-class.set.regexp"
+		begin: "\\["
+		end:   "\\]"
+		beginCaptures: 0: name: "punctuation.definition.character-class.set.begin.regexp"
+		endCaptures:   0: name: "punctuation.definition.character-class.set.end.regexp"
+		patterns: [include: "$self"]
+
+	escape:
 		name: "constant.character.escape.regexp"
+		match: "\\\\."
+
+	group:
+		patterns: [{
+			name: "meta.group.non-capturing.regexp"
+			begin: "\\(\\?:"
+			end:   "\\)"
+			beginCaptures: 0: name: "punctuation.definition.group.begin.regexp"
+			endCaptures:   0: name: "punctuation.definition.group.end.regexp"
+			patterns: [include: "$self"]
+		},{
+			name: "meta.group.atomic.regexp"
+			begin: "\\(\\?>"
+			end:   "\\)"
+			beginCaptures: 0: name: "punctuation.definition.group.begin.regexp"
+			endCaptures:   0: name: "punctuation.definition.group.end.regexp"
+			patterns: [include: "$self"]
+		},{
+			name: "meta.group.regexp"
+			begin: "\\("
+			end:   "\\)"
+			beginCaptures: 0: name: "punctuation.definition.group.begin.regexp"
+			endCaptures:   0: name: "punctuation.definition.group.end.regexp"
+			patterns: [include: "$self"]
+		}]
 
 	oniguruma:
 		begin: "\\(\\?#"
