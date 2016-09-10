@@ -1,0 +1,8 @@
+".platform-darwin atom-text-editor[data-grammar^='source regexp']":
+	"cmd-c": "language-regexp:copy"
+	"cmd-x": "language-regexp:cut"
+
+".platform-win32 atom-text-editor[data-grammar^='source regexp'],
+ .platform-linux atom-text-editor[data-grammar^='source regexp']":
+	"ctrl-c": "language-regexp:copy"
+	"ctrl-x": "language-regexp:cut"
