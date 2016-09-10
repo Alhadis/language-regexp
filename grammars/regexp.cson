@@ -127,11 +127,12 @@ repository:
 		},{
 			# POSIX character class
 			name: "constant.language.posix.$2-char.character-class.regexp"
-			match: "(\\[:)(\\w+)(:\\])"
+			match: "(\\[:)(\\^?)(\\w+)(:\\])"
 			captures:
 				1: name: "punctuation.definition.character-class.set.begin.regexp"
-				2: name: "support.constant.posix-class.regexp"
-				3: name: "punctuation.definition.character-class.set.end.regexp"
+				2: name: "keyword.operator.logical.not.regexp"
+				3: name: "support.constant.posix-class.regexp"
+				4: name: "punctuation.definition.character-class.set.end.regexp"
 		},{
 			# Escaped [ or ]
 			name: "constant.character.escape.backslash.regexp"
