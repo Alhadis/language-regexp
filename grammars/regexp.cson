@@ -238,10 +238,10 @@ repository:
 				endCaptures:
 					0: name: "punctuation.definition.group-reference.quote.single.end.regexp"
 			},{
-				# \g{NAME} - Match a named/numbered capture group (Perl)
+				# \k{NAME}, \g{NAME} - Match a named/numbered capture group (Perl/.NET)
 				name: "meta.group-reference.regexp"
 				contentName: "entity.group.name.regexp"
-				begin: "(\\\\g)({)"
+				begin: "(\\\\[kg])({)"
 				end:   "}"
 				beginCaptures:
 					1: name: "keyword.operator.group-reference.regexp"
@@ -356,6 +356,15 @@ repository:
 				3: name: "punctuation.separator.key-value.regexp"
 				4: name: "variable.parameter.control-verb.regexp"
 				5: name: "punctuation.definition.group.begin.regexp"
+		},{
+			# Python-style group reference
+			name: "meta.group-reference.named.regexp"
+			match: "(\\()(\\?P=)(\\w+)(\\))"
+			captures:
+				1: name: "punctuation.definition.group.begin.regexp"
+				2: name: "keyword.other.back-reference.regexp"
+				3: name: "entity.group.name.regexp"
+				4: name: "punctuation.definition.group.begin.regexp"
 		},{
 			# Regular group
 			name: "meta.group.regexp"
