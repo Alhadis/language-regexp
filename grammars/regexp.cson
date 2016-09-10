@@ -462,11 +462,25 @@ repository:
 			{match: "=",           name: "keyword.operator.comparison.regexp"}
 			{match: "True|False", name: "constant.language.boolean.${0:/downcase}.regexp"}
 		]
-		
 
+
+	# Repetition
 	quantifier:
-		name: "keyword.operator.quantifier.regexp"
-		match: "[*+?]|\\{(?:\\d+,?\\d*|,\\d+)\\}"
+		patterns: [{
+			name: "keyword.operator.quantifier.regexp"
+			match: "[*+?]"
+		},{
+			name: "keyword.operator.quantifier.specific.regexp"
+			match: "(\\{)(?:(\\d+)(,?)(\\d*)|(,)(\\d+))(\\})"
+			captures:
+				1: name: "punctuation.definition.quantifier.bracket.curly.begin.regexp"
+				2: name: "keyword.operator.quantifier.min.regexp"
+				3: name: "punctuation.delimiter.comma.regexp"
+				4: name: "keyword.operator.quantifier.max.regexp"
+				5: name: "punctuation.delimiter.comma.regexp"
+				6: name: "keyword.operator.quantifier.max.regexp"
+				7: name: "punctuation.definition.quantifier.bracket.curly.end.regexp"
+		}]
 
 
 	scopedModifiers:
