@@ -257,7 +257,7 @@ repository:
 					1: name: "keyword.operator.unicode-property.regexp"
 					2: name: "punctuation.definition.unicode-escape.bracket.curly.begin.regexp"
 					3: name: "keyword.operator.logical.not.regexp"
-					4: name: "entity.property.name.regexp"
+					4: name: "entity.property.name.regexp", patterns: [include: "#propInnards"]
 					5: name: "punctuation.definition.unicode-escape.bracket.curly.end.regexp"
 			},{
 				# \pP - Single-character Unicode property
@@ -451,6 +451,13 @@ repository:
 		patterns: [
 			{match: "\\-(?=\\d)", name: "keyword.operator.arithmetic.minus.regexp"}
 			{match: "\\+(?=\\d)", name: "keyword.operator.arithmetic.plus.regexp"}
+		]
+
+	# Highlighting sugar for some Unicode property sequences
+	propInnards:
+		patterns: [
+			{match: "=",           name: "keyword.operator.comparison.regexp"}
+			{match: "True|False", name: "constant.language.boolean.${0:/downcase}.regexp"}
 		]
 		
 
