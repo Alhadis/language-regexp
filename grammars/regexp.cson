@@ -357,14 +357,22 @@ repository:
 				4: name: "variable.parameter.control-verb.regexp"
 				5: name: "punctuation.definition.group.begin.regexp"
 		},{
-			# Python-style group reference
+			# Subroutine call / Python-style group reference
 			name: "meta.group-reference.named.regexp"
-			match: "(\\()(\\?P=)(\\w+)(\\))"
+			match: "(\\()(\\?(?:&|P[>=]))(\\w+)(\\))"
 			captures:
 				1: name: "punctuation.definition.group.begin.regexp"
 				2: name: "keyword.other.back-reference.regexp"
 				3: name: "entity.group.name.regexp"
 				4: name: "punctuation.definition.group.begin.regexp"
+		},{
+			# Subroutine call by relative number
+			name: "meta.group-reference.relative.regexp"
+			match: "(\\()(\\?[-+]\\d+)(\\))"
+			captures:
+				1: name: "punctuation.definition.group.begin.regexp"
+				2: name: "keyword.other.back-reference.regexp"
+				3: name: "punctuation.definition.group.end.regexp"
 		},{
 			# Regular group
 			name: "meta.group.regexp"
