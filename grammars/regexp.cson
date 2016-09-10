@@ -68,6 +68,7 @@ repository:
 		}]
 
 
+	# [Bracketed] character-class
 	class:
 		name: "meta.character-class.set.regexp"
 		begin: "\\["
@@ -77,6 +78,7 @@ repository:
 		patterns: [include: "#classInnards"]
 	
 	
+	# Stuff that only has significence inside a bracketed character-class
 	classInnards:
 		patterns: [{
 			
@@ -111,6 +113,14 @@ repository:
 				1: patterns: [include: "#escape"]
 				2: name: "punctuation.separator.range.dash.regexp"
 				3: patterns: [include: "#escape"]
+		},{
+			# POSIX character class
+			name: "constant.language.posix.$2-char.character-class.regexp"
+			match: "(\\[:)(\\w+)(:\\])"
+			captures:
+				1: name: "punctuation.definition.character-class.set.begin.regexp"
+				2: name: "support.constant.posix-class.regexp"
+				3: name: "punctuation.definition.character-class.set.end.regexp"
 		},{
 			# Escaped [ or ]
 			name: "constant.character.escape.backslash.regexp"
