@@ -2,5 +2,11 @@
 	"name": "language-regexp",
 	"version": "0.0.0",
 	"description": "For those who're serious about writing regular expressions.",
-	"main": "./lib/main.js"
+	"main": "./lib/main.js",
+	"dependencies": {"atom-space-pen-views": "*"},
+	"consumedServices": {
+		"status-bar": {
+			"versions": {"^1.0.0": "consumeStatusBar"}
+		}
+	}
 }
