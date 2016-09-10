@@ -359,7 +359,7 @@ repository:
 		},{
 			# Named group
 			name: "meta.group.named.regexp"
-			begin: "\\(\\?(?=[<'])"
+			begin: "\\(\\?(?=P?[<'])"
 			end:   "\\)"
 			beginCaptures: 0: name: "punctuation.definition.group.begin.regexp"
 			endCaptures:   0: name: "punctuation.definition.group.end.regexp"
@@ -367,10 +367,13 @@ repository:
 				
 				# <ANGLEBRACKETS> - Group's name
 				contentName: "entity.group.name.regexp"
-				begin: "\\G<"
+				begin: "\\G(P?)(<)"
 				end:   ">"
-				beginCaptures: 0: name: "punctuation.definition.named-group.bracket.angle.begin.regexp"
-				endCaptures:   0: name: "punctuation.definition.named-group.bracket.angle.end.regexp"
+				beginCaptures:
+					1: name: "storage.type.function.named-group.regexp"
+					2: name: "punctuation.definition.named-group.bracket.angle.begin.regexp"
+				endCaptures:
+					0: name: "punctuation.definition.named-group.bracket.angle.end.regexp"
 			},{
 				# 'QUOTES' - Group's name
 				contentName: "entity.group.name.regexp"
