@@ -291,6 +291,7 @@ repository:
 		]
 
 
+	# Capturing group/capture buffer
 	group:
 		patterns: [{
 			
@@ -345,6 +346,16 @@ repository:
 				1: name: "punctuation.definition.group.begin.regexp"
 				2: patterns: [include: "#scopedModifiers"]
 				3: name: "punctuation.definition.group.end.regexp"
+		},{
+			# Backtracking control verb
+			name: "meta.control-verb.regexp"
+			match: "(\\(\\*)(\\w*)(?:([:=])([^\\s()]*))?(\\))"
+			captures:
+				1: name: "punctuation.definition.group.begin.regexp"
+				2: name: "keyword.control.verb.regexp"
+				3: name: "punctuation.separator.key-value.regexp"
+				4: name: "variable.parameter.control-verb.regexp"
+				5: name: "punctuation.definition.group.begin.regexp"
 		},{
 			# Regular group
 			name: "meta.group.regexp"
