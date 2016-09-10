@@ -178,6 +178,9 @@ repository:
 			name: "punctuation.separator.condition.if-else.regexp"
 			match: "\\|"
 		},{
+			# Lookaheads/lookbehinds
+			include: "#assertion"
+		},{
 			# Innards of the actual condition
 			name: "meta.condition.function-call.regexp"
 			begin: "\\G\\("
