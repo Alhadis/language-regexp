@@ -321,7 +321,7 @@ repository:
 			# Non-capturing group
 			name: "meta.group.non-capturing.regexp"
 			patterns: [include: "$self"]
-			begin: "(\\(\\?)([-a-z^]*)(:)"
+			begin: "(\\(\\?)([-A-Za-z^]*)(:)"
 			end:    "\\)"
 			beginCaptures:
 				1: name: "punctuation.definition.group.begin.regexp"
@@ -340,7 +340,7 @@ repository:
 		},{
 			# Scoped modifiers
 			name: "meta.group.scoped-modifiers.regexp"
-			match: "(\\(\\?)([-a-z^]*)(\\))"
+			match: "(\\(\\?)([-A-Za-z^]*)(\\))"
 			captures:
 				1: name: "punctuation.definition.group.begin.regexp"
 				2: patterns: [include: "#scopedModifiers"]
@@ -373,5 +373,5 @@ repository:
 		patterns: [
 			{match: "(?<=\\?)\\^", name: "keyword.operator.modifier.reset.regexp"}
 			{match: "-",           name: "keyword.operator.modifier.negate.regexp"}
-			{match: "[a-z]",       name: "storage.modifier.flag.$0.regexp"}
+			{match: "[A-Za-z]",    name: "storage.modifier.flag.$0.regexp"}
 		]
