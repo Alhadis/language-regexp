@@ -28,6 +28,17 @@ repository:
 			{match: "\\\\Z", name: "keyword.control.anchor.string-end-line.regexp"}
 			{match: "\\\\z", name: "keyword.control.anchor.string-end.regexp"}
 			{match: "\\\\G", name: "keyword.control.anchor.search-start.regexp"}
+			
+			# \b{…} - Unicode boundary (Perl v5.22+)
+			name: "meta.unicode-boundary.regexp"
+			match: "(?:(\\\\b)|(\\\\B))(\\{)(\\w+)(})"
+			captures:
+				1: name: "keyword.control.anchor.word-boundary.regexp"
+				2: name: "keyword.control.anchor.non-word-boundary.regexp"
+				3: name: "punctuation.definition.unicode-boundary.bracket.curly.begin.regexp"
+				4: name: "entity.property.name.regexp"
+				5: name: "punctuation.definition.unicode-boundary.bracket.curly.end.regexp"
+			
 			{match: "\\\\b", name: "keyword.control.anchor.word-boundary.regexp"}
 			{match: "\\\\B", name: "keyword.control.anchor.non-word-boundary.regexp"}
 		]
