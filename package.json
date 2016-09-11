@@ -1,9 +1,16 @@
 {
 	"name": "language-regexp",
 	"version": "0.0.0",
-	"description": "For those who're serious about writing regular expressions.",
+	"description": "Serious about writing regular expressions? Then install this.",
 	"main": "./lib/main.js",
-	"dependencies": {"atom-space-pen-views": "*"},
+	"keywords": ["RegEx", "RegExp", "Regular Expression", "Patterns", "POSIX", "PCRE", "Perl", "Oniguruma", "TextMate"],
+	"repository": "https://github.com/Alhadis/language-regexp",
+	"dependencies": {
+		"atom-space-pen-views": "*"
+	},
+	"devDependencies": {
+		"atom-mocha": "*"
+	},
 	"consumedServices": {
 		"status-bar": {
 			"versions": {"^1.0.0": "consumeStatusBar"}
