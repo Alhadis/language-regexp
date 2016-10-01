@@ -52,7 +52,7 @@ repository:
 			end:   "\\)"
 			beginCaptures: 0: name: "punctuation.definition.assertion.begin.regexp"
 			endCaptures:   0: name: "punctuation.definition.assertion.end.regexp"
-			patterns: [include: "$base"]
+			patterns: [include: "#main"]
 		},{
 			# Lookahead: Negative
 			name: "meta.assertion.negative.look-ahead.regexp"
@@ -60,7 +60,7 @@ repository:
 			end:   "\\)"
 			beginCaptures: 0: name: "punctuation.definition.assertion.begin.regexp"
 			endCaptures:   0: name: "punctuation.definition.assertion.end.regexp"
-			patterns: [include: "$base"]
+			patterns: [include: "#main"]
 		},{
 			# Lookbehind: Negative
 			name: "meta.assertion.negative.look-behind.regexp"
@@ -68,7 +68,7 @@ repository:
 			end:   "\\)"
 			beginCaptures: 0: name: "punctuation.definition.assertion.begin.regexp"
 			endCaptures:   0: name: "punctuation.definition.assertion.end.regexp"
-			patterns: [include: "$base"]
+			patterns: [include: "#main"]
 		},{
 			# Lookbeind: Positive
 			name: "meta.assertion.positive.look-behind.regexp"
@@ -76,7 +76,7 @@ repository:
 			end:   "\\)"
 			beginCaptures: 0: name: "punctuation.definition.assertion.begin.regexp"
 			endCaptures:   0: name: "punctuation.definition.assertion.end.regexp"
-			patterns: [include: "$base"]
+			patterns: [include: "#main"]
 		}]
 
 
@@ -214,7 +214,7 @@ repository:
 				{match: "\\G[-+]\\d+", name: "keyword.other.reference.relative.regexp"}
 				{match: "\\G\\w+",     name: "entity.group.name.regexp"}
 			]
-		}, include: "$base"]
+		}, include: "#main"]
 
 
 	# Metacharacters
@@ -385,11 +385,11 @@ repository:
 				beginCaptures: 0: name: "punctuation.definition.named-group.quote.single.begin.regexp"
 				endCaptures:   0: name: "punctuation.definition.named-group.quote.single.end.regexp"
 				
-			}, include: "$base"]
+			}, include: "#main"]
 		},{
 			# Non-capturing group
 			name: "meta.group.non-capturing.regexp"
-			patterns: [include: "$base"]
+			patterns: [include: "#main"]
 			begin: "(\\(\\?)([-A-Za-z^]*)(:)"
 			end:    "\\)"
 			beginCaptures:
@@ -405,7 +405,7 @@ repository:
 			end:   "\\)"
 			beginCaptures: 0: name: "punctuation.definition.group.begin.regexp"
 			endCaptures:   0: name: "punctuation.definition.group.end.regexp"
-			patterns: [include: "$base"]
+			patterns: [include: "#main"]
 		},{
 			# Scoped modifiers
 			name: "meta.group.scoped-modifiers.regexp"
@@ -448,7 +448,7 @@ repository:
 			end:   "\\)"
 			beginCaptures: 0: name: "punctuation.definition.group.begin.regexp"
 			endCaptures:   0: name: "punctuation.definition.group.end.regexp"
-			patterns: [include: "$base"]
+			patterns: [include: "#main"]
 		}]
 
 
