@@ -1,7 +1,7 @@
 {
 	"name": "language-regexp",
 	"version": "0.0.0",
-	"description": "Serious about writing regular expressions? Then install this.",
+	"description": "Engine-agnostic highlighting for regular expressions.",
 	"main": "./lib/main.js",
 	"keywords": ["RegEx", "RegExp", "Regular Expression", "Patterns", "POSIX", "PCRE", "Perl", "Oniguruma", "TextMate"],
 	"repository": "https://github.com/Alhadis/language-regexp",
