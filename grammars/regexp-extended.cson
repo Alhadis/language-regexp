@@ -1,10 +1,8 @@
 name: "Regular Expression (Extended)"
 scopeName: "source.regexp.extended"
 firstLineMatch: "^\\s*\\(\\?[im]*x[im]*\\)"
-patterns: [{
-	
-	begin: "#"
-	end:   "$"
-	name: "comment.line.number-sign"
-
-}, include: "source.regexp"]
+patterns: [
+	begin: "\\A"
+	end:   "(?=A)B"
+	patterns: [include: "source.regexp#main"]
+]

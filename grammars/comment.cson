@@ -1,0 +1,7 @@
+scopeName: "source.regexp.comment"
+injectionSelector: "source.regexp.extended"
+patterns: [
+	begin: "(?<![^\\\\]\\\\)#"
+	end:   "$"
+	name: "comment.line.number-sign"
+]
