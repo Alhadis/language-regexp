@@ -2,6 +2,7 @@ name: "Regular Expression (Extended)"
 scopeName: "source.regexp.extended"
 firstLineMatch: "^\\s*\\(\\?[im]*x[im]*\\)"
 patterns: [
+	name: "source.regexp.extended"
 	begin: "\\A"
 	end:   "(?=A)B"
 	patterns: [include: "source.regexp#main"]
