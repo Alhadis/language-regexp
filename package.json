@@ -1,7 +1,7 @@
 {
 	"name": "language-regexp",
 	"version": "0.0.0",
-	"description": "Engine-agnostic highlighting for regular expressions.",
+	"description": "Bleeding edge, engine-agnostic highlighting for regular expression data.",
 	"main": "./lib/main.js",
 	"keywords": ["RegEx", "RegExp", "Regular Expression", "Patterns", "POSIX", "PCRE", "Perl", "Oniguruma", "TextMate"],
 	"repository": "https://github.com/Alhadis/language-regexp",
