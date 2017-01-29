@@ -1,4 +1,0 @@
-"atom-text-editor[data-grammar^='source regexp'],
- atom-text-editor[data-grammar^='source js'],
- atom-text-editor.regex-preview":
-	"ctrl-shift-M": "language-regexp:match"
