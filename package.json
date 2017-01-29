@@ -1,6 +1,6 @@
 {
 	"name": "language-regexp",
-	"version": "0.0.0",
+	"version": "1.0.0",
 	"description": "Bleeding edge, engine-agnostic highlighting for regular expression data.",
 	"main": "./lib/main.js",
 	"keywords": ["RegEx", "RegExp", "Regular Expression", "Patterns", "POSIX", "PCRE", "Perl", "Oniguruma", "TextMate"],
