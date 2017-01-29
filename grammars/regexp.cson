@@ -7,6 +7,7 @@ repository:
 	main:
 		patterns: [
 			{include: "#comment"}
+			{include: "#variable"}
 			{include: "#anchor"}
 			{include: "#escape"}
 			{include: "#alternation"}
@@ -492,3 +493,19 @@ repository:
 			{match: "-",           name: "keyword.operator.modifier.negate.regexp"}
 			{match: "[A-Za-z]",    name: "storage.modifier.flag.$0.regexp"}
 		]
+
+
+	# Variable expansion
+	variable:
+		patterns: [{
+			name: "variable.other.regexp"
+			match: "(?<![^\\\\]\\\\|^\\\\)\\$(?!\\d|-)[-\\w]+"
+			captures:
+				1: name: "punctuation.definition.variable.regexp"
+		},{
+			name: "variable.other.bracket.regexp"
+			match: "(?<![^\\\\]\\\\|^\\\\)(\\$\\{)\\s*(?!\\d|-)[-\\w]+\\s*(\\})"
+			captures:
+				1: name: "punctuation.definition.variable.begin.tmcg"
+				2: name: "punctuation.definition.variable.end.tmcg"
+		}]
