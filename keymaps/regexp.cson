@@ -1,14 +1,18 @@
 ".platform-darwin atom-text-editor[data-grammar~=regexp]":
+	"cmd-e":       "language-regexp:escape"
 	"cmd-c":       "language-regexp:copy-compressed"
 	"cmd-x":       "language-regexp:cut-compressed"
+	"cmd-shift-E": "language-regexp:unescape"
 	"cmd-shift-C": "language-regexp:copy-escaped"
 	"cmd-shift-X": "language-regexp:cut-escaped"
 	"cmd-shift-V": "language-regexp:paste-unescaped"
 
 ".platform-win32 atom-text-editor[data-grammar~=regexp],
  .platform-linux atom-text-editor[data-grammar~=regexp]":
+ 	"ctrl-e":       "language-regexp:escape"
 	"ctrl-c":       "language-regexp:copy-compressed"
 	"ctrl-x":       "language-regexp:cut-compressed"
+	"ctrl-shift-E": "language-regexp:unescape"
 	"ctrl-shift-C": "language-regexp:copy-escaped"
 	"ctrl-shift-X": "language-regexp:cut-escaped"
 	"ctrl-shift-V": "language-regexp:paste-unescaped"
