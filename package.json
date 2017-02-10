@@ -6,13 +6,6 @@
 	"keywords": ["RegEx", "RegExp", "Regular Expression", "Patterns", "POSIX", "PCRE", "Perl", "Oniguruma", "TextMate"],
 	"repository": "https://github.com/Alhadis/language-regexp",
 	"license": "ISC",
-	"configSchema": {
-		"copyWithDelimiters": {
-			"type": "boolean",
-			"default": true,
-			"description": "Wrap copied expressions with `/ … /` to make them valid JavaScript. Only affects the `language-regexp:(copy|cut)-compressed` commands."
-		}
-	},
 	"devDependencies": {
 		"atom-mocha": "*"
 	}
