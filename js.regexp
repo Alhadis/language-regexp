@@ -1,0 +1,159 @@
+(?x)
+(?:(?<=@param)|(?<=@arg)|(?<=@argument)|(?<=@type))
+\s+
+({(?:
+  \* |
+  \? |
+
+  (?:
+    (?:
+      \? |
+      !   |
+      \.{3}
+      [*?]?
+    )?
+
+    (?:
+      (?:
+        function
+        \s*
+        (?:
+	(?:
+	  \(\s*
+	  \.{3}[a-zA-Z_$][\w$]+
+	  \s*\)
+	)
+	|
+	(?:
+	  \(\s*
+	  (?:
+	    (?:\?|!)?
+	    [a-zA-Z_$][\w$]+
+	    (?:\[\])?
+	    (?:
+	      (?:
+	        (?:
+		\s*,\s*
+		(?:\?|!)?
+		[a-zA-Z_$][\w$]+
+		(?:\[\])?
+	        )*
+	        (?:
+		\s*,\s*
+		\.{3}[a-zA-Z_$][\w$]+
+	        )?
+	      )
+	      |
+	      (?:
+	        =?
+	        (?:
+		(?<!=)
+		\s*,\s*
+		(?:\?|!)?
+		[a-zA-Z_$][\w$]+
+		(?:\[\])?
+		=?
+	        )*
+	        (?:
+		(?<==)
+		\s*,\s*
+		(?:\?|!)?
+		[a-zA-Z_$][\w$]+
+		(?:\[\])?
+		=
+	        )*
+	      )
+	    )
+	  )?
+	  \s*\)
+	)
+        )
+        (?:                                   # {function(): string} function return type
+	\s*:\s*
+	[a-zA-Z_$][\w$]*
+        )?
+      )?
+      |
+      (?:
+        \(                                   # Opening bracket of multiple types with parenthesis {(string|number)}
+	[a-zA-Z_$]+
+	(?:
+	  (?:
+	    [\w$]*
+	    (?:\[\])?                     # {(string[]|number)} type application, an array of strings or a number
+	  ) |
+	  \.?<[\w$]+(?:,\s+[\w$]+)*>    # {Array<string>} or {Object<string, number>} type application (optional .)
+	)
+	(?:
+	  [\.|~]                           # {Foo.bar} namespaced, {string|number} multiple, {Foo~bar} class-specific callback
+	  [a-zA-Z_$]+
+	  (?:
+	    (?:
+	      [\w$]*
+	      (?:\[\])?                   # {(string|number[])} type application, a string or an array of numbers
+	    ) |
+	    \.?<[\w$]+(?:,\s+[\w$]+)*>  # {Array<string>} or {Object<string, number>} type application (optional .)
+	  )
+	)*
+        \) |
+        [a-zA-Z_$]+
+        (?:
+	(?:
+	  [\w$]*
+	  (?:\[\])?                       # {(string|number[])} type application, a string or an array of numbers
+	) |
+	\.?<[\w$]+(?:,\s+[\w$]+)*>      # {Array<string>} or {Object<string, number>} type application (optional .)
+        )
+        (?:
+	[\.|~]                             # {Foo.bar} namespaced, {string|number} multiple, {Foo~bar} class-specific callback
+	[a-zA-Z_$]+
+	(?:
+	  [\w$]* |
+	  \.?<[\w$]+(?:,\s+[\w$]+)*>    # {Array<string>} or {Object<string, number>} type application (optional .)
+	)
+        )*
+      )
+    )
+				      # Check for suffix
+    (?:\[\])?                               # {string[]} type application, an array of strings
+    =?                                        # {string=} optional parameter
+  )
+)})
+\s+
+(
+  \[                                         # [foo] optional parameter
+    \s*
+    (?:
+      [a-zA-Z_$][\w$]*
+      (?:
+        (?:\[\])?                           # Foo[].bar properties within an array
+        \.                                   # Foo.Bar namespaced parameter
+        [a-zA-Z_$][\w$]*
+      )*
+      (?:
+        \s*
+        =                                     # [foo=bar] Default parameter value
+        \s*
+        (?:
+	[\w$.\s]* |                       # [foo=bar] Unquoted
+	"[^"]*"     |                       # [foo="bar"] Double-quoted
+	'[^']*'     |                       # [foo='bar'] Single-quoted
+	{[^{}]*}    |                       # [foo={a:1}] Object literal
+	\[ [^\[\]]* \]                  # [foo=[1,2]] Array literal
+        )
+      )?
+    )
+    \s*
+  \] |
+  (?:
+    [a-zA-Z_$][\w$]*
+    (?:
+      (?:\[\])?                             # Foo[].bar properties within an array
+      \.                                     # Foo.Bar namespaced parameter
+      [a-zA-Z_$][\w$]*
+    )*
+  )?
+)
+\s+
+(?:-\s+)?                                     # optional hyphen before the description
+((?:(?!\*\/).)*)                             # The type description
