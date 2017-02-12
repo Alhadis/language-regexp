@@ -167,14 +167,12 @@ module.exports = {
 					data = [];
 					break;
 				
-				// Instruction from transition table: Squash last two states
+				// Instruction from transition table: Squash last state
 				case -2:
-					const squashedData = [
-						...data,
-						...stack.pop()[1]
-					];
-					const old = stack.pop();
-					stack.push([state, old.concat(squashedData)]);
+					const squashedData = [...stack.pop()[1], ...data];
+					const prevState = stack[stack.length - 1];
+					prevState[1].push([state, squashedData]);
+					state = 0;
 					break;
 			}
 		}
