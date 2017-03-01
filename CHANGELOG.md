@@ -4,8 +4,9 @@ Change Log
 This project honours [Semantic Versioning](http://semver.org).
 
 
-[Unpublished][Staged]
+[v1.0.1]
 ------------------------------------------------------------------------
+**March 1st, 2017**  
 Unexciting patch-release to address trivial highlighting bugs:
 
 * __Fixed:__ "Match-anything" dots not highlighted as metacharacters
@@ -21,5 +22,6 @@ Initial release. Adds syntax highlighting for regular expression data.
 
 
 [Referenced links]:_____________________________________________________
-[Staged]: ./compare/v1.0.0...HEAD
+[Staged]: ./compare/v1.0.1...HEAD
+[v1.0.1]: https://github.com/Alhadis/language-regexp/releases/tag/v1.0.1
 [v1.0.0]: https://github.com/Alhadis/language-regexp/releases/tag/v1.0.0
