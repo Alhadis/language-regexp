@@ -10,6 +10,7 @@ repository:
 			{include: "#regexp"}
 			{include: "#fieldQuotedEarly"}
 			{include: "#string"}
+			{include: "#stringJunk"}
 			{include: "#block"}
 			{include: "#field"}
 			{include: "#array"}
@@ -30,7 +31,10 @@ repository:
 		end:   "\\]"
 		beginCaptures: 0: name: "punctuation.definition.array.begin.bracket.square.son"
 		endCaptures:   0: name: "punctuation.definition.array.end.bracket.square.son"
-		patterns: [include: "#main"]
+		patterns: [
+			{include: "#main"}
+			{include: "#unquoted"}
+		]
 	
 	# { Block }
 	block:
@@ -274,11 +278,7 @@ repository:
 	fieldInnards:
 		patterns: [
 			{include: "#main"}
-			
-			name: "string.unquoted.son"
-			match: "\\G[^\\s{}](?:[^\\#,}\\]]|(?<=\\S)#|#(?=\\S))*"
-			captures:
-				0: patterns: [include: "#url"]
+			{include: "#unquoted"}
 		]
 
 	# Null keyword
@@ -407,11 +407,39 @@ repository:
 			patterns: [include: "#escapeVerbatim"]
 		}]
 
+	# Unexpected crap found after a closed quote
+	stringJunk:
+		name: "invalid.illegal.syntax.son"
+		begin: "(?<=[\"'`])(?!\\s*$)(?=\\s*[^:,}\\]])"
+		end: "(?=[:,}\\]])"
+
 	stringInnards:
 		patterns: [
 			{include: "#url"}
 			{include: "#escape"}
 		]
+
+	# Unquoted string
+	unquoted:
+		name: "string.unquoted.son"
+		match: """(?x)
+			(?:^|\\G|(?<=,))
+			\\s*
+			
+			(?! ~? [-+]? [0-9])
+			[^\\s{}\\[\\]<:"'`]
+			
+			(?: [^\\#,}\\]:]
+			|   (?<=\\S) [\\#:]
+			|   [:\\#] (?=\\S)
+			)*
+			(?!
+				\\s*
+				(?:[\\{:])
+			)
+		"""
+		captures:
+			0: patterns: [include: "#url"]
 
 	# Underlinked URLs. Not a datatype.
 	url:
