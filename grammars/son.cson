@@ -33,7 +33,9 @@ repository:
 		endCaptures:   0: name: "punctuation.definition.array.end.bracket.square.son"
 		patterns: [
 			{include: "#main"}
-			{include: "#unquoted"}
+			
+			match: "(?:[^,\\[\\]{}<>\"'`\\s:]|:(?=\\S))+"
+			name: "string.unquoted.son"
 		]
 	
 	# { Block }
@@ -281,7 +283,26 @@ repository:
 	fieldInnards:
 		patterns: [
 			{include: "#main"}
-			{include: "#unquoted"}
+			
+			# Unquoted string
+			name: "string.unquoted.son"
+			match: """(?x) \\G
+				(?! ~?[-+]?[0-9]
+				|  (?<=\\s)\\#(?=\\s|$)
+				)
+				[^\\s{}\\[\\]<:"'`]
+				
+				(?: [^\\#,}\\]:]
+				|   (?<=\\S) [\\#:]
+				|   [:\\#] (?=\\S)
+				)*
+				(?!
+					\\s*
+					(?:[\\{:])
+				)
+			"""
+			captures:
+					0: patterns: [include: "#url"]
 		]
 
 	# Null keyword
@@ -422,27 +443,6 @@ repository:
 			{include: "#escape"}
 		]
 
-	# Unquoted string
-	unquoted:
-		name: "string.unquoted.son"
-		match: """(?x)
-			(?:^|\\G|(?<=,))
-			\\s*
-			
-			(?! ~? [-+]? [0-9])
-			[^\\s{}\\[\\]<:"'`]
-			
-			(?: [^\\#,}\\]:]
-			|   (?<=\\S) [\\#:]
-			|   [:\\#] (?=\\S)
-			)*
-			(?!
-				\\s*
-				(?:[\\{:])
-			)
-		"""
-		captures:
-			0: patterns: [include: "#url"]
 
 	# Underlinked URLs. Not a datatype.
 	url:
