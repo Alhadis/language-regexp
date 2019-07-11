@@ -2,8 +2,8 @@
 	editor:
 		commentStart: "(?\# "
 		commendEnd:   ")"
-		increaseIndentPattern: "\\([^\\)]*\\s*$"
-		decreaseIndentPattern: "\\)"
+		increaseIndentPattern: "(?x)\\([^\\)]*$"
+		decreaseIndentPattern: "^\\s+\\)"
 
 ".source.regexp.extended":
 	editor:
@@ -12,5 +12,29 @@
 ".source.son":
 	editor:
 		commentStart: "# "
-		increaseIndentPattern: "^\\s*.*(?<=\\S):(?=\\s|$)\\s*(\\{[^\\]}>\"'`]*|\\[[^\\]}>\"'`]*|\\([^\\])>\"'`]*|<[^\\])>\"'`]*)?(\\\"\\\"\\\"(?!.*\\\"\\\"\\\").*|'''(?!.*''').*|```(?!.*```).*|///(?!.*///).*)?$"
-		decreaseIndentPattern: "^\\s+(?:[}\\]>]|[\\/'\"`]{3})$"
+		increaseIndentPattern: """(?x)
+			(?: [{\\[<]        # Opening array/block
+			|   \\S:(?=\\s|$)  # Key/value separator
+			) \\s*
+
+			# Unpaired open bracket:
+			( \\{ [^\\]}>"'`]*  # Curly
+			| \\[ [^\\]}>"'`]*  # Square
+			| \\( [^\\])>"'`]*  # Round
+			|   < [^\\])>"'`]*  # Angle
+			)?
+
+			# Multi-line string
+			(\""" (?!.*\""").*  # Double-quotes
+			| ''' (?!.* ''').*  # Single-quotes
+			| ``` (?!.* ```).*  # Backticks
+			| /// (?!.* ///).*  # RegExp
+			)?
+			$
+		"""
+		decreaseIndentPattern: """(?x)
+			^ \\s*
+			( [}\\]>]
+			| [/'"`]{3}
+			)
+		"""
