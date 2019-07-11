@@ -504,8 +504,8 @@ repository:
 			name: "variable.other.bracket.regexp"
 			match: "(?<![^\\\\]\\\\|^\\\\)(\\$\\{)\\s*(?!\\d|-)[-\\w]+\\s*(\\})"
 			captures:
-				1: name: "punctuation.definition.variable.begin.tmcg"
-				2: name: "punctuation.definition.variable.end.tmcg"
+				1: name: "punctuation.definition.variable.begin.regexp"
+				2: name: "punctuation.definition.variable.end.regexp"
 		}]
 
 
