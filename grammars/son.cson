@@ -1,0 +1,66 @@
+name: "Standard Object Notation"
+scopeName: "source.son"
+fileTypes: ["son", "sy"]
+patterns: [include: "#main"]
+
+repository:
+	main:
+		patterns: [
+			{include: "#comment"}
+			{include: "#regexp"}
+			{include: "#field"}
+		]
+	
+	# Comments
+	comment:
+		patterns: [{
+			### Block comment ###
+			name:  "comment.block.son"
+			begin: "(?:^|(?<=\\s))(\#{3,})(?=\\s|$)"
+			end:   "\\1"
+			beginCaptures: 1: name: "punctuation.definition.comment.begin.son"
+			endCaptures:   0: name: "punctuation.definition.comment.end.son"
+		},{
+			# Single-line comment
+			name:  "comment.line.number-sign.son"
+			begin: "(?:^|(?<=\\s))#(?=\\s|$)"
+			end:   "$"
+			beginCaptures:
+				0: name: "punctuation.definition.comment.son"
+		}]
+
+	# Named property
+	field:
+		name:  "meta.structure.dictionary.son"
+		begin: "(.+)(:)(?=\\s|$)"
+		end:   "^(?!\\G)"
+		beginCaptures:
+			0: name: "meta.structure.dictionary.key.son"
+			1: name: "entity.name.tag.property.son"
+			2: name: "punctuation.separator.key-value.son"
+		contentName: "meta.structure.dictionary.value.son"
+		patterns: [include: "#main"]
+
+	# Regular expressions
+	regexp:
+		patterns: [{
+			# Multiline regexp
+			name:  "string.regexp.multiline.son"
+			begin: "///"
+			end:   "(///)([A-Za-z]*)"
+			beginCaptures:
+				0: name: "punctuation.definition.string.begin.son"
+			endCaptures:
+				1: name: "punctuation.definition.string.end.son"
+				2: patterns: [include: "source.regexp#scopedModifiers"]
+			patterns: [include: "source.regexp#main"]
+		},{
+			# Single-line regexp
+			name: "string.regexp.son"
+			match: "(/)(.*)(/)([A-Za-z]*)"
+			captures:
+				1: name: "punctuation.definition.string.begin.son"
+				3: name: "punctuation.definition.string.end.son"
+				2: patterns: [include: "source.regexp#main"]
+				4: patterns: [include: "source.regexp#scopedModifiers"]
+		}]
