@@ -25,6 +25,7 @@ repository:
 		end:   "\\]"
 		beginCaptures: 0: name: "punctuation.definition.array.begin.bracket.square.son"
 		endCaptures:   0: name: "punctuation.definition.array.end.bracket.square.son"
+		patterns: [include: "#main"]
 	
 	# { Block }
 	block:
@@ -33,6 +34,7 @@ repository:
 		end:   "}"
 		beginCaptures: 0: name: "punctuation.section.scope.block.begin.bracket.curly.son"
 		endCaptures:   0: name: "punctuation.section.scope.block.end.bracket.curly.son"
+		patterns: [include: "#main"]
 	
 	# Boolean keywords
 	boolean:
