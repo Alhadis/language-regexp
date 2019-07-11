@@ -1,1 +1,2 @@
-tests/* linguist-vendored
+# Include CSON files in GitHub's language breakdown graph
+*.cson  linguist-detectable=true
