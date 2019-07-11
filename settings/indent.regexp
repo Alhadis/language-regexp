@@ -1,0 +1,22 @@
+^ \s*    # Leading indent
+.*       # Name
+
+# Key/value separator
+(?<=\S) : (?=\s|$)
+
+\s*
+
+# Unpaired open bracket:
+( \{ [^\]}>"'`]*   # Curly
+| \[ [^\]}>"'`]*   # Square
+| \( [^\])>"'`]*   # Round
+|  < [^\])>"'`]*   # Angle
+)?
+
+# Multi-line string
+( """ (?!.*""").*  # Double-quotes
+| ''' (?!.*''').*  # Single-quotes
+| ``` (?!.*```).*  # Backticks
+| /// (?!.*///).*  # RegExp
+)?
+$

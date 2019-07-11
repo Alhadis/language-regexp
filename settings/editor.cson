@@ -1,0 +1,16 @@
+".source.regexp":
+	editor:
+		commentStart: "(?\# "
+		commendEnd:   ")"
+		increaseIndentPattern: "\\([^\\)]*\\s*$"
+		decreaseIndentPattern: "\\)"
+
+".source.regexp.extended":
+	editor:
+		commentStart: "# "
+
+".source.son":
+	editor:
+		commentStart: "# "
+		increaseIndentPattern: "^\\s*.*(?<=\\S):(?=\\s|$)\\s*(\\{[^\\]}>\"'`]*|\\[[^\\]}>\"'`]*|\\([^\\])>\"'`]*|<[^\\])>\"'`]*)?(\\\"\\\"\\\"(?!.*\\\"\\\"\\\").*|'''(?!.*''').*|```(?!.*```).*|///(?!.*///).*)?$"
+		decreaseIndentPattern: "^\\s+(?:[}\\]>]|[\\/'\"`]{3})$"
