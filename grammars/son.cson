@@ -1,7 +1,7 @@
 name: "SON"
 scopeName: "source.son"
 fileTypes: ["son", "sy"]
-patterns: [include: "#main"]
+patterns: [include: "#blockInnards"]
 
 repository:
 	main:
@@ -9,9 +9,9 @@ repository:
 			{include: "#comment"}
 			{include: "#regexp"}
 			{include: "#string"}
+			{include: "#block"}
 			{include: "#field"}
 			{include: "#array"}
-			{include: "#block"}
 			{include: "#bytestream"}
 			{include: "#brackets"}
 			{include: "#boolean"}
@@ -33,12 +33,33 @@ repository:
 	
 	# { Block }
 	block:
-		name:  "meta.block.son"
-		begin: "{"
-		end:   "}"
-		beginCaptures: 0: name: "punctuation.section.scope.block.begin.bracket.curly.son"
-		endCaptures:   0: name: "punctuation.section.scope.block.end.bracket.curly.son"
-		patterns: [include: "#main"]
+		patterns: [{
+			# Tagged block {
+			name: "meta.block.tagged.son"
+			begin: "((?:[^{}\\[\\]:\\s,]|[:#](?=\\S))(?:[^:{}]|:(?=\\S)|\\\\[{:])*?)({)"
+			end:   "}"
+			beginCaptures:
+				1: name: "entity.name.block.tag.label.son"
+				2: name: "punctuation.section.scope.block.begin.bracket.curly.son"
+			endCaptures:
+				0: name: "punctuation.section.scope.block.end.bracket.curly.son"
+			patterns: [include: "#blockInnards"]
+		},{
+			name:  "meta.block.son"
+			begin: "{"
+			end:   "}"
+			beginCaptures: 0: name: "punctuation.section.scope.block.begin.bracket.curly.son"
+			endCaptures:   0: name: "punctuation.section.scope.block.end.bracket.curly.son"
+			patterns: [include: "#blockInnards"]
+		}]
+	
+	# Stuff matched directly inside of a block
+	blockInnards:
+		patterns: [include: "#main", {
+			match: "((?:[^{}\\[\\]:\\s,]|[:#](?=\\S))(?:[^:{}]|:(?=\\S)|\\\\[{:])*?)"
+			captures:
+				1: name: "entity.name.tag.property.son"
+		}]
 	
 	# Brackets (expressions)
 	brackets:
@@ -99,14 +120,14 @@ repository:
 		patterns: [{
 			### Block comment ###
 			name:  "comment.block.son"
-			begin: "(?:^|(?<=\\s|\\xC2\\xAD))(\#{3,})(?=\\s|$)"
+			begin: "(?:^|(?<=\\s|\\xC2\\xAD|\\xAD))(\#{3,})(?=\\s|$)"
 			end:   "\\1"
 			beginCaptures: 1: name: "punctuation.definition.comment.begin.son"
 			endCaptures:   0: name: "punctuation.definition.comment.end.son"
 		},{
 			# Single-line comment
 			name:  "comment.line.number-sign.son"
-			begin: "(?:^|(?<=\\s|\\xC2\\xAD))#(?=\\s|$)"
+			begin: "(?:^|(?<=\\s|\\xC2\\xAD|\\xAD))#(?=\\s|$)"
 			end:   "$"
 			beginCaptures:
 				0: name: "punctuation.definition.comment.son"
@@ -184,8 +205,9 @@ repository:
 
 	# Named property
 	field:
+		name:  "meta.field.son"
 		begin: "([^\\s].*?)(:)(?=\\s|$)\\s*"
-		end:   "^(?!\\G)"
+		end:   "(?=\\s*})|^(?!\\G)"
 		beginCaptures:
 			1: name: "entity.name.tag.property.son"
 			2: name: "punctuation.separator.key-value.son"
@@ -193,7 +215,7 @@ repository:
 			{include: "#main"}
 			
 			name: "string.unquoted.son"
-			match: "\\G\\S(?:[^\\#,}\\]]|(?<=\\S)#|#(?=\\S))*"
+			match: "\\G[^\\s{}](?:[^\\#,}\\]]|(?<=\\S)#|#(?=\\S))*"
 		]
 
 	# Null keyword

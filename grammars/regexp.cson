@@ -2,7 +2,7 @@ name: "Regular Expression"
 scopeName: "source.regexp"
 fileTypes: ["regexp", "regex"]
 patterns: [{
-	begin: "\\A(?:\\xC2\\xAD){2}"
+	begin: "\\A(?:\\xC2\\xAD|\\xAD){2}"
 	end: "(?=A)B"
 	patterns: [include: "source.son"]
 }, include: "#main"]
