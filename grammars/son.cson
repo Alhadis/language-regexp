@@ -13,9 +13,12 @@ repository:
 			{include: "#array"}
 			{include: "#block"}
 			{include: "#bytestream"}
+			{include: "#brackets"}
 			{include: "#boolean"}
 			{include: "#null"}
 			{include: "#number"}
+			{include: "#comma"}
+			{include: "#operator"}
 		]
 	
 	# [Array]
@@ -34,6 +37,15 @@ repository:
 		end:   "}"
 		beginCaptures: 0: name: "punctuation.section.scope.block.begin.bracket.curly.son"
 		endCaptures:   0: name: "punctuation.section.scope.block.end.bracket.curly.son"
+		patterns: [include: "#main"]
+	
+	# Brackets (expressions)
+	brackets:
+		name:  "meta.expression.son"
+		begin: "\\("
+		end:   "\\)"
+		beginCaptures: 0: name: "punctuation.section.scope.block.begin.bracket.round.son"
+		endCaptures:   0: name: "punctuation.section.scope.block.end.bracket.round.son"
 		patterns: [include: "#main"]
 	
 	# Boolean keywords
@@ -75,6 +87,11 @@ repository:
 			name: "invalid.illegal.character.son"
 			match: "[^\\s>]+"
 		}]
+	
+	# Comma
+	comma:
+		name: "punctuation.separator.delimiter.comma.son"
+		match: ","
 	
 	# Comments
 	comment:
@@ -141,12 +158,17 @@ repository:
 
 	# Named property
 	field:
-		begin: "([^\\s].*?)(:)(?=\\s|$)"
+		begin: "([^\\s].*?)(:)(?=\\s|$)\\s*"
 		end:   "^(?!\\G)"
 		beginCaptures:
 			1: name: "entity.name.tag.property.son"
 			2: name: "punctuation.separator.key-value.son"
-		patterns: [include: "#main"]
+		patterns: [
+			{include: "#main"}
+			
+			name: "string.unquoted.son"
+			match: "\\G\\S(?:[^\\#,}\\]]|(?<=\\S)#|#(?=\\S))*"
+		]
 
 	# Null keyword
 	null:
@@ -159,48 +181,37 @@ repository:
 
 	# Numeric literals
 	number:
+		match: """(?x)
+			(?:^|(?<=[\\s\\[\\({,~]))
+			(?: ([-+]?0[xX][A-Fa-f0-9]+) # Hexadecimal
+			|   ([-+]?0[oO][0-7]+)       # Octal
+			|   ([-+]?0[bB][0-1]+)       # Binary
+			|   ([-+]?[0-9]+\\.(?:[0-9]*[eE][+-]?[0-9]+|[0-9]+)) # Float
+			|   ([-+]?[0-9]+(?:[eE][+-]?[0-9]+)?) # Integer
+			)
+			\\s*
+			(?= $
+			|   [-+*/%^&|\\)<>\\s\\]},]
+			|   (?<=\\s)\\#(?=\\s|$)
+			)
+		"""
+		captures:
+			1: name: "constant.numeric.integer.int.hexadecimal.hex.son"
+			2: name: "constant.numeric.integer.int.octal.oct.son"
+			3: name: "constant.numeric.integer.int.binary.bin.son"
+			4: name: "constant.numeric.float.decimal.dec.son"
+			5: name: "constant.numeric.integer.int.decimal.dec.son"
+
+	# Expression operators
+	operator:
 		patterns: [{
-			# Hexadecimal
-			name: "constant.numeric.integer.int.hexadecimal.hex.son"
-			match: """(?x)
-				(?:^|(?<=[\\s\\[{,]))
-				[-+]?0[xX][A-Fa-f0-9]+
-				(?=$|[-+*/~%^&|()<>\\s\\]},])
-			"""
+			# Arithmetic
+			name: "keyword.operator.arithmetic.son"
+			match: "\\*\\*|[-+*/%]"
 		},{
-			# Octal
-			name: "constant.numeric.integer.int.octal.oct.son"
-			match: """(?x)
-				(?:^|(?<=[\\s\\[{,]))
-				[-+]?0[oO][0-7]+
-				(?=$|[-+*/~%^&|()<>\\s\\]},])
-			"""
-		},{
-			# Binary
-			name: "constant.numeric.integer.int.binary.bin.son"
-			match: """(?x)
-				(?:^|(?<=[\\s\\[{,]))
-				[-+]?0[bB][0-1]+
-				(?=$|[-+*/~%^&|()<>\\s\\]},])
-			"""
-		},{
-			# Decimal: Floating-point
-			name: "constant.numeric.float.decimal.dec.son"
-			match: """(?x)
-				(?:^|(?<=[\\s\\[{,]))
-				[-+]?[0-9]+\\.
-				(?:[0-9]*[eE][+-]?[0-9]+|[0-9]+)
-				(?=$|[-+*/~%^&|()<>\\s\\]},])
-			"""
-		},{
-			# Decimal: Integer
-			name: "constant.numeric.integer.int.decimal.dec.son"
-			match: """(?x)
-				(?:^|(?<=[\\s\\[{,]))
-				[-+]?[0-9]+
-				(?:[eE][+-]?[0-9]+)?
-				(?=$|[-+*/~%^&|()<>\\s\\]},])
-			"""
+			# Bitwise
+			name: "keyword.operator.bitwise.son"
+			match: "(<<|>>|>>>|[~&|^])"
 		}]
 
 	# Regular expressions
