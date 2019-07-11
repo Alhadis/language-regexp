@@ -13,6 +13,9 @@ repository:
 			{include: "#array"}
 			{include: "#block"}
 			{include: "#bytestream"}
+			{include: "#boolean"}
+			{include: "#null"}
+			{include: "#number"}
 		]
 	
 	# [Array]
@@ -30,6 +33,26 @@ repository:
 		end:   "}"
 		beginCaptures: 0: name: "punctuation.section.scope.block.begin.bracket.curly.son"
 		endCaptures:   0: name: "punctuation.section.scope.block.end.bracket.curly.son"
+	
+	# Boolean keywords
+	boolean:
+		patterns: [{
+			# True
+			name: "constant.language.boolean.true.son"
+			match: """(?x)
+				(?:^|(?<=[\\s\\[{,]))
+				(?:true|yes|on|TRUE|YES|ON)
+				(?=$|[\\s\\]},])
+			"""
+		},{
+			# False
+			name: "constant.language.boolean.false.son"
+			match: """(?x)
+				(?:^|(?<=[\\s\\[{,]))
+				(?:false|no|off|TRUE|YES|ON)
+				(?=$|[\\s\\]},])
+			"""
+		}]
 	
 	# Bytestream: <37 A2 E7 7E>
 	bytestream:
@@ -122,6 +145,61 @@ repository:
 			1: name: "entity.name.tag.property.son"
 			2: name: "punctuation.separator.key-value.son"
 		patterns: [include: "#main"]
+
+	# Null keyword
+	null:
+		name: "constant.language.null.son"
+		match: """(?x)
+			(?:^|(?<=[\\s\\[{,]))
+			(?:null|NULL)
+			(?=$|[\\s\\]},])
+		"""
+
+	# Numeric literals
+	number:
+		patterns: [{
+			# Hexadecimal
+			name: "constant.numeric.integer.int.hexadecimal.hex.son"
+			match: """(?x)
+				(?:^|(?<=[\\s\\[{,]))
+				[-+]?0[xX][A-Fa-f0-9]+
+				(?=$|[-+*/~%^&|()<>\\s\\]},])
+			"""
+		},{
+			# Octal
+			name: "constant.numeric.integer.int.octal.oct.son"
+			match: """(?x)
+				(?:^|(?<=[\\s\\[{,]))
+				[-+]?0[oO][0-7]+
+				(?=$|[-+*/~%^&|()<>\\s\\]},])
+			"""
+		},{
+			# Binary
+			name: "constant.numeric.integer.int.binary.bin.son"
+			match: """(?x)
+				(?:^|(?<=[\\s\\[{,]))
+				[-+]?0[bB][0-1]+
+				(?=$|[-+*/~%^&|()<>\\s\\]},])
+			"""
+		},{
+			# Decimal: Floating-point
+			name: "constant.numeric.float.decimal.dec.son"
+			match: """(?x)
+				(?:^|(?<=[\\s\\[{,]))
+				[-+]?[0-9]+\\.
+				(?:[0-9]*[eE][+-]?[0-9]+|[0-9]+)
+				(?=$|[-+*/~%^&|()<>\\s\\]},])
+			"""
+		},{
+			# Decimal: Integer
+			name: "constant.numeric.integer.int.decimal.dec.son"
+			match: """(?x)
+				(?:^|(?<=[\\s\\[{,]))
+				[-+]?[0-9]+
+				(?:[eE][+-]?[0-9]+)?
+				(?=$|[-+*/~%^&|()<>\\s\\]},])
+			"""
+		}]
 
 	# Regular expressions
 	regexp:
