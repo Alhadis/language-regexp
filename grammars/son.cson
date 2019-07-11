@@ -77,14 +77,11 @@ repository:
 
 	# Named property
 	field:
-		name:  "meta.structure.dictionary.son"
-		begin: "(.+)(:)(?=\\s|$)"
+		begin: "([^\\s].*?)(:)(?=\\s|$)"
 		end:   "^(?!\\G)"
 		beginCaptures:
-			0: name: "meta.structure.dictionary.key.son"
 			1: name: "entity.name.tag.property.son"
 			2: name: "punctuation.separator.key-value.son"
-		contentName: "meta.structure.dictionary.value.son"
 		patterns: [include: "#main"]
 
 	# Regular expressions
