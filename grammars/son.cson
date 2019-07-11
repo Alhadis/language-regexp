@@ -8,6 +8,7 @@ repository:
 		patterns: [
 			{include: "#comment"}
 			{include: "#regexp"}
+			{include: "#string"}
 			{include: "#field"}
 		]
 	
@@ -27,6 +28,51 @@ repository:
 			end:   "$"
 			beginCaptures:
 				0: name: "punctuation.definition.comment.son"
+		}]
+
+	# Escaped character
+	escape:
+		patterns: [{
+			# Newline hack
+			name:  "constant.character.escape.newline.son"
+			begin: "\\\\$\\s*"
+			end:   "^"
+			beginCaptures:
+				0: name: "punctuation.backslash.definition.escape.son"
+		},{
+			# Hexadecimal escape: \x1B
+			name: "constant.character.escape.unicode.son"
+			match: "(\\\\)x[A-Fa-f0-9]{2}"
+			captures:
+				1: name: "punctuation.backslash.definition.escape.son"
+		},{
+			# Unicode escape: \u0032
+			name:  "constant.character.escape.unicode.son"
+			match: "(\\\\)u[A-Fa-f0-9]{4}"
+			captures:
+				1: name: "punctuation.backslash.definition.escape.son"
+		},{
+			# Unicode escape: \u{1B240}
+			name: "constant.character.escape.unicode.son"
+			match: "(\\\\)u({)[A-Fa-f0-9]+(})"
+			captures:
+				1: name: "punctuation.backslash.definition.escape.son"
+				2: name: "punctuation.definition.unicode-escape.begin.bracket.curly.son"
+				3: name: "punctuation.definition.unicode-escape.end.bracket.curly.son"
+		},{
+			# Invalid unicode escape: \u{nope}, \u{}
+			name: "invalid.illegal.unicode-escape.son"
+			match: "\\\\u{[^}\"]*}"
+		},{
+			# Invalid unicode escape: \uNOPE
+			name: "invalid.illegal.unicode-escape.son"
+			match: "\\\\u(?![A-Fa-f0-9]{4})[^\"]*"
+		},{
+			# Anything else
+			name: "constant.character.escape.son"
+			match: "(\\\\)."
+			captures:
+				0: name: "punctuation.backslash.definition.escape.son"
 		}]
 
 	# Named property
@@ -63,4 +109,68 @@ repository:
 				3: name: "punctuation.definition.string.end.son"
 				2: patterns: [include: "source.regexp#main"]
 				4: patterns: [include: "source.regexp#scopedModifiers"]
+		}]
+
+	# Quoted string literals
+	string:
+		patterns: [{
+			# """ Double-quoted heredoc """
+			name: "string.quoted.double.heredoc.son"
+			begin: '"""'
+			end:   '"""'
+			beginCaptures: 0: name: "punctuation.definition.string.begin.son"
+			endCaptures:   0: name: "punctuation.definition.string.end.son"
+			patterns: [include: "#escape"]
+		},{
+			# ''' Single-quoted heredoc '''
+			name: "string.quoted.single.heredoc.son"
+			begin: "'''"
+			end:   "'''"
+			beginCaptures: 0: name: "punctuation.definition.string.begin.son"
+			endCaptures:   0: name: "punctuation.definition.string.end.son"
+			patterns: [include: "#escape"]
+		},{
+			# ``` Verbatim heredoc ```
+			name: "string.quoted.verbatim.backtick.heredoc.son"
+			begin: "```"
+			end:   "```"
+			beginCaptures: 0: name: "punctuation.definition.string.begin.son"
+			endCaptures:   0: name: "punctuation.definition.string.end.son"
+			patterns: [{
+				# Only one escape possible: \```
+				name: "constant.character.escape.heredoc.son"
+				match: "(\\\\)```"
+				captures:
+					1: name: "punctuation.backslash.definition.escape.son"
+			}]
+		},{
+			# "Double-quoted string"
+			name:  "string.quoted.double.son"
+			begin: '"'
+			end:   '"'
+			beginCaptures: 0: name: "punctuation.definition.string.begin.son"
+			endCaptures:   0: name: "punctuation.definition.string.end.son"
+			patterns: [include: "#escape"]
+		},{
+			# 'Single-quoted string'
+			name: "string.quoted.single.son"
+			begin: "'"
+			end:   "'"
+			beginCaptures: 0: name: "punctuation.definition.string.begin.son"
+			endCaptures:   0: name: "punctuation.definition.string.end.son"
+			patterns: [include: "#escape"]
+		},{
+			# `Verbatim string`
+			name: "string.quoted.verbatim.backtick.son"
+			begin: "`"
+			end:   "`"
+			beginCaptures: 0: name: "punctuation.definition.string.begin.son"
+			endCaptures:   0: name: "punctuation.definition.string.end.son"
+			patterns: [{
+				# Only one escape possible: \`
+				name: "constant.character.escape.backtick.son"
+				match: "(\\\\)`"
+				captures:
+					1: name: "punctuation.backslash.definition.escape.son"
+			}]
 		}]
