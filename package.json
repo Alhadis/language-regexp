@@ -5,8 +5,5 @@
 	"main": "./lib/main.js",
 	"keywords": ["RegEx", "RegExp", "Regular Expression", "Patterns", "POSIX", "PCRE", "Perl", "Oniguruma", "TextMate"],
 	"repository": "https://github.com/Alhadis/language-regexp",
-	"license": "ISC",
-	"devDependencies": {
-		"atom-mocha": "*"
-	}
+	"license": "ISC"
 }
