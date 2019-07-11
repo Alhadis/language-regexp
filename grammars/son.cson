@@ -10,7 +10,46 @@ repository:
 			{include: "#regexp"}
 			{include: "#string"}
 			{include: "#field"}
+			{include: "#array"}
+			{include: "#block"}
+			{include: "#bytestream"}
 		]
+	
+	# [Array]
+	name: "meta.array.son"
+	array:
+		begin: "\\["
+		end:   "\\]"
+		beginCaptures: 0: name: "punctuation.definition.array.begin.bracket.square.son"
+		endCaptures:   0: name: "punctuation.definition.array.end.bracket.square.son"
+	
+	# { Block }
+	block:
+		name:  "meta.block.son"
+		begin: "{"
+		end:   "}"
+		beginCaptures: 0: name: "punctuation.section.scope.block.begin.bracket.curly.son"
+		endCaptures:   0: name: "punctuation.section.scope.block.end.bracket.curly.son"
+	
+	# Bytestream: <37 A2 E7 7E>
+	bytestream:
+		name:  "meta.bytestream.son"
+		begin: "<"
+		end:   ">"
+		beginCaptures: 0: name: "punctuation.section.bytestream.begin.bracket.angle.son"
+		endCaptures:   0: name: "punctuation.section.bytestream.end.bracket.angle.son"
+		patterns: [{
+			# Byte
+			name:  "constant.numeric.integer.int.hexadecimal.hex.son"
+			match: "[A-Fa-f0-9]+"
+		},{
+			# Embedded comments
+			include: "#comment"
+		},{
+			# Unexpected junk
+			name: "invalid.illegal.character.son"
+			match: "[^\\s>]+"
+		}]
 	
 	# Comments
 	comment:
