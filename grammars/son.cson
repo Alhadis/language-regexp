@@ -206,16 +206,19 @@ repository:
 	# Named property
 	field:
 		name:  "meta.field.son"
-		begin: "([^\\s].*?)(:)(?=\\s|$)\\s*"
+		begin: "(?:([^\\s].*?)(:)|(?<=[\"'`])\\s*(:))(?=\\s|$)\\s*"
 		end:   "(?=\\s*})|^(?!\\G)"
 		beginCaptures:
 			1: name: "entity.name.tag.property.son"
 			2: name: "punctuation.separator.key-value.son"
+			3: name: "punctuation.separator.key-value.son"
 		patterns: [
 			{include: "#main"}
 			
 			name: "string.unquoted.son"
 			match: "\\G[^\\s{}](?:[^\\#,}\\]]|(?<=\\S)#|#(?=\\S))*"
+			captures:
+				0: patterns: [include: "#url"]
 		]
 
 	# Null keyword
@@ -295,7 +298,7 @@ repository:
 			end:   '"""'
 			beginCaptures: 0: name: "punctuation.definition.string.begin.son"
 			endCaptures:   0: name: "punctuation.definition.string.end.son"
-			patterns: [include: "#escape"]
+			patterns: [include: "#stringInnards"]
 		},{
 			# ''' Single-quoted heredoc '''
 			name: "string.quoted.single.heredoc.son"
@@ -303,7 +306,7 @@ repository:
 			end:   "'''"
 			beginCaptures: 0: name: "punctuation.definition.string.begin.son"
 			endCaptures:   0: name: "punctuation.definition.string.end.son"
-			patterns: [include: "#escape"]
+			patterns: [include: "#stringInnards"]
 		},{
 			# ``` Verbatim heredoc ```
 			name: "string.quoted.verbatim.backtick.heredoc.son"
@@ -325,7 +328,7 @@ repository:
 			end:   '"'
 			beginCaptures: 0: name: "punctuation.definition.string.begin.son"
 			endCaptures:   0: name: "punctuation.definition.string.end.son"
-			patterns: [include: "#escape"]
+			patterns: [include: "#stringInnards"]
 		},{
 			# 'Single-quoted string'
 			name: "string.quoted.single.son"
@@ -333,7 +336,7 @@ repository:
 			end:   "'"
 			beginCaptures: 0: name: "punctuation.definition.string.begin.son"
 			endCaptures:   0: name: "punctuation.definition.string.end.son"
-			patterns: [include: "#escape"]
+			patterns: [include: "#stringInnards"]
 		},{
 			# `Verbatim string`
 			name: "string.quoted.verbatim.backtick.son"
@@ -348,4 +351,56 @@ repository:
 				captures:
 					1: name: "punctuation.backslash.definition.escape.son"
 			}]
+		}]
+
+	stringInnards:
+		patterns: [
+			{include: "#url"}
+			{include: "#escape"}
+		]
+
+	# Underlinked URLs. Not a datatype.
+	url:
+		patterns: [{
+			# https://etc, git://github.com/
+			name: "constant.other.reference.link.underline.son"
+			match: """(?x) \\b
+				# Protocol
+				( https?
+				| s?ftp
+				| ftps
+				| file
+				| wss?
+				| smb
+				| git (?:\\+https?)
+				| ssh
+				| rsync
+				| afp
+				| nfs
+				| (?:x-)?man(?:-page)?
+				| gopher
+				| txmt
+				| issue
+				| atom
+				) ://
+				
+				# Path specifier
+				(?:
+					(?! \\#\\w*\\#)
+					(?: [-:\\@\\w.,~%+_/?=&\\#;|!])
+				)+
+				
+				# Don't include trailing punctuation
+				(?<![-.,?:\\#;])
+			"""
+		},{
+			# mailto:this@guy
+			name: "markup.underline.link.mailto.son"
+			match: """(?x) \\b
+				mailto: (?:
+					(?! \\#\\w*\\#)
+					(?: [-:@\\w.,~%+_/?=&\\#;|!])
+				)+
+				(?<![-.,?:\\#;])
+			"""
 		}]
