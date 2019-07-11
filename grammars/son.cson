@@ -8,6 +8,7 @@ repository:
 		patterns: [
 			{include: "#comment"}
 			{include: "#regexp"}
+			{include: "#fieldQuotedEarly"}
 			{include: "#string"}
 			{include: "#block"}
 			{include: "#field"}
@@ -55,11 +56,15 @@ repository:
 	
 	# Stuff matched directly inside of a block
 	blockInnards:
-		patterns: [include: "#main", {
+		patterns: [
+			{include: "#fieldQuotedEarly"}
+			{include: "#main"}
+			
+			# Assumed to be a multiline field name
 			match: "((?:[^{}\\[\\]:\\s,]|[:#](?=\\S))(?:[^:{}]|:(?=\\S)|\\\\[{:])*?)"
 			captures:
 				1: name: "entity.name.tag.property.son"
-		}]
+		]
 	
 	# Brackets (expressions)
 	brackets:
@@ -203,15 +208,70 @@ repository:
 				0: name: "punctuation.backslash.definition.escape.son"
 		}]
 
+	# Only one escape possible in a verbatim string: \`
+	escapeVerbatim:
+		name: "constant.character.escape.backtick.son"
+		match: "(\\\\)`"
+		captures:
+			1: name: "punctuation.backslash.definition.escape.son"
+
 	# Named property
 	field:
-		name:  "meta.field.son"
-		begin: "(?:([^\\s].*?)(:)|(?<=[\"'`])\\s*(:))(?=\\s|$)\\s*"
-		end:   "(?=\\s*})|^(?!\\G)"
+		name: "meta.field.son"
+		begin: """(?x)
+			(?:
+				# Quoted property name
+				(?<=[:{\\[]) \\s*
+				(?: ("(?:[^"\\\\]|\\\\.)*")
+				|   ('(?:[^'\\\\]|\\\\.)*')
+				|   (`(?:[^`\\\\]|\\\\.)*`)
+				) \\s* (:)
+				
+				|
+				
+				# Unquoted property name
+				([^{}\\[\\]<>\\s].*?)
+				(?<!\\\\) (:)
+				
+				|
+				
+				# Presumably one following a multiline string
+				(?<=["'`]) \\s* (:)
+			)
+			(?=\\s|$)
+			\\s*
+		"""
+		end: "(?=\\s*})|^(?!\\G)"
 		beginCaptures:
-			1: name: "entity.name.tag.property.son"
-			2: name: "punctuation.separator.key-value.son"
-			3: name: "punctuation.separator.key-value.son"
+			1: name: "entity.name.tag.property.quoted.double.son",   patterns: [include: "#escape"]
+			2: name: "entity.name.tag.property.quoted.single.son",   patterns: [include: "#escape"]
+			3: name: "entity.name.tag.property.quoted.backtick.son", patterns: [include: "#escapeVerbatim"]
+			4: name: "punctuation.separator.key-value.son"
+			5: name: "entity.name.tag.property.son",                 patterns: [include: "#escape"]
+			6: name: "punctuation.separator.key-value.son"
+			7: name: "punctuation.separator.key-value.son"
+		patterns: [include: "#fieldInnards"]
+
+	# Quoted field, hack for preceding #string rule
+	fieldQuotedEarly:
+		name: "meta.field.son"
+		begin: """(?x) ^ \\s*
+			(?: ("(?:[^"\\\\]|\\\\.)*")
+			|   ('(?:[^'\\\\]|\\\\.)*')
+			|   (`(?:[^`\\\\]|\\\\.)*`)
+			) \\s* (:)
+			(?=\\s|$)
+			\\s*
+		"""
+		end: "(?=\\s*})|^(?!\\G)"
+		beginCaptures:
+			1: name: "entity.name.tag.property.quoted.double.son",   patterns: [include: "#escape"]
+			2: name: "entity.name.tag.property.quoted.single.son",   patterns: [include: "#escape"]
+			3: name: "entity.name.tag.property.quoted.backtick.son", patterns: [include: "#escapeVerbatim"]
+			4: name: "punctuation.separator.key-value.son"
+		patterns: [include: "#fieldInnards"]
+	
+	fieldInnards:
 		patterns: [
 			{include: "#main"}
 			
@@ -344,13 +404,7 @@ repository:
 			end:   "`"
 			beginCaptures: 0: name: "punctuation.definition.string.begin.son"
 			endCaptures:   0: name: "punctuation.definition.string.end.son"
-			patterns: [{
-				# Only one escape possible: \`
-				name: "constant.character.escape.backtick.son"
-				match: "(\\\\)`"
-				captures:
-					1: name: "punctuation.backslash.definition.escape.son"
-			}]
+			patterns: [include: "#escapeVerbatim"]
 		}]
 
 	stringInnards:
