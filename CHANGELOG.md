@@ -7,6 +7,7 @@ This project honours [Semantic Versioning](http://semver.org).
 [Staged]
 ------------------------------------------------------------------------
 * __Added:__ Patterns for matching script runs (Perl 5.28+)
+* __Added:__ Patterns for matching Oniguruma's "absent functions"
 * __Added:__ Patterns for matching Oniguruma's `y{…}` text-segment mode
 * __Added:__ Patterns for matching Oniguruma callouts
 * __Added:__ Patterns for matching Oniguruma's `\y`, `\Y`, and `\O`

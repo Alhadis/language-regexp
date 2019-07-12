@@ -440,6 +440,52 @@ repository:
 				5: name: "callout-tag.constant.other.regexp"
 				6: name: "punctuation.definition.callout-tag.end.regexp"
 				7: name: "punctuation.definition.group.end.regexp"
+		},{
+			# Absent function: clear range (Oniguruma)
+			name: "meta.absent-function.clear-range.regexp"
+			match: "(\\()(\\?~)(\\|)(\\))"
+			captures:
+				1: name: "punctuation.definition.group.begin.regexp"
+				2: name: "keyword.control.flow.regexp"
+				3: name: "punctuation.separator.delimiter.pipe.regexp"
+				4: name: "punctuation.definition.group.end.regexp"
+		},{
+			# (?~|pattern)
+			name: "meta.absent-stopper.regexp"
+			match: "(\\()(\\?~)(\\|)([^|\\)]*)(\\))"
+			captures:
+				1: name: "punctuation.definition.group.begin.regexp"
+				2: name: "keyword.control.flow.regexp"
+				3: name: "punctuation.separator.delimiter.pipe.regexp"
+				4: name: "variable.parameter.absent-function.regexp", patterns: [include: "#main"]
+				5: name: "punctuation.definition.group.end.regexp"
+		},{
+			# (?~|pattern|pattern)
+			name: "meta.absent-expression.regexp"
+			match: """(?x)
+				(\\()
+				(\\?~)
+				(\\|) ([^|\\)]*)
+				(\\|) ([^|\\)]*)
+				(\\))
+			"""
+			captures:
+				1: name: "punctuation.definition.group.begin.regexp"
+				2: name: "keyword.control.flow.regexp"
+				3: name: "punctuation.separator.delimiter.pipe.regexp"
+				4: name: "variable.parameter.absent-function.regexp", patterns: [include: "#main"]
+				5: name: "punctuation.separator.delimiter.pipe.regexp"
+				6: name: "variable.parameter.absent-function.regexp", patterns: [include: "#main"]
+				7: name: "punctuation.definition.group.end.regexp"
+		},{
+			# Absent functions (Oniguruma)
+			name:  "meta.absent-repeater.regexp"
+			match: "(\\()(\\?~)([^|\\)]*)(\\))"
+			captures:
+				1: name: "punctuation.definition.group.begin.regexp"
+				2: name: "keyword.control.flow.regexp"
+				3: name: "variable.parameter.absent-function.regexp", patterns: [include: "#main"]
+				4: name: "punctuation.definition.group.end.regexp"
 		}]
 		
 
@@ -564,6 +610,24 @@ repository:
 				name: "variable.parameter.argument.regexp"
 				match: "[-\\w]+"
 			]
+		},{
+			# Absent function, loosely-matched
+			name: "meta.absent-function.regexp"
+			begin: "(\\()(\\?~)(\\|)"
+			end:   "\\)"
+			beginCaptures:
+				1: name: "punctuation.definition.group.begin.regexp"
+				2: name: "keyword.control.flow.regexp"
+				3: name: "punctuation.separator.delimiter.pipe.regexp"
+			endCaptures:
+				0: name: "punctuation.definition.group.end.regexp"
+			patterns: [{
+				name: "punctuation.separator.delimiter.pipe.regexp"
+				match: "\\|"
+			},{
+				name: "variable.parameter.argument.regexp"
+				match: "[-\\w]+"
+			}, include: "#main"]
 		},{
 			# Regular group
 			name: "meta.group.regexp"

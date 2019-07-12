@@ -256,6 +256,24 @@ repository:
 				match: "[-\\w]+"
 			]
 		},{
+			# Absent function, loosely-matched
+			name: "meta.absent-function.regexp"
+			begin: "(\\()(\\?~)(\\|)"
+			end:   "\\)"
+			beginCaptures:
+				1: name: "punctuation.definition.group.begin.regexp"
+				2: name: "keyword.control.flow.regexp"
+				3: name: "punctuation.separator.delimiter.pipe.regexp"
+			endCaptures:
+				0: name: "punctuation.definition.group.end.regexp"
+			patterns: [{
+				name: "punctuation.separator.delimiter.pipe.regexp"
+				match: "\\|"
+			},{
+				name: "variable.parameter.argument.regexp"
+				match: "[-\\w]+"
+			}, include: "#main"]
+		},{
 			# Regular group
 			name: "meta.group.regexp"
 			begin: "\\("
