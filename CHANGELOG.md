@@ -4,8 +4,11 @@ Change Log
 This project honours [Semantic Versioning](http://semver.org).
 
 
-[Staged]
+[v1.1.0]
 ------------------------------------------------------------------------
+**July 12th, 2019**  
+Considerable improvements made to syntax highlighting:
+
 * __Added:__ Patterns for matching script runs (Perl 5.28+)
 * __Added:__ Patterns for matching Oniguruma's "absent functions"
 * __Added:__ Patterns for matching Oniguruma's `y{…}` text-segment mode
@@ -34,6 +37,7 @@ Initial release. Adds syntax highlighting for regular expression data.
 
 
 [Referenced links]:_____________________________________________________
-[Staged]: ./compare/v1.0.1...HEAD
+[Staged]: ../../compare/v1.1.0...HEAD
+[v1.1.0]: https://github.com/Alhadis/language-regexp/releases/tag/v1.1.0
 [v1.0.1]: https://github.com/Alhadis/language-regexp/releases/tag/v1.0.1
 [v1.0.0]: https://github.com/Alhadis/language-regexp/releases/tag/v1.0.0
