@@ -468,6 +468,18 @@ repository:
 			endCaptures:   0: name: "punctuation.definition.group.end.regexp"
 			patterns: [include: "#main"]
 		},{
+			# Script run (Perl 5.28+)
+			name: "meta.group.script-run.regexp"
+			begin: "(\\(\\*)((?:atomic_)?script_run|a?sr)(:)"
+			end:   "\\)"
+			beginCaptures:
+				1: name: "punctuation.definition.group.begin.regexp"
+				2: name: "keyword.control.verb.regexp"
+				3: name: "punctuation.separator.colon.regexp"
+			endCaptures:
+				0: name: "punctuation.definition.group.end.regexp"
+			patterns: [include: "#main"]
+		},{
 			# Regular group
 			name: "meta.group.regexp"
 			begin: "\\("
