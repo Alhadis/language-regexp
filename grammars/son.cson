@@ -104,27 +104,65 @@ repository:
 			"""
 		}]
 	
-	# Bytestream: <37 A2 E7 7E>
+	# Arbitrary binary data
 	bytestream:
-		name:  "meta.bytestream.son"
-		begin: "<"
-		end:   "(>)\\s*([^:,}\\]]+)"
-		beginCaptures:
-			0: name: "punctuation.section.bytestream.begin.bracket.angle.son"
-		endCaptures:
-			1: name: "punctuation.section.bytestream.end.bracket.angle.son"
-			2: name: "invalid.illegal.characters.son"
 		patterns: [{
-			# Byte
-			name:  "constant.numeric.integer.int.hexadecimal.hex.son"
-			match: "[A-Fa-f0-9]+"
+			# Base64-encoded: <base64: YWJjCg>
+			name: "meta.bytestream.base64.son"
+			begin: "(<)(base64)(:)"
+			end:   "(>)\\s*([^:,}\\]]+)"
+			beginCaptures:
+				1: name: "punctuation.section.bytestream.begin.bracket.angle.son"
+				2: name: "storage.modifier.encoding.base64.son"
+				3: name: "punctuation.separator.key-value.son"
+			endCaptures:
+				1: name: "punctuation.section.bytestream.end.bracket.angle.son"
+				2: name: "invalid.illegal.characters.son"
+			patterns: [{
+				# Data
+				name: "constant.character.encoded.base64.son"
+				match: "[A-Za-z0-9+/=]+"
+			},{
+				# Embedded comments
+				include: "#comment"
+			},{
+				# Unexpected junk
+				name: "invalid.illegal.character.son"
+				match: "[^\\s>]+"
+			}]
 		},{
-			# Embedded comments
-			include: "#comment"
+			# Base85 (Ascii85): <~ … ~>
+			name: "meta.bytestream.base85.son"
+			begin: "<~"
+			end:   "~>"
+			beginCaptures: 0: name: "punctuation.section.bytestream.begin.bracket.angle.son"
+			endCaptures:   0: name: "punctuation.section.bytestream.end.bracket.angle.son"
+			patterns: [
+				{match: "[!-uz]+",     name: "constant.character.encoded.base85.son"}
+				{match: "[^!-uz\\s~]", name: "invalid.illegal.character.son"}
+			]
 		},{
-			# Unexpected junk
-			name: "invalid.illegal.character.son"
-			match: "[^\\s>]+"
+			# Hexadecimal: <37 A2 E7 7E>
+			name:  "meta.bytestream.son"
+			begin: "<"
+			end:   "(>)\\s*([^:,}\\]]+)"
+			beginCaptures:
+				0: name: "punctuation.section.bytestream.begin.bracket.angle.son"
+			endCaptures:
+				1: name: "punctuation.section.bytestream.end.bracket.angle.son"
+				2: name: "invalid.illegal.characters.son"
+			patterns: [{
+				# Byte
+				name:  "constant.numeric.integer.int.hexadecimal.hex.son"
+				match: "[A-Fa-f0-9]+"
+			},{
+				# Embedded comments
+				include: "#comment"
+			},{
+				# Unexpected junk
+				name: "invalid.illegal.character.son"
+				match: "[^\\s>]+"
+			}]
 		}]
 	
 	# Comma
