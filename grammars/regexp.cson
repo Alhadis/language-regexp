@@ -353,7 +353,7 @@ repository:
 			{match: "\\\\M-\\\\C-[?-_]",   name: "constant.character.escape.meta-control.regexp"}
 			{match: "\\\\M-.",             name: "constant.character.escape.meta-char.regexp"}
 			{match: "\\\\O",               name: "constant.character.escape.any-char.regexp"}
-			{match: "\\\\[yY]",            name: "constant.character.escape.text-segment-boundary.regexp"}
+			{match: "\\\\[yY]",            name: "keyword.control.anchor.text-boundary.regexp"}
 			{match: "\\\\.",               name: "constant.character.escape.misc.regexp"}
 		]
 
@@ -373,7 +373,7 @@ repository:
 		},{
 			# Scoped modifiers
 			name: "meta.group.scoped-modifiers.regexp"
-			match: "(\\(\\?)([-A-Za-z^]*)(\\))"
+			match: "(\\(\\?)((?:y{[\\w]+}|[-A-Za-z^])*)(\\))"
 			captures:
 				1: name: "punctuation.definition.group.begin.regexp"
 				2: patterns: [include: "#scopedModifiers"]
@@ -451,7 +451,7 @@ repository:
 			# Non-capturing group
 			name: "meta.group.non-capturing.regexp"
 			patterns: [include: "#main"]
-			begin: "(\\(\\?)([-A-Za-z^]*)(:)"
+			begin: "(\\(\\?)((?:y{[\\w]+}|[-A-Za-z^])*)(:)"
 			end:    "\\)"
 			beginCaptures:
 				1: name: "punctuation.definition.group.begin.regexp"
@@ -500,7 +500,7 @@ repository:
 	# Highlighting sugar for some Unicode property sequences
 	propInnards:
 		patterns: [
-			{match: "=",           name: "keyword.operator.comparison.regexp"}
+			{match: "=",          name: "keyword.operator.comparison.regexp"}
 			{match: "True|False", name: "constant.language.boolean.${0:/downcase}.regexp"}
 		]
 
@@ -526,6 +526,15 @@ repository:
 
 	scopedModifiers:
 		patterns: [
+			# y{…} - Text segment mode (Oniguruma)
+			name:  "meta.text-segment-mode.regexp"
+			match: "(y)({)(\\w+)(})"
+			captures:
+				1: name: "storage.modifier.flag.y.regexp"
+				2: name: "punctuation.definition.option.bracket.curly.begin.regexp"
+				3: name: "variable.parameter.option-mode.regexp"
+				4: name: "punctuation.definition.option.bracket.curly.end.regexp"
+			
 			{match: "(?:(?<=\\?)|\\G|^)\\^", name: "keyword.operator.modifier.reset.regexp"}
 			{match: "-",                     name: "keyword.operator.modifier.negate.regexp"}
 			{match: "[A-Za-z]",              name: "storage.modifier.flag.$0.regexp"}

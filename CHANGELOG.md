@@ -7,6 +7,7 @@ This project honours [Semantic Versioning](http://semver.org).
 [Staged]
 ------------------------------------------------------------------------
 * __Added:__ Patterns for matching script runs (Perl 5.28+)
+* __Added:__ Patterns for matching Oniguruma's `y{…}` text-segment mode
 * __Added:__ Patterns for matching Oniguruma's `\y`, `\Y`, and `\O`
 * __Added:__ Support for toggling comments and auto-indenting groups
 * __Fixed:__ Lack of comment highlighting in "extended" regexp grammar

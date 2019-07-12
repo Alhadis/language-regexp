@@ -158,7 +158,7 @@ repository:
 			# Non-capturing group
 			name: "meta.group.non-capturing.regexp"
 			patterns: [include: "#main"]
-			begin: "(\\(\\?)([-A-Za-z^]*)(:)"
+			begin: "(\\(\\?)((?:y{[\\w]+}|[-A-Za-z^])*)(:)"
 			end:    "\\)"
 			beginCaptures:
 				1: name: "punctuation.definition.group.begin.regexp"
