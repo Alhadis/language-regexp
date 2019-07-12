@@ -505,9 +505,9 @@ repository:
 
 	scopedModifiers:
 		patterns: [
-			{match: "(?<=\\?)\\^", name: "keyword.operator.modifier.reset.regexp"}
-			{match: "-",           name: "keyword.operator.modifier.negate.regexp"}
-			{match: "[A-Za-z]",    name: "storage.modifier.flag.$0.regexp"}
+			{match: "(?:(?<=\\?)|\\G|^)\\^", name: "keyword.operator.modifier.reset.regexp"}
+			{match: "-",                     name: "keyword.operator.modifier.negate.regexp"}
+			{match: "[A-Za-z]",              name: "storage.modifier.flag.$0.regexp"}
 		]
 
 

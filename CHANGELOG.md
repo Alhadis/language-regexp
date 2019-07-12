@@ -10,6 +10,7 @@ This project honours [Semantic Versioning](http://semver.org).
 * __Added:__ Support for toggling comments and auto-indenting groups
 * __Fixed:__ Lack of comment highlighting in "extended" regexp grammar
 * __Fixed:__ Missing highlighting for `\R` escapes
+* __Fixed:__ Missing highlighting of reset sequence in scoped modifiers
 
 
 [v1.0.1]
