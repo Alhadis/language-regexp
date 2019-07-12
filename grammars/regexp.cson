@@ -352,6 +352,8 @@ repository:
 			{match: "\\\\V",               name: "constant.character.escape.non-vertical-whitespace.regexp"}
 			{match: "\\\\M-\\\\C-[?-_]",   name: "constant.character.escape.meta-control.regexp"}
 			{match: "\\\\M-.",             name: "constant.character.escape.meta-char.regexp"}
+			{match: "\\\\O",               name: "constant.character.escape.any-char.regexp"}
+			{match: "\\\\[yY]",            name: "constant.character.escape.text-segment-boundary.regexp"}
 			{match: "\\\\.",               name: "constant.character.escape.misc.regexp"}
 		]
 
@@ -367,7 +369,7 @@ repository:
 				1: name: "punctuation.definition.group.begin.regexp"
 				2: patterns: [include: "#scopedModifiers"]
 				3: name: "punctuation.definition.group.end.regexp"
-
+		},{
 			# Backtracking control verb
 			name: "meta.control-verb.regexp"
 			match: "(\\(\\*)(\\w*)(?:([:=])([^\\s()]*))?(\\))"
@@ -377,7 +379,7 @@ repository:
 				3: name: "punctuation.separator.key-value.regexp"
 				4: name: "variable.parameter.control-verb.regexp"
 				5: name: "punctuation.definition.group.begin.regexp"
-
+		},{
 			# Subroutine call / Python-style group reference
 			name: "meta.group-reference.named.regexp"
 			match: "(\\()(\\?(?:&|P[>=]))(\\w+)(\\))"
@@ -386,7 +388,7 @@ repository:
 				2: name: "keyword.other.back-reference.regexp"
 				3: name: "entity.group.name.regexp"
 				4: name: "punctuation.definition.group.begin.regexp"
-
+		},{
 			# Subroutine call by relative number
 			name: "meta.group-reference.relative.regexp"
 			match: "(\\()(\\?[-+]\\d+)(\\))"
@@ -394,7 +396,7 @@ repository:
 				1: name: "punctuation.definition.group.begin.regexp"
 				2: name: "keyword.other.back-reference.regexp"
 				3: name: "punctuation.definition.group.end.regexp"
-
+		},{
 			# Callout (PCRE)
 			name: "meta.callout.regexp"
 			match: "(\\()(\\?C\\d*)(\\))"
