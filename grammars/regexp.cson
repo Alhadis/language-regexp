@@ -362,6 +362,15 @@ repository:
 	# Split from `#groups` to minimise copy+pasta with `source.regexp.extended`.
 	fixedGroups:
 		patterns: [{
+			
+			# Recursive subroutine reset: (?R) (?0)
+			name: "meta.group-reference.reset.regexp"
+			match: "(\\()(\\?[R0])(\\))"
+			captures:
+				1: name: "punctuation.definition.group.begin.regexp"
+				2: name: "keyword.other.back-reference.regexp"
+				3: name: "punctuation.definition.group.end.regexp"
+		},{
 			# Scoped modifiers
 			name: "meta.group.scoped-modifiers.regexp"
 			match: "(\\(\\?)([-A-Za-z^]*)(\\))"
