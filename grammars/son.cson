@@ -79,7 +79,10 @@ repository:
 		end:   "\\)"
 		beginCaptures: 0: name: "punctuation.section.scope.block.begin.bracket.round.son"
 		endCaptures:   0: name: "punctuation.section.scope.block.end.bracket.round.son"
-		patterns: [include: "#main"]
+		patterns: [
+			{include: "#operator"}
+			{include: "#main"}
+		]
 	
 	# Boolean keywords
 	boolean:
@@ -224,6 +227,34 @@ repository:
 		captures:
 			1: name: "punctuation.backslash.definition.escape.son"
 
+	# Bunch of numbers, possibly with operators
+	expression:
+		name: "meta.expression.son"
+		match: """(?x)
+			\\G
+			(
+				(?:\\s*\\()*
+				\\s*
+				~? [-+]? ~?
+				\\d
+				[-+*/%~^&|\\(\\)eE\\s.oOxXbB\\d]*
+			)
+			(?=
+				\\s*
+				(?: $
+				|   ,
+				| \\]
+				| \\}
+				| (?<=\\s)\\#(?=\\s|$)
+				)
+			)
+		"""
+		captures: 1: patterns: [
+			{include: "#brackets"}
+			{include: "#number"}
+			{include: "#operator"}
+		]
+
 	# Named property
 	field:
 		name: "meta.field.son"
@@ -239,7 +270,7 @@ repository:
 				|
 				
 				# Unquoted property name
-				([^{}\\[\\]<>\\s].*?)
+				([^{}\\[\\]<>\\s][^,]*?)
 				(?<!\\\\) (:)
 				
 				|
@@ -282,6 +313,8 @@ repository:
 	
 	fieldInnards:
 		patterns: [
+			{include: "#date"}
+			{include: "#expression"}
 			{include: "#main"}
 			
 			# Unquoted string
@@ -365,12 +398,14 @@ repository:
 		},{
 			# Single-line regexp
 			name: "string.regexp.son"
-			match: "(/)(.*)(/)([A-Za-z]*)"
-			captures:
-				1: name: "punctuation.definition.string.begin.son"
-				3: name: "punctuation.definition.string.end.son"
-				2: patterns: [include: "source.regexp#main"]
-				4: patterns: [include: "source.regexp#scopedModifiers"]
+			begin: "(/)"
+			end:   "(/)([A-Za-z]*)"
+			patterns: [include: "source.regexp#main"]
+			beginCaptures:
+				0: name: "punctuation.definition.string.begin.son"
+			endCaptures:
+				1: name: "punctuation.definition.string.end.son"
+				2: patterns: [include: "source.regexp#scopedModifiers"]
 		}]
 
 	# Quoted string literals
