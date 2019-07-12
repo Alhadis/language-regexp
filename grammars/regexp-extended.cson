@@ -34,6 +34,17 @@ repository:
 		modified to include the line-comment pattern as appropriate.
 	###
 
+	# {{{ Nested bracket pairs in Oniguruma callouts }}}
+	calloutBrackets:
+		begin: "{"
+		end:   "}"
+		beginCaptures: 0: name: "punctuation.definition.bracket.curly.begin.regexp"
+		endCaptures:   0: name: "punctuation.definition.bracket.curly.end.regexp"
+		patterns: [
+			{include: "#calloutBrackets"}
+			{include: "#main"}
+		]
+
 	assertion:
 		patterns: [{
 			# Lookahead: Positive
@@ -185,6 +196,58 @@ repository:
 				3: name: "punctuation.separator.colon.regexp"
 			endCaptures:
 				0: name: "punctuation.definition.group.end.regexp"
+			patterns: [include: "#main"]
+		},{
+			# Oniguruma callout / Perl code execution
+			name: "meta.group.callout.contents.regexp"
+			begin: "(\\(\\?{1,2})({)"
+			end:   """(?x)
+				(})                                    # Last closing bracket
+				((\\[)([_A-Za-z][_A-Za-z0-9]*)(\\]))?  # [tag]
+				(X|<|>)?                               # Callout direction
+				(?:[^\\)]*)                            # Silently skip unexpected characters
+				(\\))                                  # Closing bracket
+			"""
+			beginCaptures:
+				1: name: "punctuation.definition.group.begin.regexp"
+				2: name: "punctuation.definition.bracket.curly.begin.regexp"
+			endCaptures:
+				1: name: "punctuation.definition.bracket.curly.end.regexp"
+				2: name: "entity.name.tag.callout-tag.regexp"
+				3: name: "punctuation.definition.callout-tag.begin.regexp"
+				4: name: "callout-tag.constant.other.regexp"
+				5: name: "punctuation.definition.callout-tag.end.regexp"
+				6: name: "constant.language.callout-direction.regexp"
+				7: name: "punctuation.definition.group.end.regexp"
+			patterns: [
+				{include: "#calloutBrackets"}
+				{include: "#main"}
+			]
+		},{
+			# Oniguruma callout name, with args: (?*name[tag]{args…})
+			name: "meta.group.callout.regexp"
+			begin: """(?x)
+				(\\(\\*)
+				([_A-Za-z][_A-Za-z0-9]*)               # Name
+				((\\[)([_A-Za-z][_A-Za-z0-9]*)(\\]))?  # [tag]
+				({)
+			"""
+			end: """(?x)
+				(})
+				(?:[^\\)]*)
+				(?:(\\))|(?=$))
+			"""
+			beginCaptures:
+				1: name: "punctuation.definition.group.begin.regexp"
+				2: name: "entity.name.callout.regexp"
+				3: name: "entity.name.tag.callout-tag.regexp"
+				4: name: "punctuation.definition.callout-tag.begin.regexp"
+				5: name: "callout-tag.constant.other.regexp"
+				6: name: "punctuation.definition.callout-tag.end.regexp"
+				7: name: "punctuation.definition.arguments.begin.regexp"
+			endCaptures:
+				1: name: "punctuation.definition.arguments.end.regexp"
+				2: name: "punctuation.definition.group.end.regexp"
 			patterns: [include: "#main"]
 		},{
 			# Regular group
