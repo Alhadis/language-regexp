@@ -248,7 +248,13 @@ repository:
 			endCaptures:
 				1: name: "punctuation.definition.arguments.end.regexp"
 				2: name: "punctuation.definition.group.end.regexp"
-			patterns: [include: "#main"]
+			patterns: [
+				{include: "#main"}
+				
+				# Highlight unmatched parameters
+				name: "variable.parameter.argument.regexp"
+				match: "[-\\w]+"
+			]
 		},{
 			# Regular group
 			name: "meta.group.regexp"
