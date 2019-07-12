@@ -1,11 +1,185 @@
 name: "Regular Expression (Extended)"
 scopeName: "source.regexp.extended"
-firstLineMatch: "^\\s*\\(\\?[im]*x[im]*\\)"
-patterns: [include: "source.regexp#main"]
-injections:
-	"source.regexp.extended":
+firstLineMatch: "^\\s*(?:/\\s*)?(\\(\\?\\^?[A-Za-wyz]*x[A-Za-z]*[-A-Za-wyz]*\\))"
+patterns: [include: "#main"]
+
+repository:
+	main:
 		patterns: [
-			begin: "(?<![^\\\\]\\\\)#"
-			end: "$"
-			name: "comment.line.number-sign"
+			{include: "#comment"}
+			{include: "source.regexp#comment"}
+			{include: "source.regexp#variable"}
+			{include: "source.regexp#anchor"}
+			{include: "source.regexp#escape"}
+			{include: "source.regexp#wildcard"}
+			{include: "source.regexp#alternation"}
+			{include: "source.regexp#quantifier"}
+			{include: "#assertion"}
+			{include: "#conditional"}
+			{include: "#group"}
+			{include: "source.regexp#class"}
 		]
+	
+	# Single-line comment
+	comment:
+		name:  "comment.line.number-sign.regexp"
+		begin: "#"
+		end:   "$"
+		beginCaptures:
+			0: name: "punctuation.definition.comment.regexp"
+
+
+	###
+		NOTE: The following patterns are copied from regexp.cson,
+		modified to include the line-comment pattern as appropriate.
+	###
+
+	assertion:
+		patterns: [{
+			# Lookahead: Positive
+			name: "meta.assertion.positive.look-ahead.regexp"
+			begin: "\\(\\?="
+			end:   "\\)"
+			beginCaptures: 0: name: "punctuation.definition.assertion.begin.regexp"
+			endCaptures:   0: name: "punctuation.definition.assertion.end.regexp"
+			patterns: [include: "#main"]
+		},{
+			# Lookahead: Negative
+			name: "meta.assertion.negative.look-ahead.regexp"
+			begin: "\\(\\?!"
+			end:   "\\)"
+			beginCaptures: 0: name: "punctuation.definition.assertion.begin.regexp"
+			endCaptures:   0: name: "punctuation.definition.assertion.end.regexp"
+			patterns: [include: "#main"]
+		},{
+			# Lookbehind: Negative
+			name: "meta.assertion.negative.look-behind.regexp"
+			begin: "\\(\\?<!"
+			end:   "\\)"
+			beginCaptures: 0: name: "punctuation.definition.assertion.begin.regexp"
+			endCaptures:   0: name: "punctuation.definition.assertion.end.regexp"
+			patterns: [include: "#main"]
+		},{
+			# Lookbeind: Positive
+			name: "meta.assertion.positive.look-behind.regexp"
+			begin: "\\(\\?<="
+			end:   "\\)"
+			beginCaptures: 0: name: "punctuation.definition.assertion.begin.regexp"
+			endCaptures:   0: name: "punctuation.definition.assertion.end.regexp"
+			patterns: [include: "#main"]
+		}]
+
+	# (?(if)then|else) - Conditional patterns
+	conditional:
+		name: "meta.conditional.regexp"
+		begin: "(\\()(\\?)(?=\\()"
+		end:   "\\)"
+		beginCaptures:
+			1: name: "punctuation.section.condition.begin.regexp"
+			2: name: "keyword.control.flow.regexp"
+		endCaptures:
+			0: name: "punctuation.section.condition.end.regexp"
+		patterns: [{
+			
+			# If/else separator
+			name: "punctuation.separator.condition.if-else.regexp"
+			match: "\\|"
+		},{
+			# Lookaheads/lookbehinds
+			include: "#assertion"
+		},{
+			# Innards of the actual condition
+			name: "meta.condition.function-call.regexp"
+			begin: "\\G\\("
+			end:   "\\)"
+			beginCaptures: 0: name: "punctuation.section.condition.begin.regexp"
+			endCaptures:   0: name: "punctuation.section.condition.end.regexp"
+			patterns: [
+				{match: "\\GDEFINE",   name: "storage.type.function.subpattern.regexp"}
+				{match: "\\Gassert",   name: "keyword.other.assertion.regexp"}
+				{
+					# Named reference (Perl)
+					match: "\\G(?:(<)([^>]+)(>)|(')([^>]+)('))"
+					captures:
+						1: name: "punctuation.definition.group-reference.bracket.angle.begin.regexp"
+						2: name: "entity.group.name.regexp"
+						3: name: "punctuation.definition.group-reference.bracket.angle.end.regexp"
+						4: name: "punctuation.definition.group-reference.quote.single.begin.regexp"
+						5: name: "entity.group.name.regexp"
+						6: name: "punctuation.definition.group-reference.quote.single.end.regexp"
+				},{
+					# Specific recusion
+					match: "\\G(R(&))(\\w+)"
+					captures:
+						1: name: "keyword.other.recursion.specific.regexp"
+						2: name: "punctuation.definition.reference.regexp"
+						3: name: "entity.group.name.regexp"
+				}
+				{match: "\\GR\\d+",    name: "keyword.other.recursion.specific-group.regexp"}
+				{match: "\\GR",        name: "keyword.other.recursion.overall.regexp"}
+				{match: "\\G\\d+",     name: "keyword.other.reference.absolute.regexp"}
+				{match: "\\G[-+]\\d+", name: "keyword.other.reference.relative.regexp"}
+				{match: "\\G\\w+",     name: "entity.group.name.regexp"}
+			]
+		}, include: "#main"]
+
+	# Anything enclosed in parentheses quacking like a group
+	group:
+		patterns: [{
+			include: "source.regexp#fixedGroups"
+		},{
+			# Named group
+			name: "meta.group.named.regexp"
+			begin: "\\(\\?(?=P?[<'])"
+			end:   "\\)"
+			beginCaptures: 0: name: "punctuation.definition.group.begin.regexp"
+			endCaptures:   0: name: "punctuation.definition.group.end.regexp"
+			patterns: [{
+				
+				# <ANGLEBRACKETS> - Group's name
+				contentName: "entity.group.name.regexp"
+				begin: "\\G(P?)(<)"
+				end:   ">"
+				beginCaptures:
+					1: name: "storage.type.function.named-group.regexp"
+					2: name: "punctuation.definition.named-group.bracket.angle.begin.regexp"
+				endCaptures:
+					0: name: "punctuation.definition.named-group.bracket.angle.end.regexp"
+			},{
+				# 'QUOTES' - Group's name
+				contentName: "entity.group.name.regexp"
+				begin: "\\G'"
+				end:   "'"
+				beginCaptures: 0: name: "punctuation.definition.named-group.quote.single.begin.regexp"
+				endCaptures:   0: name: "punctuation.definition.named-group.quote.single.end.regexp"
+				
+			}, include: "#main"]
+		},{
+			# Non-capturing group
+			name: "meta.group.non-capturing.regexp"
+			patterns: [include: "#main"]
+			begin: "(\\(\\?)([-A-Za-z^]*)(:)"
+			end:    "\\)"
+			beginCaptures:
+				1: name: "punctuation.definition.group.begin.regexp"
+				2: patterns: [include: "source.regexp#scopedModifiers"]
+				3: name: "punctuation.separator.colon.regexp"
+			endCaptures:
+				0: name: "punctuation.definition.group.end.regexp"
+		},{
+			# Atomic group (no backtracking)
+			name: "meta.group.atomic.regexp"
+			begin: "\\(\\?>"
+			end:   "\\)"
+			beginCaptures: 0: name: "punctuation.definition.group.begin.regexp"
+			endCaptures:   0: name: "punctuation.definition.group.end.regexp"
+			patterns: [include: "#main"]
+		},{
+			# Regular group
+			name: "meta.group.regexp"
+			begin: "\\("
+			end:   "\\)"
+			beginCaptures: 0: name: "punctuation.definition.group.begin.regexp"
+			endCaptures:   0: name: "punctuation.definition.group.end.regexp"
+			patterns: [include: "#main"]
+		}]

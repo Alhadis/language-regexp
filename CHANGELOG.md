@@ -7,6 +7,7 @@ This project honours [Semantic Versioning](http://semver.org).
 [Staged]
 ------------------------------------------------------------------------
 * __Added:__ Support for toggling comments and auto-indenting groups
+* __Fixed:__ Lack of comment highlighting in "extended" regexp grammar
 
 
 [v1.0.1]

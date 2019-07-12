@@ -2,6 +2,12 @@ name: "Regular Expression"
 scopeName: "source.regexp"
 fileTypes: ["regexp", "regex"]
 patterns: [{
+	begin: "\\A\\s*(?:/\\s*)?(\\(\\?\\^?[A-Za-wyz]*x[A-Za-z]*[-A-Za-wyz]*\\))"
+	end:   "(?=A)B"
+	beginCaptures:
+		1: patterns: [include: "#group"]
+	patterns: [include: "source.regexp.extended"]
+},{
 	begin: "\\A(?:\\xC2\\xAD|\\xAD){2}"
 	end: "(?=A)B"
 	patterns: [include: "source.son"]
@@ -350,11 +356,45 @@ repository:
 		]
 
 
-
-	# Anything enclosed in parentheses quacking like a group
-	group:
+	# Group-like constructs with fixed widths or simple-to-match boundaries.
+	# Split from `#groups` to minimise copy+pasta with `source.regexp.extended`.
+	fixedGroups:
 		patterns: [{
-			
+			# Scoped modifiers
+			name: "meta.group.scoped-modifiers.regexp"
+			match: "(\\(\\?)([-A-Za-z^]*)(\\))"
+			captures:
+				1: name: "punctuation.definition.group.begin.regexp"
+				2: patterns: [include: "#scopedModifiers"]
+				3: name: "punctuation.definition.group.end.regexp"
+
+			# Backtracking control verb
+			name: "meta.control-verb.regexp"
+			match: "(\\(\\*)(\\w*)(?:([:=])([^\\s()]*))?(\\))"
+			captures:
+				1: name: "punctuation.definition.group.begin.regexp"
+				2: name: "keyword.control.verb.regexp"
+				3: name: "punctuation.separator.key-value.regexp"
+				4: name: "variable.parameter.control-verb.regexp"
+				5: name: "punctuation.definition.group.begin.regexp"
+
+			# Subroutine call / Python-style group reference
+			name: "meta.group-reference.named.regexp"
+			match: "(\\()(\\?(?:&|P[>=]))(\\w+)(\\))"
+			captures:
+				1: name: "punctuation.definition.group.begin.regexp"
+				2: name: "keyword.other.back-reference.regexp"
+				3: name: "entity.group.name.regexp"
+				4: name: "punctuation.definition.group.begin.regexp"
+
+			# Subroutine call by relative number
+			name: "meta.group-reference.relative.regexp"
+			match: "(\\()(\\?[-+]\\d+)(\\))"
+			captures:
+				1: name: "punctuation.definition.group.begin.regexp"
+				2: name: "keyword.other.back-reference.regexp"
+				3: name: "punctuation.definition.group.end.regexp"
+
 			# Callout (PCRE)
 			name: "meta.callout.regexp"
 			match: "(\\()(\\?C\\d*)(\\))"
@@ -362,6 +402,13 @@ repository:
 				1: name: "punctuation.definition.group.begin.regexp"
 				2: name: "keyword.control.callout.regexp"
 				3: name: "punctuation.definition.group.end.regexp"
+		}]
+		
+
+	# Anything enclosed in parentheses quacking like a group
+	group:
+		patterns: [{
+			include: "#fixedGroups"
 		},{
 			# Named group
 			name: "meta.group.named.regexp"
@@ -409,41 +456,6 @@ repository:
 			beginCaptures: 0: name: "punctuation.definition.group.begin.regexp"
 			endCaptures:   0: name: "punctuation.definition.group.end.regexp"
 			patterns: [include: "#main"]
-		},{
-			# Scoped modifiers
-			name: "meta.group.scoped-modifiers.regexp"
-			match: "(\\(\\?)([-A-Za-z^]*)(\\))"
-			captures:
-				1: name: "punctuation.definition.group.begin.regexp"
-				2: patterns: [include: "#scopedModifiers"]
-				3: name: "punctuation.definition.group.end.regexp"
-		},{
-			# Backtracking control verb
-			name: "meta.control-verb.regexp"
-			match: "(\\(\\*)(\\w*)(?:([:=])([^\\s()]*))?(\\))"
-			captures:
-				1: name: "punctuation.definition.group.begin.regexp"
-				2: name: "keyword.control.verb.regexp"
-				3: name: "punctuation.separator.key-value.regexp"
-				4: name: "variable.parameter.control-verb.regexp"
-				5: name: "punctuation.definition.group.begin.regexp"
-		},{
-			# Subroutine call / Python-style group reference
-			name: "meta.group-reference.named.regexp"
-			match: "(\\()(\\?(?:&|P[>=]))(\\w+)(\\))"
-			captures:
-				1: name: "punctuation.definition.group.begin.regexp"
-				2: name: "keyword.other.back-reference.regexp"
-				3: name: "entity.group.name.regexp"
-				4: name: "punctuation.definition.group.begin.regexp"
-		},{
-			# Subroutine call by relative number
-			name: "meta.group-reference.relative.regexp"
-			match: "(\\()(\\?[-+]\\d+)(\\))"
-			captures:
-				1: name: "punctuation.definition.group.begin.regexp"
-				2: name: "keyword.other.back-reference.regexp"
-				3: name: "punctuation.definition.group.end.regexp"
 		},{
 			# Regular group
 			name: "meta.group.regexp"
