@@ -9,6 +9,7 @@ This project honours [Semantic Versioning](http://semver.org).
 * __Added:__ Patterns for matching Oniguruma's `\y`, `\Y`, and `\O`
 * __Added:__ Support for toggling comments and auto-indenting groups
 * __Fixed:__ Lack of comment highlighting in "extended" regexp grammar
+* __Fixed:__ Missing highlighting for `\R` escapes
 
 
 [v1.0.1]

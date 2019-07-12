@@ -210,7 +210,7 @@ repository:
 						5: name: "entity.group.name.regexp"
 						6: name: "punctuation.definition.group-reference.quote.single.end.regexp"
 				},{
-					# Specific recusion
+					# Specific recursion
 					match: "\\G(R(&))(\\w+)"
 					captures:
 						1: name: "keyword.other.recursion.specific.regexp"
@@ -348,7 +348,7 @@ repository:
 			{match: "\\\\u",               name: "constant.character.escape.titlecase-next.regexp"}
 			{match: "\\\\N",               name: "constant.character.escape.non-newline.regexp"}
 			{match: "\\\\X",               name: "constant.character.escape.extended-grapheme.regexp"}
-			{match: "\\\\R",               name: "constnat.character.escape.linebreak-grapheme.regexp"}
+			{match: "\\\\R",               name: "constant.character.escape.linebreak-grapheme.regexp"}
 			{match: "\\\\V",               name: "constant.character.escape.non-vertical-whitespace.regexp"}
 			{match: "\\\\M-\\\\C-[?-_]",   name: "constant.character.escape.meta-control.regexp"}
 			{match: "\\\\M-.",             name: "constant.character.escape.meta-char.regexp"}

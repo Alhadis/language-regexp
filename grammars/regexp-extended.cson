@@ -108,7 +108,7 @@ repository:
 						5: name: "entity.group.name.regexp"
 						6: name: "punctuation.definition.group-reference.quote.single.end.regexp"
 				},{
-					# Specific recusion
+					# Specific recursion
 					match: "\\G(R(&))(\\w+)"
 					captures:
 						1: name: "keyword.other.recursion.specific.regexp"
