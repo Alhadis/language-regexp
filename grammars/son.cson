@@ -451,24 +451,24 @@ repository:
 		patterns: [{
 			# """ Double-quoted heredoc """
 			name: "string.quoted.double.heredoc.son"
-			begin: '"""'
-			end:   '"""'
+			begin: '("{3,})'
+			end:   '\\1'
 			beginCaptures: 0: name: "punctuation.definition.string.begin.son"
 			endCaptures:   0: name: "punctuation.definition.string.end.son"
 			patterns: [include: "#stringInnards"]
 		},{
 			# ''' Single-quoted heredoc '''
 			name: "string.quoted.single.heredoc.son"
-			begin: "'''"
-			end:   "'''"
+			begin: "('{3,})"
+			end:   "\\1"
 			beginCaptures: 0: name: "punctuation.definition.string.begin.son"
 			endCaptures:   0: name: "punctuation.definition.string.end.son"
 			patterns: [include: "#stringInnards"]
 		},{
 			# ``` Verbatim heredoc ```
 			name: "string.quoted.verbatim.backtick.heredoc.son"
-			begin: "```"
-			end:   "```"
+			begin: "(`{3,})"
+			end:   "\\1"
 			beginCaptures: 0: name: "punctuation.definition.string.begin.son"
 			endCaptures:   0: name: "punctuation.definition.string.end.son"
 			patterns: [{
