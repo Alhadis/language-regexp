@@ -425,14 +425,20 @@ repository:
 		patterns: [{
 			# Multiline regexp
 			name:  "string.regexp.multiline.son"
-			begin: "///"
-			end:   "(///)([A-Za-z]*)"
-			beginCaptures:
-				0: name: "punctuation.definition.string.begin.son"
-			endCaptures:
-				1: name: "punctuation.definition.string.end.son"
-				2: patterns: [include: "source.regexp#scopedModifiers"]
+			begin: "(/{3,})"
+			end:   "(\\1)([A-Za-z]*)"
 			patterns: [include: "source.regexp#main"]
+			beginCaptures:
+				1: patterns: [
+					{match: "^/{3}$", name: "punctuation.definition.string.begin.triple-slash.son"}
+					{match: ".+",     name: "punctuation.definition.string.begin.son"}
+				]
+			endCaptures:
+				1: patterns: [
+					{match: "^/{3}$", name: "punctuation.definition.string.end.triple-slash.son"}
+					{match: ".+",     name: "punctuation.definition.string.end.son"}
+				]
+				2: patterns: [include: "source.regexp#scopedModifiers"]
 		},{
 			# Single-line regexp
 			name: "string.regexp.son"
