@@ -9,7 +9,7 @@
 	editor:
 		commentStart: "# "
 
-".source.son":
+".source.sy":
 	editor:
 		commentStart: "# "
 		increaseIndentPattern: """(?x)
