@@ -25,8 +25,8 @@ repository:
 		]
 	
 	# [Array]
-	name: "meta.array.sy"
 	array:
+		name: "meta.array.sy"
 		begin: "\\["
 		end:   "\\]"
 		beginCaptures: 0: name: "punctuation.definition.array.begin.bracket.square.sy"
