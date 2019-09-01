@@ -4,6 +4,14 @@ Change Log
 This project honours [Semantic Versioning](http://semver.org).
 
 
+[v1.1.1]
+------------------------------------------------------------------------
+**September 1st, 2019**  
+Fixes malformed syntax reported by [`Alhadis/language-regexp#1`][1].
+
+[1]: https://github.com/Alhadis/language-regexp/issues/1
+
+
 [v1.1.0]
 ------------------------------------------------------------------------
 **July 12th, 2019**  
@@ -37,7 +45,8 @@ Initial release. Adds syntax highlighting for regular expression data.
 
 
 [Referenced links]:_____________________________________________________
-[Staged]: ../../compare/v1.1.0...HEAD
+[Staged]: ../../compare/v1.1.1...HEAD
+[v1.1.1]: https://github.com/Alhadis/language-regexp/releases/tag/v1.1.1
 [v1.1.0]: https://github.com/Alhadis/language-regexp/releases/tag/v1.1.0
 [v1.0.1]: https://github.com/Alhadis/language-regexp/releases/tag/v1.0.1
 [v1.0.0]: https://github.com/Alhadis/language-regexp/releases/tag/v1.0.0
