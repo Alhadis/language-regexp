@@ -477,13 +477,6 @@ repository:
 			end:   "\\1"
 			beginCaptures: 0: name: "punctuation.definition.string.begin.sy"
 			endCaptures:   0: name: "punctuation.definition.string.end.sy"
-			patterns: [{
-				# Only one escape possible: \```
-				name: "constant.character.escape.heredoc.sy"
-				match: "(\\\\)```"
-				captures:
-					1: name: "punctuation.backslash.definition.escape.sy"
-			}]
 		},{
 			# "Double-quoted string"
 			name:  "string.quoted.double.sy"
@@ -523,7 +516,7 @@ repository:
 		]
 
 
-	# Underlinked URLs. Not a datatype.
+	# Underlined URLs. Not a datatype.
 	url:
 		patterns: [{
 			# https://etc, git://github.com/
