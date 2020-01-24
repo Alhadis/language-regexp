@@ -258,12 +258,10 @@ repository:
 				0: name: "punctuation.backslash.definition.escape.sy"
 		}]
 
-	# Only one escape possible in a verbatim string: \`
+	# Only one escape possible in a verbatim string: ``
 	escapeVerbatim:
 		name: "constant.character.escape.backtick.sy"
-		match: "(\\\\)`"
-		captures:
-			1: name: "punctuation.backslash.definition.escape.sy"
+		match: "``"
 
 	# Bunch of numbers, possibly with operators
 	expression:
@@ -302,7 +300,7 @@ repository:
 				(?<=[:{\\[]) \\s*
 				(?: ("(?:[^"\\\\]|\\\\.)*")
 				|   ('(?:[^'\\\\]|\\\\.)*')
-				|   (`(?:[^`\\\\]|\\\\.)*`)
+				|   (`(?:[^`]|``)*+`(?!`))
 				) \\s* (:)
 				
 				|
@@ -336,7 +334,7 @@ repository:
 		begin: """(?x) ^ \\s*
 			(?: ("(?:[^"\\\\]|\\\\.)*")
 			|   ('(?:[^'\\\\]|\\\\.)*')
-			|   (`(?:[^`\\\\]|\\\\.)*`)
+			|   (`(?:[^`]|``)*+`(?!`))
 			) \\s* (:)
 			(?=\\s|$)
 			\\s*
@@ -373,7 +371,7 @@ repository:
 				)
 			"""
 			captures:
-					0: patterns: [include: "#url"]
+				0: patterns: [include: "#url"]
 		]
 
 	# Null keyword
@@ -497,7 +495,7 @@ repository:
 			# `Verbatim string`
 			name: "string.quoted.verbatim.backtick.sy"
 			begin: "`"
-			end:   "`"
+			end:   "`(?!`)"
 			beginCaptures: 0: name: "punctuation.definition.string.begin.sy"
 			endCaptures:   0: name: "punctuation.definition.string.end.sy"
 			patterns: [include: "#escapeVerbatim"]
