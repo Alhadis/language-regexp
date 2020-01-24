@@ -14,7 +14,7 @@ repository:
 			{include: "#block"}
 			{include: "#field"}
 			{include: "#array"}
-			{include: "#bytestream"}
+			{include: "#byteArray"}
 			{include: "#brackets"}
 			{include: "#boolean"}
 			{include: "#null"}
@@ -105,18 +105,18 @@ repository:
 		}]
 	
 	# Arbitrary binary data
-	bytestream:
+	byteArray:
 		patterns: [{
 			# Base64-encoded: <base64: YWJjCg>
-			name: "meta.bytestream.base64.sy"
+			name: "meta.byte-array.base64.sy"
 			begin: "(<)(base64)(:)"
 			end:   "(>)\\s*([^:,}\\]]+)"
 			beginCaptures:
-				1: name: "punctuation.section.bytestream.begin.bracket.angle.sy"
+				1: name: "punctuation.section.byte-array.begin.bracket.angle.sy"
 				2: name: "storage.modifier.encoding.base64.sy"
 				3: name: "punctuation.separator.key-value.sy"
 			endCaptures:
-				1: name: "punctuation.section.bytestream.end.bracket.angle.sy"
+				1: name: "punctuation.section.byte-array.end.bracket.angle.sy"
 				2: name: "invalid.illegal.characters.sy"
 			patterns: [{
 				# Data
@@ -132,24 +132,24 @@ repository:
 			}]
 		},{
 			# Base85 (Ascii85): <~ … ~>
-			name: "meta.bytestream.base85.sy"
+			name: "meta.byte-array.base85.sy"
 			begin: "<~"
 			end:   "~>"
-			beginCaptures: 0: name: "punctuation.section.bytestream.begin.bracket.angle.sy"
-			endCaptures:   0: name: "punctuation.section.bytestream.end.bracket.angle.sy"
+			beginCaptures: 0: name: "punctuation.section.byte-array.begin.bracket.angle.sy"
+			endCaptures:   0: name: "punctuation.section.byte-array.end.bracket.angle.sy"
 			patterns: [
 				{match: "[!-uz]+",     name: "constant.character.encoded.base85.sy"}
 				{match: "[^!-uz\\s~]", name: "invalid.illegal.character.sy"}
 			]
 		},{
 			# Hexadecimal: <37 A2 E7 7E>
-			name:  "meta.bytestream.sy"
+			name:  "meta.byte-array.sy"
 			begin: "<"
 			end:   "(>)\\s*([^:,}\\]]+)"
 			beginCaptures:
-				0: name: "punctuation.section.bytestream.begin.bracket.angle.sy"
+				0: name: "punctuation.section.byte-array.begin.bracket.angle.sy"
 			endCaptures:
-				1: name: "punctuation.section.bytestream.end.bracket.angle.sy"
+				1: name: "punctuation.section.byte-array.end.bracket.angle.sy"
 				2: name: "invalid.illegal.characters.sy"
 			patterns: [{
 				# Byte
