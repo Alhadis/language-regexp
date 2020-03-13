@@ -1,0 +1,34 @@
+\k<n>     \k'n'                                   [[:^word]]   ASCII-range         Full-range        Backslash
+\k<-n>    \k'-n'                                  ------------------------------------------------------------
+\k<name>  \k'name'                                alpha        \p{PosixAlpha}      \p{XPosixAlpha}
+                                                  alnum        \p{PosixAlnum}      \p{XPosixAlnum}
+\k<n+level> \k'n+level'                           ascii        \p{ASCII}
+\k<n-level> \k'n-level'                           blank        \p{PosixBlank}      \p{XPosixBlank}   \h
+                                                                                   \p{HorizSpace}
+\A(?<a>|.|(?:(?<b>.)\o{22}qr\g<a>\k<b>))\z        cntrl        \p{PosixCntrl}      \p{XPosixCntrl}
+\A(?<a>|.|(?:(?<b>.)\o{22}qr\g<a>\k<b+0>))\z      digit        \p{PosixDigit}      \p{XPosixDigit}   \d
+                                                  graph        \p{PosixGraph}      \p{XPosixGraph}
+\h, \H                                            lower        \p{PosixLower}      \p{XPosixLower}
+(?<name>...), (?'name'...)                        print        \p{PosixPrint}      \p{XPosixPrint}
+\k<name>                                          punct        \p{PosixPunct}      \p{XPosixPunct}
+\g<name>, \g<group-num>                                        \p{PerlSpace}       \p{XPerlSpace}    \s
+                                                  space        \p{PosixSpace}      \p{XPosixSpace}
+\p{k}                                             upper        \p{PosixUpper}      \p{XPosixUpper}
+\pP                                               word         \p{PosixWord}       \p{XPosixWord}    \w
+\g{1}                                             xdigit       \p{PosixXDigit}     \p{XPosixXDigit}
+(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})
+                                                  (?R)         (?(2)yes|no)        ?                 (...)
+\o{2,2}                                           (?n)         (?(+2)yes|no)       ?+                (?<name>...)
+\o{22424}                                         (?+2)        (?(-2)yes|no)       ??                (?'name'...)
+                                                  (?-2)        (?(<name>)yes|no)   *                 (?P<name>...)
+\p{ASCII_Hex_Digit=True}                          (?&name)     (?('name')yes|no)   *+                (?:...)
+\p{ASCII_Hex_Digit=False}                         (?P>name)    (?(name)yes|no)     *?                (?|...)
+                                                  \g<name>     (?(R)yes|no)        +
+(?-imx:subexp)                                    \g'name'     (??(R2)yes|no)      ++                (?i)
+                                                  \g<2>        (?(R&name)yes|no)   +?                (?J)
+(?<element> \g<stag> \g<content>* \g<etag> ){0}   \g'2'        (?(DEFINE)yes|no)   {1}               (?m)
+(?<stag> < \g<name> \s* > ){0}                    \g<+2>       (?(assert)yes|no)   {1,3}             (?s)
+(?<name> [a-zA-Z_:]+ ){0}                         \g'+2'       (?(?<=AA)yes|no)    {1,3}+            (?U)
+(?<content> [^<&]+ (\g<element> | [^<&]+)* ){0}   \g<-2>       (?(?=AA)yes|no)     {1,3}?            (?x)
+(?<etag> </ \k<name+1> >){0}                      \g'-2'                           {1,}              (?-s)
+\g<element>                                                                        {1,}+
