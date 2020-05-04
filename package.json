@@ -1,6 +1,6 @@
 {
 	"name": "language-regexp",
-	"version": "1.1.1",
+	"version": "1.1.2",
 	"description": "Bleeding edge, engine-agnostic highlighting for regular expression data.",
 	"keywords": ["RegEx", "RegExp", "Regular Expression", "Patterns", "POSIX", "PCRE", "Perl", "Oniguruma", "TextMate"],
 	"repository": "https://github.com/Alhadis/language-regexp",

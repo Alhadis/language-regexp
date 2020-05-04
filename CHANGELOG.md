@@ -4,9 +4,14 @@ Change Log
 This project honours [Semantic Versioning](http://semver.org).
 
 
-[Staged]
+[v1.1.2]
 ------------------------------------------------------------------------
-* __Added:__ Highlighting for patterns in Bash `[[ =~ … ]]` conditionals
+**May 4th, 2020**  
+Adds syntax highlighting for patterns in Bash `[[ =~ … ]]` conditionals.
+Note that this only works when [Tree Sitter parsers are disabled][2].
+
+[2]: https://github.com/Alhadis/language-regexp/issues/5
+
 
 
 [v1.1.1]
@@ -50,7 +55,8 @@ Initial release. Adds syntax highlighting for regular expression data.
 
 
 [Referenced links]:_____________________________________________________
-[Staged]: ../../compare/v1.1.1...HEAD
+[Staged]: ../../compare/v1.1.2...HEAD
+[v1.1.2]: https://github.com/Alhadis/language-regexp/releases/tag/v1.1.2
 [v1.1.1]: https://github.com/Alhadis/language-regexp/releases/tag/v1.1.1
 [v1.1.0]: https://github.com/Alhadis/language-regexp/releases/tag/v1.1.0
 [v1.0.1]: https://github.com/Alhadis/language-regexp/releases/tag/v1.0.1
