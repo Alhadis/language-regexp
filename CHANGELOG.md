@@ -4,6 +4,11 @@ Change Log
 This project honours [Semantic Versioning](http://semver.org).
 
 
+[Staged]
+------------------------------------------------------------------------
+* __Added:__ Highlighting for patterns in Bash `[[ =~ … ]]` conditionals
+
+
 [v1.1.1]
 ------------------------------------------------------------------------
 **September 1st, 2019**  
