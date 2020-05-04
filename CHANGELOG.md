@@ -55,7 +55,7 @@ Initial release. Adds syntax highlighting for regular expression data.
 
 
 [Referenced links]:_____________________________________________________
-[Staged]: ../../compare/v1.1.2...HEAD
+[Staged]: ../../compare/v1.1.3...HEAD
 [v1.1.2]: https://github.com/Alhadis/language-regexp/releases/tag/v1.1.2
 [v1.1.1]: https://github.com/Alhadis/language-regexp/releases/tag/v1.1.1
 [v1.1.0]: https://github.com/Alhadis/language-regexp/releases/tag/v1.1.0
