@@ -485,6 +485,19 @@ repository:
 			contentName: "source.embedded.batchfile"
 			patterns: [match: ".+", captures: 0: patterns: [include: "source.batchfile"]]
 		},{
+			# Annotated: PostScript
+			name:  "string.quoted.double.heredoc.annotated.${1:/downcase}.sy"
+			begin: '(?i)(PS|PostScript|PDF(?:mark)?)[ \\t]+("{3,})'
+			end:   '((?:(?!\\2).)*+)(\\2)'
+			beginCaptures:
+				1: name: "storage.modifier.type.annotation.sy"
+				2: name: "punctuation.definition.string.begin.sy"
+			endCaptures:
+				1: name: "source.embedded.postscript", patterns: [include: "source.postscript"]
+				2: name: "punctuation.definition.string.end.sy"
+			contentName: "source.embedded.postscript"
+			patterns: [match: ".+", captures: 0: patterns: [include: "source.postscript"]]
+		},{
 			# Annotated: Other
 			name:  "string.quoted.double.heredoc.annotated.${1:/downcase}.sy"
 			begin: '([-\\w]+)[ \\t]+("{3,})'
@@ -599,6 +612,19 @@ repository:
 			contentName: "source.embedded.batchfile"
 			patterns: [match: ".+", captures: 0: patterns: [include: "source.batchfile"]]
 		},{
+			# Annotated: PostScript
+			name:  "string.quoted.single.heredoc.annotated.${1:/downcase}.sy"
+			begin: "(?i)(PS|PostScript|PDF(?:mark)?)[ \\t]+('{3,})"
+			end:   "((?:(?!\\2).)*+)(\\2)"
+			beginCaptures:
+				1: name: "storage.modifier.type.annotation.sy"
+				2: name: "punctuation.definition.string.begin.sy"
+			endCaptures:
+				1: name: "source.embedded.postscript", patterns: [include: "source.postscript"]
+				2: name: "punctuation.definition.string.end.sy"
+			contentName: "source.embedded.postscript"
+			patterns: [match: ".+", captures: 0: patterns: [include: "source.postscript"]]
+		},{
 			# Annotated: Other
 			name:  "string.quoted.single.heredoc.annotated.${1:/downcase}.sy"
 			begin: "([-\\w]+)[ \\t]+('{3,})"
@@ -712,6 +738,19 @@ repository:
 				2: name: "punctuation.definition.string.end.sy"
 			contentName: "source.embedded.batchfile"
 			patterns: [match: ".+", captures: 0: patterns: [include: "source.batchfile"]]
+		},{
+			# Annotated: PostScript
+			name:  "string.quoted.verbatim.backtick.heredoc.annotated.${1:/downcase}.sy"
+			begin: "(?i)(PS|PostScript|PDF(?:mark)?)[ \\t]+(`{3,})"
+			end:   "((?:(?!\\2).)*+)(\\2)"
+			beginCaptures:
+				1: name: "storage.modifier.type.annotation.sy"
+				2: name: "punctuation.definition.string.begin.sy"
+			endCaptures:
+				1: name: "source.embedded.postscript", patterns: [include: "source.postscript"]
+				2: name: "punctuation.definition.string.end.sy"
+			contentName: "source.embedded.postscript"
+			patterns: [match: ".+", captures: 0: patterns: [include: "source.postscript"]]
 		},{
 			# Annotated: Other
 			name:  "string.quoted.verbatim.backtick.heredoc.annotated.${1:/downcase}.sy"
@@ -912,6 +951,19 @@ repository:
 			contentName: "source.embedded.batchfile"
 			patterns: [match: '(?:[^\\\\"]|\\\\.)+', captures: 0: patterns: [include: "source.batchfile"]]
 		},{
+			# Annotated: PostScript
+			name:  "string.quoted.double.annotated.${1:/downcase}.sy"
+			begin: '(?i)(PS|PostScript|PDF(?:mark)?)[ \\t]+(")'
+			end:   '((?:[^\\\\"]|\\\\.)*+)(")'
+			beginCaptures:
+				1: name: "storage.modifier.type.annotation.sy"
+				2: name: "punctuation.definition.string.begin.sy"
+			endCaptures:
+				1: name: "source.embedded.postscript", patterns: [include: "source.postscript"]
+				2: name: "punctuation.definition.string.end.sy"
+			contentName: "source.embedded.postscript"
+			patterns: [match: '(?:[^\\\\"]|\\\\.)+', captures: 0: patterns: [include: "source.postscript"]]
+		},{
 			# Annotated: Other
 			name:  "string.quoted.double.annotated.${1:/downcase}.sy"
 			begin: '([-\\w]+)[ \\t]+(")'
@@ -1025,6 +1077,19 @@ repository:
 				2: name: "punctuation.definition.string.end.sy"
 			contentName: "source.embedded.batchfile"
 			patterns: [match: "(?:[^\\\\']|\\\\.)+", captures: 0: patterns: [include: "source.batchfile"]]
+		},{
+			# Annotated: PostScript
+			name:  "string.quoted.single.annotated.${1:/downcase}.sy"
+			begin: "(?i)(PS|PostScript|PDF(?:mark)?)[ \\t]+(')"
+			end:   "((?:[^\\\\']|\\\\.)*+)(')"
+			beginCaptures:
+				1: name: "storage.modifier.type.annotation.sy"
+				2: name: "punctuation.definition.string.begin.sy"
+			endCaptures:
+				1: name: "source.embedded.postscript", patterns: [include: "source.postscript"]
+				2: name: "punctuation.definition.string.end.sy"
+			contentName: "source.embedded.postscript"
+			patterns: [match: "(?:[^\\\\']|\\\\.)+", captures: 0: patterns: [include: "source.postscript"]]
 		},{
 			# Annotated: Other
 			name:  "string.quoted.single.annotated.${1:/downcase}.sy"
@@ -1160,6 +1225,22 @@ repository:
 			patterns: [
 				{include: "#escapeVerbatim"}
 				{match: "[^`]+", captures: 0: patterns: [include: "source.batchfile"]}
+			]
+		},{
+			# Annotated: PostScript
+			name:  "string.quoted.verbatim.backtick.annotated.${1:/downcase}.sy"
+			begin: "(?i)(PS|PostScript|PDF(?:mark)?)[ \\t]+(`)"
+			end:   "([^`]*)(`)(?!`)"
+			beginCaptures:
+				1: name: "storage.modifier.type.annotation.sy"
+				2: name: "punctuation.definition.string.begin.sy"
+			endCaptures:
+				1: name: "source.embedded.postscript", patterns: [include: "source.postscript"]
+				2: name: "punctuation.definition.string.end.sy"
+			contentName: "source.embedded.postscript"
+			patterns: [
+				{include: "#escapeVerbatim"}
+				{match: "[^`]+", captures: 0: patterns: [include: "source.postscript"]}
 			]
 		},{
 			# Annotated: Other
