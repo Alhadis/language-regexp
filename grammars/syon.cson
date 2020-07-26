@@ -3,10 +3,10 @@ scopeName: "source.sy"
 fileTypes: ["sy"]
 patterns: [include: "#blockInnards"]
 injections:
-	"source.sy string.quoted.double.heredoc.annotated,
-	 source.sy string.quoted.single.heredoc.annotated,
-	 source.sy string.quoted.double.annotated,
-	 source.sy string.quoted.single.annotated":
+	"source.sy string.quoted.double.heredoc.hinted,
+	 source.sy string.quoted.single.heredoc.hinted,
+	 source.sy string.quoted.double.hinted,
+	 source.sy string.quoted.single.hinted":
 		patterns: [
 			{include: "#escape"}
 		]
@@ -394,12 +394,12 @@ repository:
 	# """ Double-quoted heredoc """
 	heredocDouble:
 		patterns: [{
-			# Annotated: HTML
-			name:  "string.quoted.double.heredoc.annotated.${1:/downcase}.sy"
+			# Hinted: HTML
+			name:  "string.quoted.double.heredoc.hinted.${1:/downcase}.sy"
 			begin: '(?i)(X?HTML)[ \\t]+("{3,})'
 			end:   '((?:(?!\\2).)*+)(\\2)'
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "text.embedded.html.basic", patterns: [include: "text.html.basic"]
@@ -407,12 +407,12 @@ repository:
 			contentName: "text.embedded.html.basic"
 			patterns: [match: ".+", captures: 0: patterns: [include: "text.html.basic"]]
 		},{
-			# Annotated: CSS
-			name:  "string.quoted.double.heredoc.annotated.${1:/downcase}.sy"
+			# Hinted: CSS
+			name:  "string.quoted.double.heredoc.hinted.${1:/downcase}.sy"
 			begin: '(?i)(CSS)[ \\t]+("{3,})'
 			end:   '((?:(?!\\2).)*+)(\\2)'
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.css", patterns: [include: "source.css"]
@@ -420,12 +420,12 @@ repository:
 			contentName: "source.embedded.css"
 			patterns: [match: ".+", captures: 0: patterns: [include: "source.css"]]
 		},{
-			# Annotated: JavaScript
-			name:  "string.quoted.double.heredoc.annotated.${1:/downcase}.sy"
+			# Hinted: JavaScript
+			name:  "string.quoted.double.heredoc.hinted.${1:/downcase}.sy"
 			begin: '(?i)(JS|JavaScript)[ \\t]+("{3,})'
 			end:   '((?:(?!\\2).)*+)(\\2)'
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.js", patterns: [include: "source.js"]
@@ -433,12 +433,12 @@ repository:
 			contentName: "source.embedded.js"
 			patterns: [match: ".+", captures: 0: patterns: [include: "source.js"]]
 		},{
-			# Annotated: Markdown
-			name:  "string.quoted.double.heredoc.annotated.${1:/downcase}.sy"
+			# Hinted: Markdown
+			name:  "string.quoted.double.heredoc.hinted.${1:/downcase}.sy"
 			begin: '(?i)(MD|Markdown|GFM)[ \\t]+("{3,})'
 			end:   '((?:(?!\\2).)*+)(\\2)'
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.gfm", patterns: [include: "source.gfm"]
@@ -446,12 +446,12 @@ repository:
 			contentName: "source.embedded.gfm"
 			patterns: [match: ".+", captures: 0: patterns: [include: "source.gfm"]]
 		},{
-			# Annotated: Shell-script
-			name:  "string.quoted.double.heredoc.annotated.${1:/downcase}.sy"
+			# Hinted: Shell-script
+			name:  "string.quoted.double.heredoc.hinted.${1:/downcase}.sy"
 			begin: '(?i)(bash|shell(?:-script)?|[zkc]?sh|mksh)[ \\t]+("{3,})'
 			end:   '((?:(?!\\2).)*+)(\\2)'
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.shell", patterns: [include: "source.shell"]
@@ -459,12 +459,12 @@ repository:
 			contentName: "source.embedded.shell"
 			patterns: [match: ".+", captures: 0: patterns: [include: "source.shell"]]
 		},{
-			# Annotated: PowerShell
-			name:  "string.quoted.double.heredoc.annotated.${1:/downcase}.sy"
+			# Hinted: PowerShell
+			name:  "string.quoted.double.heredoc.hinted.${1:/downcase}.sy"
 			begin: '(?i)(powershell|pw?sh|ps1)[ \\t]+("{3,})'
 			end:   '((?:(?!\\2).)*+)(\\2)'
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.powershell", patterns: [include: "source.powershell"]
@@ -472,12 +472,12 @@ repository:
 			contentName: "source.embedded.powershell"
 			patterns: [match: ".+", captures: 0: patterns: [include: "source.powershell"]]
 		},{
-			# Annotated: Batch
-			name:  "string.quoted.double.heredoc.annotated.${1:/downcase}.sy"
+			# Hinted: Batch
+			name:  "string.quoted.double.heredoc.hinted.${1:/downcase}.sy"
 			begin: '(?i)(bat|batch(?:-?(?:script|file))?)[ \\t]+("{3,})'
 			end:   '((?:(?!\\2).)*+)(\\2)'
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.batchfile", patterns: [include: "source.batchfile"]
@@ -485,12 +485,12 @@ repository:
 			contentName: "source.embedded.batchfile"
 			patterns: [match: ".+", captures: 0: patterns: [include: "source.batchfile"]]
 		},{
-			# Annotated: PostScript
-			name:  "string.quoted.double.heredoc.annotated.${1:/downcase}.sy"
+			# Hinted: PostScript
+			name:  "string.quoted.double.heredoc.hinted.${1:/downcase}.sy"
 			begin: '(?i)(PS|PostScript|PDF(?:mark)?)[ \\t]+("{3,})'
 			end:   '((?:(?!\\2).)*+)(\\2)'
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.postscript", patterns: [include: "source.postscript"]
@@ -498,18 +498,18 @@ repository:
 			contentName: "source.embedded.postscript"
 			patterns: [match: ".+", captures: 0: patterns: [include: "source.postscript"]]
 		},{
-			# Annotated: Other
-			name:  "string.quoted.double.heredoc.annotated.${1:/downcase}.sy"
+			# Hinted: Other
+			name:  "string.quoted.double.heredoc.hinted.${1:/downcase}.sy"
 			begin: '([-\\w]+)[ \\t]+("{3,})'
 			end:   '\\2'
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				0: name: "punctuation.definition.string.end.sy"
 			contentName: "source.embedded.${1:/downcase}"
 		},{
-			# Unannotated
+			# Unhinted
 			name: "string.quoted.double.heredoc.sy"
 			begin: '("{3,})'
 			end:   '\\1'
@@ -521,12 +521,12 @@ repository:
 	# ''' Single-quoted heredoc '''
 	heredocSingle:
 		patterns: [{
-			# Annotated: HTML
-			name:  "string.quoted.single.heredoc.annotated.${1:/downcase}.sy"
+			# Hinted: HTML
+			name:  "string.quoted.single.heredoc.hinted.${1:/downcase}.sy"
 			begin: "(?i)(X?HTML)[ \\t]+('{3,})"
 			end:   "((?:(?!\\2).)*+)(\\2)"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "text.embedded.html.basic", patterns: [include: "text.html.basic"]
@@ -534,12 +534,12 @@ repository:
 			contentName: "text.embedded.html.basic"
 			patterns: [match: ".+", captures: 0: patterns: [include: "text.html.basic"]]
 		},{
-			# Annotated: CSS
-			name:  "string.quoted.single.heredoc.annotated.${1:/downcase}.sy"
+			# Hinted: CSS
+			name:  "string.quoted.single.heredoc.hinted.${1:/downcase}.sy"
 			begin: "(?i)(CSS)[ \\t]+('{3,})"
 			end:   "((?:(?!\\2).)*+)(\\2)"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.css", patterns: [include: "source.css"]
@@ -547,12 +547,12 @@ repository:
 			contentName: "source.embedded.css"
 			patterns: [match: ".+", captures: 0: patterns: [include: "source.css"]]
 		},{
-			# Annotated: JavaScript
-			name:  "string.quoted.single.heredoc.annotated.${1:/downcase}.sy"
+			# Hinted: JavaScript
+			name:  "string.quoted.single.heredoc.hinted.${1:/downcase}.sy"
 			begin: "(?i)(JS|JavaScript)[ \\t]+('{3,})"
 			end:   "((?:(?!\\2).)*+)(\\2)"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.js", patterns: [include: "source.js"]
@@ -560,12 +560,12 @@ repository:
 			contentName: "source.embedded.js"
 			patterns: [match: ".+", captures: 0: patterns: [include: "source.js"]]
 		},{
-			# Annotated: Markdown
-			name:  "string.quoted.single.heredoc.annotated.${1:/downcase}.sy"
+			# Hinted: Markdown
+			name:  "string.quoted.single.heredoc.hinted.${1:/downcase}.sy"
 			begin: "(?i)(MD|Markdown|GFM)[ \\t]+('{3,})"
 			end:   "((?:(?!\\2).)*+)(\\2)"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.gfm", patterns: [include: "source.gfm"]
@@ -573,12 +573,12 @@ repository:
 			contentName: "source.embedded.gfm"
 			patterns: [match: ".+", captures: 0: patterns: [include: "source.gfm"]]
 		},{
-			# Annotated: Shell-script
-			name:  "string.quoted.single.heredoc.annotated.${1:/downcase}.sy"
+			# Hinted: Shell-script
+			name:  "string.quoted.single.heredoc.hinted.${1:/downcase}.sy"
 			begin: "(?i)(bash|shell(?:-script)?|[zkc]?sh|mksh)[ \\t]+('{3,})"
 			end:   "((?:(?!\\2).)*+)(\\2)"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.shell", patterns: [include: "source.shell"]
@@ -586,12 +586,12 @@ repository:
 			contentName: "source.embedded.shell"
 			patterns: [match: ".+", captures: 0: patterns: [include: "source.shell"]]
 		},{
-			# Annotated: PowerShell
-			name:  "string.quoted.single.heredoc.annotated.${1:/downcase}.sy"
+			# Hinted: PowerShell
+			name:  "string.quoted.single.heredoc.hinted.${1:/downcase}.sy"
 			begin: "(?i)(powershell|pw?sh|ps1)[ \\t]+('{3,})"
 			end:   "((?:(?!\\2).)*+)(\\2)"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.powershell", patterns: [include: "source.powershell"]
@@ -599,12 +599,12 @@ repository:
 			contentName: "source.embedded.powershell"
 			patterns: [match: ".+", captures: 0: patterns: [include: "source.powershell"]]
 		},{
-			# Annotated: Batch
-			name:  "string.quoted.single.heredoc.annotated.${1:/downcase}.sy"
+			# Hinted: Batch
+			name:  "string.quoted.single.heredoc.hinted.${1:/downcase}.sy"
 			begin: "(?i)(bat|batch(?:-?(?:script|file))?)[ \\t]+('{3,})"
 			end:   "((?:(?!\\2).)*+)(\\2)"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.batchfile", patterns: [include: "source.batchfile"]
@@ -612,12 +612,12 @@ repository:
 			contentName: "source.embedded.batchfile"
 			patterns: [match: ".+", captures: 0: patterns: [include: "source.batchfile"]]
 		},{
-			# Annotated: PostScript
-			name:  "string.quoted.single.heredoc.annotated.${1:/downcase}.sy"
+			# Hinted: PostScript
+			name:  "string.quoted.single.heredoc.hinted.${1:/downcase}.sy"
 			begin: "(?i)(PS|PostScript|PDF(?:mark)?)[ \\t]+('{3,})"
 			end:   "((?:(?!\\2).)*+)(\\2)"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.postscript", patterns: [include: "source.postscript"]
@@ -625,18 +625,18 @@ repository:
 			contentName: "source.embedded.postscript"
 			patterns: [match: ".+", captures: 0: patterns: [include: "source.postscript"]]
 		},{
-			# Annotated: Other
-			name:  "string.quoted.single.heredoc.annotated.${1:/downcase}.sy"
+			# Hinted: Other
+			name:  "string.quoted.single.heredoc.hinted.${1:/downcase}.sy"
 			begin: "([-\\w]+)[ \\t]+('{3,})"
 			end:   "\\2"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				0: name: "punctuation.definition.string.end.sy"
 			contentName: "source.embedded.${1:/downcase}"
 		},{
-			# Unannotated
+			# Unhinted
 			name: "string.quoted.single.heredoc.sy"
 			begin: "('{3,})"
 			end:   "\\1"
@@ -648,12 +648,12 @@ repository:
 	# ``` Verbatim heredoc ```
 	heredocVerbatim:
 		patterns: [{
-			# Annotated: HTML
-			name:  "string.quoted.verbatim.backtick.heredoc.annotated.${1:/downcase}.sy"
+			# Hinted: HTML
+			name:  "string.quoted.verbatim.backtick.heredoc.hinted.${1:/downcase}.sy"
 			begin: "(?i)(X?HTML)[ \\t]+(`{3,})"
 			end:   "((?:(?!\\2).)*+)(\\2)"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "text.embedded.html.basic", patterns: [include: "text.html.basic"]
@@ -661,12 +661,12 @@ repository:
 			contentName: "text.embedded.html.basic"
 			patterns: [match: ".+", captures: 0: patterns: [include: "text.html.basic"]]
 		},{
-			# Annotated: CSS
-			name:  "string.quoted.verbatim.backtick.heredoc.annotated.${1:/downcase}.sy"
+			# Hinted: CSS
+			name:  "string.quoted.verbatim.backtick.heredoc.hinted.${1:/downcase}.sy"
 			begin: "(?i)(CSS)[ \\t]+(`{3,})"
 			end:   "((?:(?!\\2).)*+)(\\2)"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.css", patterns: [include: "source.css"]
@@ -674,12 +674,12 @@ repository:
 			contentName: "source.embedded.css"
 			patterns: [match: ".+", captures: 0: patterns: [include: "source.css"]]
 		},{
-			# Annotated: JavaScript
-			name:  "string.quoted.verbatim.backtick.heredoc.annotated.${1:/downcase}.sy"
+			# Hinted: JavaScript
+			name:  "string.quoted.verbatim.backtick.heredoc.hinted.${1:/downcase}.sy"
 			begin: "(?i)(JS|JavaScript)[ \\t]+(`{3,})"
 			end:   "((?:(?!\\2).)*+)(\\2)"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.js", patterns: [include: "source.js"]
@@ -687,12 +687,12 @@ repository:
 			contentName: "source.embedded.js"
 			patterns: [match: ".+", captures: 0: patterns: [include: "source.js"]]
 		},{
-			# Annotated: Markdown
-			name:  "string.quoted.verbatim.backtick.heredoc.annotated.${1:/downcase}.sy"
+			# Hinted: Markdown
+			name:  "string.quoted.verbatim.backtick.heredoc.hinted.${1:/downcase}.sy"
 			begin: "(?i)(MD|Markdown|GFM)[ \\t]+(`{3,})"
 			end:   "((?:(?!\\2).)*+)(\\2)"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.gfm", patterns: [include: "source.gfm"]
@@ -700,12 +700,12 @@ repository:
 			contentName: "source.embedded.gfm"
 			patterns: [match: ".+", captures: 0: patterns: [include: "source.gfm"]]
 		},{
-			# Annotated: Shell-script
-			name:  "string.quoted.verbatim.backtick.heredoc.annotated.${1:/downcase}.sy"
+			# Hinted: Shell-script
+			name:  "string.quoted.verbatim.backtick.heredoc.hinted.${1:/downcase}.sy"
 			begin: "(?i)(bash|shell(?:-script)?|[zkc]?sh|mksh)[ \\t]+(`{3,})"
 			end:   "((?:(?!\\2).)*+)(\\2)"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.shell", patterns: [include: "source.shell"]
@@ -713,12 +713,12 @@ repository:
 			contentName: "source.embedded.shell"
 			patterns: [match: ".+", captures: 0: patterns: [include: "source.shell"]]
 		},{
-			# Annotated: PowerShell
-			name:  "string.quoted.verbatim.backtick.heredoc.annotated.${1:/downcase}.sy"
+			# Hinted: PowerShell
+			name:  "string.quoted.verbatim.backtick.heredoc.hinted.${1:/downcase}.sy"
 			begin: "(?i)(powershell|pw?sh|ps1)[ \\t]+(`{3,})"
 			end:   "((?:(?!\\2).)*+)(\\2)"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.powershell", patterns: [include: "source.powershell"]
@@ -726,12 +726,12 @@ repository:
 			contentName: "source.embedded.powershell"
 			patterns: [match: ".+", captures: 0: patterns: [include: "source.powershell"]]
 		},{
-			# Annotated: Batch
-			name:  "string.quoted.verbatim.backtick.heredoc.annotated.${1:/downcase}.sy"
+			# Hinted: Batch
+			name:  "string.quoted.verbatim.backtick.heredoc.hinted.${1:/downcase}.sy"
 			begin: "(?i)(bat|batch(?:-?(?:script|file))?)[ \\t]+(`{3,})"
 			end:   "((?:(?!\\2).)*+)(\\2)"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.batchfile", patterns: [include: "source.batchfile"]
@@ -739,12 +739,12 @@ repository:
 			contentName: "source.embedded.batchfile"
 			patterns: [match: ".+", captures: 0: patterns: [include: "source.batchfile"]]
 		},{
-			# Annotated: PostScript
-			name:  "string.quoted.verbatim.backtick.heredoc.annotated.${1:/downcase}.sy"
+			# Hinted: PostScript
+			name:  "string.quoted.verbatim.backtick.heredoc.hinted.${1:/downcase}.sy"
 			begin: "(?i)(PS|PostScript|PDF(?:mark)?)[ \\t]+(`{3,})"
 			end:   "((?:(?!\\2).)*+)(\\2)"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.postscript", patterns: [include: "source.postscript"]
@@ -752,18 +752,18 @@ repository:
 			contentName: "source.embedded.postscript"
 			patterns: [match: ".+", captures: 0: patterns: [include: "source.postscript"]]
 		},{
-			# Annotated: Other
-			name:  "string.quoted.verbatim.backtick.heredoc.annotated.${1:/downcase}.sy"
+			# Hinted: Other
+			name:  "string.quoted.verbatim.backtick.heredoc.hinted.${1:/downcase}.sy"
 			begin: "([-\\w]+)[ \\t]+(`{3,})"
 			end:   "\\2"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				0: name: "punctuation.definition.string.end.sy"
 			contentName: "source.embedded.${1:/downcase}"
 		},{
-			# Unannotated
+			# Unhinted
 			name: "string.quoted.verbatim.backtick.heredoc.sy"
 			begin: "(`{3,})"
 			end:   "\\1"
@@ -824,7 +824,7 @@ repository:
 			end:   "(\\2)([A-Za-z]*)"
 			patterns: [include: "source.regexp#main"]
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: patterns: [
 					{match: "^/{3}$", name: "punctuation.definition.string.begin.triple-slash.sy"}
 					{match: ".+",     name: "punctuation.definition.string.begin.sy"}
@@ -842,7 +842,7 @@ repository:
 			end:   "(/)([A-Za-z]*)"
 			patterns: [include: "source.regexp#main"]
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "punctuation.definition.string.end.sy"
@@ -860,12 +860,12 @@ repository:
 	# "Double-quoted string"
 	stringDouble:
 		patterns: [{
-			# Annotated: HTML
-			name:  "string.quoted.double.annotated.${1:/downcase}.sy"
+			# Hinted: HTML
+			name:  "string.quoted.double.hinted.${1:/downcase}.sy"
 			begin: '(?i)(X?HTML)[ \\t]+(")'
 			end:   '((?:[^\\\\"]|\\\\.)*+)(")'
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "text.embedded.html.basic", patterns: [include: "text.html.basic"]
@@ -873,12 +873,12 @@ repository:
 			contentName: "text.embedded.html.basic"
 			patterns: [match: '(?:[^\\\\"]|\\\\.)+', captures: 0: patterns: [include: "text.html.basic"]]
 		},{
-			# Annotated: CSS
-			name:  "string.quoted.double.annotated.${1:/downcase}.sy"
+			# Hinted: CSS
+			name:  "string.quoted.double.hinted.${1:/downcase}.sy"
 			begin: '(?i)(CSS)[ \\t]+(")'
 			end:   '((?:[^\\\\"]|\\\\.)*+)(")'
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.css", patterns: [include: "source.css"]
@@ -886,12 +886,12 @@ repository:
 			contentName: "source.embedded.css"
 			patterns: [match: '(?:[^\\\\"]|\\\\.)+', captures: 0: patterns: [include: "source.css"]]
 		},{
-			# Annotated: JavaScript
-			name:  "string.quoted.double.annotated.${1:/downcase}.sy"
+			# Hinted: JavaScript
+			name:  "string.quoted.double.hinted.${1:/downcase}.sy"
 			begin: '(?i)(JS|JavaScript)[ \\t]+(")'
 			end:   '((?:[^\\\\"]|\\\\.)*+)(")'
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.js", patterns: [include: "source.js"]
@@ -899,12 +899,12 @@ repository:
 			contentName: "source.embedded.js"
 			patterns: [match: '(?:[^\\\\"]|\\\\.)+', captures: 0: patterns: [include: "source.js"]]
 		},{
-			# Annotated: Markdown
-			name:  "string.quoted.double.annotated.${1:/downcase}.sy"
+			# Hinted: Markdown
+			name:  "string.quoted.double.hinted.${1:/downcase}.sy"
 			begin: '(?i)(MD|Markdown|GFM)[ \\t]+(")'
 			end:   '((?:[^\\\\"]|\\\\.)*+)(")'
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.gfm", patterns: [include: "source.gfm"]
@@ -912,12 +912,12 @@ repository:
 			contentName: "source.embedded.gfm"
 			patterns: [match: '(?:[^\\\\"]|\\\\.)+', captures: 0: patterns: [include: "source.gfm"]]
 		},{
-			# Annotated: Shell-script
-			name:  "string.quoted.double.annotated.${1:/downcase}.sy"
+			# Hinted: Shell-script
+			name:  "string.quoted.double.hinted.${1:/downcase}.sy"
 			begin: '(?i)(bash|shell(?:-script)?|[zkc]?sh|mksh)[ \\t]+(")'
 			end:   '((?:[^\\\\"]|\\\\.)*+)(")'
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.shell", patterns: [include: "source.shell"]
@@ -925,12 +925,12 @@ repository:
 			contentName: "source.embedded.shell"
 			patterns: [match: '(?:[^\\\\"]|\\\\.)+', captures: 0: patterns: [include: "source.shell"]]
 		},{
-			# Annotated: PowerShell
-			name:  "string.quoted.double.annotated.${1:/downcase}.sy"
+			# Hinted: PowerShell
+			name:  "string.quoted.double.hinted.${1:/downcase}.sy"
 			begin: '(?i)(powershell|pw?sh|ps1)[ \\t]+(")'
 			end:   '((?:[^\\\\"]|\\\\.)*+)(")'
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.powershell", patterns: [include: "source.powershell"]
@@ -938,12 +938,12 @@ repository:
 			contentName: "source.embedded.powershell"
 			patterns: [match: '(?:[^\\\\"]|\\\\.)+', captures: 0: patterns: [include: "source.powershell"]]
 		},{
-			# Annotated: Batch
-			name:  "string.quoted.double.annotated.${1:/downcase}.sy"
+			# Hinted: Batch
+			name:  "string.quoted.double.hinted.${1:/downcase}.sy"
 			begin: '(?i)(bat|batch(?:-?(?:script|file))?)[ \\t]+(")'
 			end:   '((?:[^\\\\"]|\\\\.)*+)(")'
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.batchfile", patterns: [include: "source.batchfile"]
@@ -951,12 +951,12 @@ repository:
 			contentName: "source.embedded.batchfile"
 			patterns: [match: '(?:[^\\\\"]|\\\\.)+', captures: 0: patterns: [include: "source.batchfile"]]
 		},{
-			# Annotated: PostScript
-			name:  "string.quoted.double.annotated.${1:/downcase}.sy"
+			# Hinted: PostScript
+			name:  "string.quoted.double.hinted.${1:/downcase}.sy"
 			begin: '(?i)(PS|PostScript|PDF(?:mark)?)[ \\t]+(")'
 			end:   '((?:[^\\\\"]|\\\\.)*+)(")'
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.postscript", patterns: [include: "source.postscript"]
@@ -964,18 +964,18 @@ repository:
 			contentName: "source.embedded.postscript"
 			patterns: [match: '(?:[^\\\\"]|\\\\.)+', captures: 0: patterns: [include: "source.postscript"]]
 		},{
-			# Annotated: Other
-			name:  "string.quoted.double.annotated.${1:/downcase}.sy"
+			# Hinted: Other
+			name:  "string.quoted.double.hinted.${1:/downcase}.sy"
 			begin: '([-\\w]+)[ \\t]+(")'
 			end:   '"'
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				0: name: "punctuation.definition.string.end.sy"
 			contentName: "source.embedded.${1:/downcase}"
 		},{
-			# Unannotated
+			# Unhinted
 			name:  "string.quoted.double.sy"
 			begin: '"'
 			end:   '"'
@@ -987,12 +987,12 @@ repository:
 	# 'Single-quoted string'
 	stringSingle:
 		patterns: [{
-			# Annotated: HTML
-			name:  "string.quoted.single.annotated.${1:/downcase}.sy"
+			# Hinted: HTML
+			name:  "string.quoted.single.hinted.${1:/downcase}.sy"
 			begin: "(?i)(X?HTML)[ \\t]+(')"
 			end:   "((?:[^\\\\']|\\\\.)*+)(')"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "text.embedded.html.basic", patterns: [include: "text.html.basic"]
@@ -1000,12 +1000,12 @@ repository:
 			contentName: "text.embedded.html.basic"
 			patterns: [match: "(?:[^\\\\']|\\\\.)+", captures: 0: patterns: [include: "text.html.basic"]]
 		},{
-			# Annotated: CSS
-			name:  "string.quoted.single.annotated.${1:/downcase}.sy"
+			# Hinted: CSS
+			name:  "string.quoted.single.hinted.${1:/downcase}.sy"
 			begin: "(?i)(CSS)[ \\t]+(')"
 			end:   "((?:[^\\\\']|\\\\.)*+)(')"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.css", patterns: [include: "source.css"]
@@ -1013,12 +1013,12 @@ repository:
 			contentName: "source.embedded.css"
 			patterns: [match: "(?:[^\\\\']|\\\\.)+", captures: 0: patterns: [include: "source.css"]]
 		},{
-			# Annotated: JavaScript
-			name:  "string.quoted.single.annotated.${1:/downcase}.sy"
+			# Hinted: JavaScript
+			name:  "string.quoted.single.hinted.${1:/downcase}.sy"
 			begin: "(?i)(JS|JavaScript)[ \\t]+(')"
 			end:   "((?:[^\\\\']|\\\\.)*+)(')"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.js", patterns: [include: "source.js"]
@@ -1026,12 +1026,12 @@ repository:
 			contentName: "source.embedded.js"
 			patterns: [match: "(?:[^\\\\']|\\\\.)+", captures: 0: patterns: [include: "source.js"]]
 		},{
-			# Annotated: Markdown
-			name:  "string.quoted.single.annotated.${1:/downcase}.sy"
+			# Hinted: Markdown
+			name:  "string.quoted.single.hinted.${1:/downcase}.sy"
 			begin: "(?i)(MD|Markdown|GFM)[ \\t]+(')"
 			end:   "((?:[^\\\\']|\\\\.)*+)(')"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.gfm", patterns: [include: "source.gfm"]
@@ -1039,12 +1039,12 @@ repository:
 			contentName: "source.embedded.gfm"
 			patterns: [match: "(?:[^\\\\']|\\\\.)+", captures: 0: patterns: [include: "source.gfm"]]
 		},{
-			# Annotated: Shell-script
-			name:  "string.quoted.single.annotated.${1:/downcase}.sy"
+			# Hinted: Shell-script
+			name:  "string.quoted.single.hinted.${1:/downcase}.sy"
 			begin: "(?i)(bash|shell(?:-script)?|[zkc]?sh|mksh)[ \\t]+(')"
 			end:   "((?:[^\\\\']|\\\\.)*+)(')"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.shell", patterns: [include: "source.shell"]
@@ -1052,12 +1052,12 @@ repository:
 			contentName: "source.embedded.shell"
 			patterns: [match: "(?:[^\\\\']|\\\\.)+", captures: 0: patterns: [include: "source.shell"]]
 		},{
-			# Annotated: PowerShell
-			name:  "string.quoted.single.annotated.${1:/downcase}.sy"
+			# Hinted: PowerShell
+			name:  "string.quoted.single.hinted.${1:/downcase}.sy"
 			begin: "(?i)(powershell|pw?sh|ps1)[ \\t]+(')"
 			end:   "((?:[^\\\\']|\\\\.)*+)(')"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.powershell", patterns: [include: "source.powershell"]
@@ -1065,12 +1065,12 @@ repository:
 			contentName: "source.embedded.powershell"
 			patterns: [match: "(?:[^\\\\']|\\\\.)+", captures: 0: patterns: [include: "source.powershell"]]
 		},{
-			# Annotated: Batch
-			name:  "string.quoted.single.annotated.${1:/downcase}.sy"
+			# Hinted: Batch
+			name:  "string.quoted.single.hinted.${1:/downcase}.sy"
 			begin: "(?i)(bat|batch(?:-?(?:script|file))?)[ \\t]+(')"
 			end:   "((?:[^\\\\']|\\\\.)*+)(')"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.batchfile", patterns: [include: "source.batchfile"]
@@ -1078,12 +1078,12 @@ repository:
 			contentName: "source.embedded.batchfile"
 			patterns: [match: "(?:[^\\\\']|\\\\.)+", captures: 0: patterns: [include: "source.batchfile"]]
 		},{
-			# Annotated: PostScript
-			name:  "string.quoted.single.annotated.${1:/downcase}.sy"
+			# Hinted: PostScript
+			name:  "string.quoted.single.hinted.${1:/downcase}.sy"
 			begin: "(?i)(PS|PostScript|PDF(?:mark)?)[ \\t]+(')"
 			end:   "((?:[^\\\\']|\\\\.)*+)(')"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.postscript", patterns: [include: "source.postscript"]
@@ -1091,18 +1091,18 @@ repository:
 			contentName: "source.embedded.postscript"
 			patterns: [match: "(?:[^\\\\']|\\\\.)+", captures: 0: patterns: [include: "source.postscript"]]
 		},{
-			# Annotated: Other
-			name:  "string.quoted.single.annotated.${1:/downcase}.sy"
+			# Hinted: Other
+			name:  "string.quoted.single.hinted.${1:/downcase}.sy"
 			begin: "([-\\w]+)[ \\t]+(')"
 			end:   "'"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				0: name: "punctuation.definition.string.end.sy"
 			contentName: "source.embedded.${1:/downcase}"
 		},{
-			# Unannotated
+			# Unhinted
 			name: "string.quoted.single.sy"
 			begin: "'"
 			end:   "'"
@@ -1114,12 +1114,12 @@ repository:
 	# `Verbatim string`
 	stringVerbatim:
 		patterns: [{
-			# Annotated: HTML
-			name:  "string.quoted.verbatim.backtick.annotated.${1:/downcase}.sy"
+			# Hinted: HTML
+			name:  "string.quoted.verbatim.backtick.hinted.${1:/downcase}.sy"
 			begin: "(?i)(X?HTML)[ \\t]+(`)"
 			end:   "([^`]*)(`)(?!`)"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "text.embedded.html.basic", patterns: [include: "text.html.basic"]
@@ -1131,12 +1131,12 @@ repository:
 					0: patterns: [include: "text.html.basic"]
 			}]
 		},{
-			# Annotated: CSS
-			name:  "string.quoted.verbatim.backtick.annotated.${1:/downcase}.sy"
+			# Hinted: CSS
+			name:  "string.quoted.verbatim.backtick.hinted.${1:/downcase}.sy"
 			begin: "(?i)(CSS)[ \\t]+(`)"
 			end:   "([^`]*)(`)(?!`)"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.css", patterns: [include: "source.css"]
@@ -1147,12 +1147,12 @@ repository:
 				{match: "[^`]+", captures: 0: patterns: [include: "source.css"]}
 			]
 		},{
-			# Annotated: JavaScript
-			name:  "string.quoted.verbatim.backtick.annotated.${1:/downcase}.sy"
+			# Hinted: JavaScript
+			name:  "string.quoted.verbatim.backtick.hinted.${1:/downcase}.sy"
 			begin: "(?i)(JS|JavaScript)[ \\t]+(`)"
 			end:   "([^`]*)(`)(?!`)"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.js", patterns: [include: "source.js"]
@@ -1163,12 +1163,12 @@ repository:
 				{match: "[^`]+", captures: 0: patterns: [include: "source.js"]}
 			]
 		},{
-			# Annotated: Markdown
-			name:  "string.quoted.verbatim.backtick.annotated.${1:/downcase}.sy"
+			# Hinted: Markdown
+			name:  "string.quoted.verbatim.backtick.hinted.${1:/downcase}.sy"
 			begin: "(?i)(MD|Markdown|GFM)[ \\t]+(`)"
 			end:   "([^`]*)(`)(?!`)"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.gfm", patterns: [include: "source.gfm"]
@@ -1179,12 +1179,12 @@ repository:
 				{match: "[^`]+", captures: 0: patterns: [include: "source.gfm"]}
 			]
 		},{
-			# Annotated: Shell-script
-			name:  "string.quoted.verbatim.backtick.annotated.${1:/downcase}.sy"
+			# Hinted: Shell-script
+			name:  "string.quoted.verbatim.backtick.hinted.${1:/downcase}.sy"
 			begin: "(?i)(bash|shell(?:-script)?|[zkc]?sh|mksh)[ \\t]+(`)"
 			end:   "([^`]*)(`)(?!`)"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.shell", patterns: [include: "source.shell"]
@@ -1195,12 +1195,12 @@ repository:
 				{match: "[^`]+", captures: 0: patterns: [include: "source.shell"]}
 			]
 		},{
-			# Annotated: PowerShell
-			name:  "string.quoted.verbatim.backtick.annotated.${1:/downcase}.sy"
+			# Hinted: PowerShell
+			name:  "string.quoted.verbatim.backtick.hinted.${1:/downcase}.sy"
 			begin: "(?i)(powershell|pw?sh|ps1)[ \\t]+(`)"
 			end:   "([^`]*)(`)(?!`)"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.powershell", patterns: [include: "source.powershell"]
@@ -1211,12 +1211,12 @@ repository:
 				{match: "[^`]+", captures: 0: patterns: [include: "source.powershell"]}
 			]
 		},{
-			# Annotated: Batch
-			name:  "string.quoted.verbatim.backtick.annotated.${1:/downcase}.sy"
+			# Hinted: Batch
+			name:  "string.quoted.verbatim.backtick.hinted.${1:/downcase}.sy"
 			begin: "(?i)(bat|batch(?:-?(?:script|file))?)[ \\t]+(`)"
 			end:   "([^`]*)(`)(?!`)"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.batchfile", patterns: [include: "source.batchfile"]
@@ -1227,12 +1227,12 @@ repository:
 				{match: "[^`]+", captures: 0: patterns: [include: "source.batchfile"]}
 			]
 		},{
-			# Annotated: PostScript
-			name:  "string.quoted.verbatim.backtick.annotated.${1:/downcase}.sy"
+			# Hinted: PostScript
+			name:  "string.quoted.verbatim.backtick.hinted.${1:/downcase}.sy"
 			begin: "(?i)(PS|PostScript|PDF(?:mark)?)[ \\t]+(`)"
 			end:   "([^`]*)(`)(?!`)"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				1: name: "source.embedded.postscript", patterns: [include: "source.postscript"]
@@ -1243,18 +1243,18 @@ repository:
 				{match: "[^`]+", captures: 0: patterns: [include: "source.postscript"]}
 			]
 		},{
-			# Annotated: Other
-			name:  "string.quoted.verbatim.backtick.annotated.${1:/downcase}.sy"
+			# Hinted: Other
+			name:  "string.quoted.verbatim.backtick.hinted.${1:/downcase}.sy"
 			begin: "([-\\w]+)[ \\t]+(`)"
 			end:   "`"
 			beginCaptures:
-				1: name: "storage.modifier.type.annotation.sy"
+				1: name: "storage.modifier.type.parse-hint.sy"
 				2: name: "punctuation.definition.string.begin.sy"
 			endCaptures:
 				0: name: "punctuation.definition.string.end.sy"
 			contentName: "source.embedded.${1:/downcase}"
 		},{
-			# Unannotated
+			# Unhinted
 			name: "string.quoted.verbatim.backtick.sy"
 			begin: "`"
 			end:   "`(?!`)"
