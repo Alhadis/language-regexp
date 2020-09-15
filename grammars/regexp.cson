@@ -2,7 +2,7 @@ name: "Regular Expression"
 scopeName: "source.regexp"
 fileTypes: ["regexp", "regex"]
 patterns: [{
-	begin: "\\A\\s*(?:/\\s*)?(\\(\\?\\^?[A-Za-wyz]*x[A-Za-z]*[-A-Za-wyz]*\\))"
+	begin: "(?:\\A|\\G)\\s*(?:/\\s*)?(\\(\\?\\^?[A-Za-wyz]*x[A-Za-z]*[-A-Za-wyz]*\\))"
 	end:   "(?=A)B"
 	beginCaptures:
 		1: patterns: [include: "#group"]
@@ -162,7 +162,7 @@ repository:
 			include: "#escape"
 		},{
 			# Load the normal pattern set
-			include: "$self"
+			include: "#main"
 		},{
 			# Anything else that didn't match, highlight as a constant
 			name: "constant.single.character.character-class.regexp"
