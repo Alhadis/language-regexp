@@ -99,7 +99,7 @@ repository:
 			# True
 			name: "constant.language.boolean.true.sy"
 			match: """(?x)
-				(?:^|(?<=[\\s\\[{,]))
+				(?:\\G|^|(?<=[\\s\\[{,]))
 				(?:true|yes|on|TRUE|YES|ON)
 				(?=$|[\\s\\]},])
 			"""
@@ -107,7 +107,7 @@ repository:
 			# False
 			name: "constant.language.boolean.false.sy"
 			match: """(?x)
-				(?:^|(?<=[\\s\\[{,]))
+				(?:\\G|^|(?<=[\\s\\[{,]))
 				(?:false|no|off|TRUE|YES|ON)
 				(?=$|[\\s\\]},])
 			"""
@@ -184,14 +184,14 @@ repository:
 		patterns: [{
 			### Block comment ###
 			name:  "comment.block.sy"
-			begin: "(?:^|(?<=\\s|\\xC2\\xAD|\\xAD))(\#{3,})(?=\\s|$)"
+			begin: "(?:\\G|^|(?<=\\s|\\xC2\\xAD|\\xAD))(\#{3,})(?=\\s|$)"
 			end:   "\\1"
 			beginCaptures: 1: name: "punctuation.definition.comment.begin.sy"
 			endCaptures:   0: name: "punctuation.definition.comment.end.sy"
 		},{
 			# Single-line comment
 			name:  "comment.line.number-sign.sy"
-			begin: "(?:^|(?<=\\s|\\xC2\\xAD|\\xAD))#(?=\\s|$)"
+			begin: "(?:\\G|^|(?<=\\s|\\xC2\\xAD|\\xAD))#(?=\\s|$)"
 			end:   "$"
 			beginCaptures:
 				0: name: "punctuation.definition.comment.sy"
@@ -340,7 +340,7 @@ repository:
 	# Quoted field, hack for preceding #string rule
 	fieldQuotedEarly:
 		name: "meta.field.sy"
-		begin: """(?x) ^ \\s*
+		begin: """(?x) (?:\\G|^) \\s*
 			(?: ("(?:[^"\\\\]|\\\\.)*")
 			|   ('(?:[^'\\\\]|\\\\.)*')
 			|   (`(?:[^`]|``)*+`(?!`))
@@ -775,7 +775,7 @@ repository:
 	null:
 		name: "constant.language.null.sy"
 		match: """(?x)
-			(?:^|(?<=[\\s\\[{,]))
+			(?:\\G|^|(?<=[\\s\\[{,]))
 			(?:null|NULL)
 			(?=$|[\\s\\]},])
 		"""
@@ -783,7 +783,7 @@ repository:
 	# Numeric literals
 	number:
 		match: """(?x)
-			(?:^|(?<=[\\s\\[\\({,~]))
+			(?:^|(?<=[\\s\\[\\({,~])|\\G)
 			(?: ([-+]?0[xX][A-Fa-f0-9_]+) # Hexadecimal
 			|   ([-+]?0[oO][0-7_]+)       # Octal
 			|   ([-+]?0[bB][0-1_]+)       # Binary
@@ -826,13 +826,13 @@ repository:
 			beginCaptures:
 				1: name: "storage.modifier.type.parse-hint.sy"
 				2: patterns: [
-					{match: "^/{3}$", name: "punctuation.definition.string.begin.triple-slash.sy"}
-					{match: ".+",     name: "punctuation.definition.string.begin.sy"}
+					{match: "(?:\\G|^)/{3}$", name: "punctuation.definition.string.begin.triple-slash.sy"}
+					{match: ".+",             name: "punctuation.definition.string.begin.sy"}
 				]
 			endCaptures:
 				1: patterns: [
-					{match: "^/{3}$", name: "punctuation.definition.string.end.triple-slash.sy"}
-					{match: ".+",     name: "punctuation.definition.string.end.sy"}
+					{match: "(?:\\G|^)/{3}$", name: "punctuation.definition.string.end.triple-slash.sy"}
+					{match: ".+",             name: "punctuation.definition.string.end.sy"}
 				]
 				2: patterns: [include: "source.regexp#scopedModifiers"]
 		},{
