@@ -2,14 +2,6 @@ name: "SyON"
 scopeName: "source.sy"
 fileTypes: ["sy"]
 patterns: [include: "#blockInnards"]
-injections:
-	"source.sy string.quoted.double.heredoc.hinted,
-	 source.sy string.quoted.single.heredoc.hinted,
-	 source.sy string.quoted.double.hinted,
-	 source.sy string.quoted.single.hinted":
-		patterns: [
-			{include: "#escape"}
-		]
 
 repository:
 	main:
