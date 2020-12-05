@@ -10,7 +10,7 @@ patterns: [{
 },{
 	begin: "\\A(?:\\xC2\\xAD|\\xAD){2}"
 	end: "(?=A)B"
-	patterns: [include: "source.sy"]
+	patterns: [include: "source.sy#blockInnards"]
 }, include: "#main"]
 
 repository:
