@@ -256,20 +256,20 @@ repository:
 			{
 				# \x{FFFFFF} - Variable-length codepoint
 				name: "meta.character-escape.hex.regexp"
-				match: "(\\\\x)(\\{)([0-9A-Fa-f]{2,})(\\})"
+				match: "(\\\\x)({)([0-9A-Fa-f]+(?>\\s+[0-9A-Fa-f]+)*)\\s*(})"
 				captures:
 					1: name: "keyword.operator.unicode-escape.hex.regexp"
 					2: name: "punctuation.definition.unicode-escape.bracket.curly.begin.regexp"
-					3: name: "constant.numeric.codepoint.hex.regexp"
+					3: patterns: [match: "\\S+", name: "constant.numeric.codepoint.hex.regexp"]
 					4: name: "punctuation.definition.unicode-escape.bracket.curly.end.regexp"
 			},{
-				# \o{000000} - Variable-length octal (Perl)
+				# \o{000000} - Variable-length octal
 				name: "meta.character-escape.octal.regexp"
-				match: "(\\\\o)(\\{)(\\d{2,})(\\})"
+				match: "(\\\\o)({)([0-7]+(?>\\s+[0-7]+)*)\\s*(})"
 				captures:
 					1: name: "keyword.operator.unicode-escape.octal.regexp"
 					2: name: "punctuation.definition.unicode-escape.bracket.curly.begin.regexp"
-					3: name: "constant.numeric.codepoint.octal.regexp"
+					3: patterns: [match: "\\S+", name: "constant.numeric.codepoint.octal.regexp"]
 					4: name: "punctuation.definition.unicode-escape.bracket.curly.end.regexp"
 			},{
 				# \p{Name} - Unicode character property

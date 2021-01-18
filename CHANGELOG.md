@@ -4,6 +4,15 @@ Change Log
 This project honours [Semantic Versioning](http://semver.org).
 
 
+[Staged]
+------------------------------------------------------------------------
+* __Added:__ Support for codepoint sequences ([Oniguruma 6.9.5+][3])
+* __Added:__ Support for trailing whitespace in `\x{… }` and `\o{… }`
+
+[3]: https://github.com/kkos/oniguruma/releases/tag/v6.9.5
+
+
+
 [v1.1.2]
 ------------------------------------------------------------------------
 **May 4th, 2020**  
