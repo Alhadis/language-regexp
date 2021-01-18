@@ -629,6 +629,13 @@ repository:
 				match: "[-\\w]+"
 			}, include: "#main"]
 		},{
+			# Empty group
+			name: "meta.group.empty.regexp"
+			match: "(\\()(\\))"
+			captures:
+				1: name: "punctuation.definition.group.begin.regexp"
+				2: name: "punctuation.definition.group.end.regexp"
+		},{
 			# Regular group
 			name: "meta.group.regexp"
 			begin: "\\("

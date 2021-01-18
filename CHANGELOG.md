@@ -6,6 +6,7 @@ This project honours [Semantic Versioning](http://semver.org).
 
 [Staged]
 ------------------------------------------------------------------------
+* __Added:__ Dedicated scope for identifying empty capturing groups
 * __Added:__ Support for codepoint sequences ([Oniguruma 6.9.5+][3])
 * __Added:__ Support for trailing whitespace in `\x{… }` and `\o{… }`
 
