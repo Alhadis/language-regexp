@@ -1,7 +1,7 @@
 ".source.regexp":
 	editor:
 		commentStart: "(?\# "
-		commendEnd:   ")"
+		commentEnd:   ")"
 		increaseIndentPattern: "(?x)\\([^\\)]*$"
 		decreaseIndentPattern: "^\\s+\\)"
 
