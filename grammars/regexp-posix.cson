@@ -1,0 +1,152 @@
+# POSIX 1003.2 regex syntax as documented by re_format(7)
+name: "Regular Expression (POSIX - Extended)"
+scopeName: "source.regexp.posix"
+patterns: [include: "#main"]
+
+repository:
+	main:
+		patterns: [
+			{include: "source.regexp#alternation"}
+			{include: "source.regexp#wildcard"}
+			{include: "#escape"}
+			{include: "#brackets"}
+			{include: "#bound"}
+			{include: "#anchor"}
+			{include: "#group"}
+		]
+
+
+	# ^, $ — Zero-width assertions
+	anchor:
+		match: "\\^|\\$"
+		captures:
+			0: patterns: [include: "source.regexp#anchor"]
+
+
+	# POSIX-ese for “quantifier”
+	bound:
+		patterns: [
+			{match: "\\\\{,"}
+			{include: "source.regexp#quantifier"}
+		]
+
+
+	# […] — Stuff enclosed by square-brackets. POSIX calls it a “bracket expression”,
+	# which—strictly speaking—isn't the same as a “character class”. Nonetheless, we
+	# retain the scopes used by “source.regexp#class” for the sake of consistency.
+	brackets:
+		patterns: [{
+			# Empty Expression
+			name:  "meta.character-class.set.empty.regexp"
+			match: "(\\[)(\\])"
+			captures:
+				1: name: "punctuation.definition.character-class.set.begin.regexp"
+				2: name: "punctuation.definition.character-class.set.end.regexp"
+		},{
+			name:  "meta.character-class.set.regexp"
+			begin: "\\["
+			end:   "(?!\\G)-?\\]"
+			beginCaptures: 0: name: "punctuation.definition.character-class.set.begin.regexp"
+			endCaptures:   0: name: "punctuation.definition.character-class.set.end.regexp"
+			patterns: [
+				match: "\\G(\\^)(?:-|\\])?"
+				captures:
+					1: patterns: [include: "source.regexp#classInnards"]
+
+				{include: "#charRange"}
+				{include: "#localeClasses"}
+			]
+		}]
+
+
+	# [:alnum:], [:^blank:] — Character class
+	charClass:
+		name: "constant.language.$2-char.character-class.regexp.posix"
+		match: "(\\[:)(\\^?)(\\w+)(:\\])"
+		captures:
+			1: name: "punctuation.definition.character-class.set.begin.regexp"
+			2: name: "keyword.operator.logical.not.regexp"
+			3: name: "support.constant.posix-class.regexp"
+			4: name: "punctuation.definition.character-class.set.end.regexp"
+
+
+	# Character range
+	charRange:
+		patterns: [{
+			# [a-b-c] — Invalid/ambiguous
+			name: "invalid.illegal.range.ambiguous-endpoint.regexp"
+			match: "(?<=[^-])-[^\\[\\]\\\\]"
+		},{
+			# [a-z] - Valid
+			name: "(?:[^\\]\\\\]|(?<=\\]))(-)(?:[^\\[\\]\\\\]|(?=[^\\\\[\\]\\\\]))"
+			captures:
+				1: name: "punctuation.separator.range.dash.regexp"
+		}]
+
+
+	# [.x.] - Collating element (locale-dependent)
+	collatingElement:
+		name:  "constant.language.collating-element.regexp.posix"
+		match: "(\\[\\.)(.*?)(\\.\\])"
+		captures:
+			1: name: "punctuation.definition.collating-element.set.begin.regexp"
+			2: name: "storage.type.var.regexp"
+			3: name: "punctuation.definition.collating-element.set.end.regexp"
+
+
+	# [=x=] - Equivalence class (locale-dependent)
+	equivalenceClass:
+		name: "constant.language.posix.equivalence-class.regexp"
+		match: "(\\[=)(.*?)(=\\])"
+		captures:
+			1: name: "punctuation.definition.class.begin.regexp"
+			2: name: "storage.type.class.regexp"
+			3: name: "punctuation.definition.class.end.regexp"
+
+
+	# \… — Backslashed character
+	escape:
+		patterns: [
+			{include: "#escapeMeta"}
+			{include: "#escapeOther"}
+		]
+
+	# Literal form of a “special” regex character
+	escapeMeta:
+		name: "constant.character.escape.literal-metacharacter.regexp"
+		match: "\\\\[.^\\[$\\(\\)|*+?{\\\\]"
+
+	# Unrecognised (and probably superfluous) escape sequence
+	escapeOther:
+		name: "constant.character.escape.misc.regexp"
+		match: "\\\\."
+
+
+	# (…) — Capturing group
+	group:
+		patterns: [{
+			# Empty
+			name: "meta.group.empty.regexp"
+			match: "(\\()(\\))"
+			captures:
+				1: name: "punctuation.definition.group.begin.regexp"
+				2: name: "punctuation.definition.group.end.regexp"
+		},{
+			# Non-empty
+			name:  "meta.group.regexp"
+			begin: "\\("
+			end:   "\\)"
+			beginCaptures: 0: name: "punctuation.definition.group.begin.regexp"
+			endCaptures:   0: name: "punctuation.definition.group.end.regexp"
+			patterns: [include: "#main"]
+		}]
+
+
+	# Locale-dependent features. Rarely supported by real-world implementations
+	# of POSIX regexes (cf. regexp(3) § “Implementation Choices”). Hence their
+	# exclusion from `source.regexp#classInnards`.
+	localeClasses:
+		patterns: [
+			{include: "#collatingElement"}
+			{include: "#equivalenceClass"}
+		]

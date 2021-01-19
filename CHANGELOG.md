@@ -7,6 +7,7 @@ This project honours [Semantic Versioning](http://semver.org).
 [Staged]
 ------------------------------------------------------------------------
 * __Added:__ Dedicated scope for identifying empty capturing groups
+* __Added:__ Grammar for POSIX.2 (IEEE Std 1003.2) “extended” regexes
 * __Added:__ Support for codepoint sequences ([Oniguruma 6.9.5+][3])
 * __Added:__ Support for trailing whitespace in `\x{… }` and `\o{… }`
 * __Fixed:__ Typo in `.source.regexp`'s `editor.commentEnd` setting

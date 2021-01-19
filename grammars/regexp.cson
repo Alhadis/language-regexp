@@ -142,14 +142,8 @@ repository:
 			name: "punctuation.separator.range.dash.regexp"
 			match: "(?<!\\G|\\\\[dwshDWSHN])-(?!\\])"
 		},{
-			# POSIX character class
-			name: "constant.language.posix.$2-char.character-class.regexp"
-			match: "(\\[:)(\\^?)(\\w+)(:\\])"
-			captures:
-				1: name: "punctuation.definition.character-class.set.begin.regexp"
-				2: name: "keyword.operator.logical.not.regexp"
-				3: name: "support.constant.posix-class.regexp"
-				4: name: "punctuation.definition.character-class.set.end.regexp"
+			# POSIX character classes
+			include: "source.regexp.posix#charClass"
 		},{
 			# Escaped [ or ]
 			name: "constant.character.escape.backslash.regexp"
@@ -663,21 +657,41 @@ repository:
 
 	# Repetition
 	quantifier:
-		patterns: [{
-			name: "keyword.operator.quantifier.regexp"
-			match: "[*+?]"
-		},{
-			name: "keyword.operator.quantifier.specific.regexp"
-			match: "(\\{)(?:(\\d+)(,?)(\\d*)|(,)(\\d+))(\\})"
-			captures:
-				1: name: "punctuation.definition.quantifier.bracket.curly.begin.regexp"
-				2: name: "keyword.operator.quantifier.min.regexp"
-				3: name: "punctuation.delimiter.comma.regexp"
-				4: name: "keyword.operator.quantifier.max.regexp"
-				5: name: "punctuation.delimiter.comma.regexp"
-				6: name: "keyword.operator.quantifier.max.regexp"
-				7: name: "punctuation.definition.quantifier.bracket.curly.end.regexp"
-		}]
+		patterns: [
+			{include: "#quantifierSymbolic"}
+			{include: "#quantifierNumeric"}
+		]
+
+	# {𝑁}, {𝑚,𝑀} - Explicit number of repetitions (Modern/“extended” syntax)
+	quantifierNumeric:
+		name: "keyword.operator.quantifier.specific.unescaped.regexp"
+		match: "(\\{)(?:(\\d+)(,?)(\\d*)|(,)(\\d+))(\\})"
+		captures:
+			1: name: "punctuation.definition.quantifier.bracket.curly.begin.regexp"
+			2: name: "keyword.operator.quantifier.min.regexp"
+			3: name: "punctuation.delimiter.comma.regexp"
+			4: name: "keyword.operator.quantifier.max.regexp"
+			5: name: "punctuation.delimiter.comma.regexp"
+			6: name: "keyword.operator.quantifier.max.regexp"
+			7: name: "punctuation.definition.quantifier.bracket.curly.end.regexp"
+
+	# \{𝑁\}, \{𝑚,𝑀\} - Explicit number of repetitions (Obsolete/“basic” syntax)
+	quantifierNumericOld:
+		name: "keyword.operator.quantifier.specific.escaped.regexp"
+		match: "(\\\\{)(?:(\\d+)(,?)(\\d*)|(,)(\\d+))(\\\\})"
+		captures:
+			1: name: "punctuation.definition.quantifier.bracket.curly.begin.regexp"
+			2: name: "keyword.operator.quantifier.min.regexp"
+			3: name: "punctuation.delimiter.comma.regexp"
+			4: name: "keyword.operator.quantifier.max.regexp"
+			5: name: "punctuation.delimiter.comma.regexp"
+			6: name: "keyword.operator.quantifier.max.regexp"
+			7: name: "punctuation.definition.quantifier.bracket.curly.end.regexp"
+
+	# Single-character quantifiers
+	quantifierSymbolic:
+		name: "keyword.operator.quantifier.regexp"
+		match: "[*+?]"
 
 
 	scopedModifiers:
