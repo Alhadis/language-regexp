@@ -335,6 +335,14 @@ repository:
 					3: name: "entity.character.name.regexp", patterns: [
 						{name: "punctuation.separator.colon.regexp",     match: ":"}
 						{name: "punctuation.separator.codepoint.regexp", match: "(?<=U)\\+(?=[A-Fa-f0-9])"}]
+			},{
+				# \Q(UOTED)\+$\E - Ignore metacharacters until \E (Perl)
+				name: "meta.quoted-chars.regexp"
+				begin: "\\\\Q(?=.*?\\\\E)"
+				end:   "\\\\E"
+				contentName: "markup.raw.verbatim.string.regexp"
+				beginCaptures: 0: name: "keyword.control.quote-mode.begin.regexp"
+				endCaptures:   0: name: "keyword.control.quote-mode.end.regexp"
 			}
 			{match: "\\\\(?:\\d{3}|0\\d)", name: "constant.character.escape.octal.numeric.regexp"}
 			{match: "\\\\0",               name: "constant.character.escape.null-byte.numeric.regexp"}
