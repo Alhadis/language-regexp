@@ -6,6 +6,7 @@ patterns: [{
 	end:   "(?=A)B"
 	beginCaptures:
 		1: patterns: [include: "#group"]
+	contentName: "source.embedded.regexp.extended"
 	patterns: [include: "source.regexp.extended"]
 },{
 	begin: "\\A(?:\\xC2\\xAD|\\xAD){2}"
@@ -522,6 +523,19 @@ repository:
 				endCaptures:   0: name: "punctuation.definition.named-group.quote.single.end.regexp"
 				
 			}, include: "#main"]
+		},{
+			# Non-capturing group (extended regexp modifier)
+			name: "meta.group.non-capturing.regexp.extended"
+			begin: "(\\(\\?)([A-Za-wyz]*x[A-Za-z]*[-A-Za-wyz]*)(:)"
+			end:    "\\)"
+			beginCaptures:
+				1: name: "punctuation.definition.group.begin.regexp"
+				2: patterns: [include: "#scopedModifiers"]
+				3: name: "punctuation.separator.colon.regexp"
+			endCaptures:
+				0: name: "punctuation.definition.group.end.regexp"
+			contentName: "source.embedded.regexp.extended"
+			patterns: [include: "source.regexp.extended#main"]
 		},{
 			# Non-capturing group
 			name: "meta.group.non-capturing.regexp"
