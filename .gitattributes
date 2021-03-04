@@ -1,0 +1,3 @@
+# I breathe regular expressions
+*.regexp linguist-detectable
+*.regex  linguist-detectable
