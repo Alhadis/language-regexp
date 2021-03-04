@@ -1,0 +1,45 @@
+(?xi-m)
+
+# Opening delimiter
+-\*-
+
+(?:
+	# Short form: `-*- ruby -*-`
+	[ \t]*
+	(?=
+		[^:;\s]+  # Name of mode
+		[ \t]*    # Optional whitespace
+		-\*-      # Closing delimiter
+	)
+	|
+	
+	# Longer form: `-*- foo:bar; mode: ruby; -*-`
+	(?:
+		.*?[ \t;] # Preceding variables: `-*- foo:bar bar:baz;`
+		|
+		(?<=-\*-) # Not preceded by anything: `-*-mode:ruby-*-`
+	)
+	
+	# Explicitly-named variable: `mode: ruby` or `mode  : ruby`
+	[ \t]* mode [ \t]* : [ \t]*
+)
+
+# Name of major-mode, which corresponds to syntax or filetype
+([^:;\s]+)
+
+# Ensure the name is terminated correctly
+(?=
+	# Followed by semicolon or whitespace
+	[ \t;]
+	|
+	# Touching the ending sequence: `ruby-*-`
+	(?<![-*])   # Don't allow stuff like `ruby--*-` to match; it'll invalidate the mode
+	-\*-        # Emacs has no problems reading `ruby --*-`, however.
+)
+
+# If we've gotten this far, it means the modeline is valid.
+# We gleefully skip past everything up until reaching "-*-"
+.*?
+
+# Closing delimiter
+-\*-
