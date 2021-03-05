@@ -1,0 +1,22 @@
+(?x)
+# Variant of `number.regexp` that supports separators for digit-grouping
+
+# Sign
+[-+]?
+
+(?:
+	# Integer or floating-point value
+	\d       (?:\d|_\d)*    # 1_234
+	(?: \.\d (?:\d|_\d)*)?  #      .567_890
+	|
+	
+	# Decimal value (float) without an integral half
+	\.\d (?:\d|_\d)* # .4_567 ≡ 0.4567
+)
+
+# Exponentiation / Scientific notation
+(?:
+	[Ee]           # 1e2_456 ≡ 1E2456
+	[-+]?          # Exponents can be signed, too
+	\d (?:\d|_\d)* # Mantissa
+)?

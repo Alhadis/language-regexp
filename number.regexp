@@ -1,0 +1,22 @@
+(?x)
+# Matches most English decimal notations used in computing
+
+# Sign
+[-+]?
+
+(?:
+	# Integer or floating-point value
+	\d+        # 123
+	(?:\.\d+)? #    .456
+	|
+	
+	# Decimal value (float) without an integral half
+	\.\d+      # .456 ≡ 0.456
+)
+
+# Exponentiation / Scientific notation
+(?:
+	[Ee]  # 1e2 === 1E2
+	[-+]? # Exponents can be signed, too
+	\d+   # Mantissa
+)?

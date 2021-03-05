@@ -6,64 +6,58 @@ def load_regexp(path)
 	Regexp.new(source, Regexp::EXTENDED)
 end
 
-def test_matches(regex, tests)
-	results = []
-	tests.each_slice(2) do |test|
-		filetype, input = test
-		result = regex.match(input)
-		error =
-			if result.nil?
-				"Expression failed to match"
-			elsif result[1] != filetype.to_s
-				"Expected filetype to be #{filetype}, got #{result[1].inspect}"
-			else
-				nil
-			end
-		results.push({
-			:passed?  => error.nil?,
-			:result   => result,
-			:input    => input,
-			:filetype => filetype,
-			:error    => error,
-		})
-	end
-	results
+# Abuse VT100 features to print huge wanky letters
+def h1(text)
+	puts "\e#3#{text}\n\e#4\e[4m#{text}\e[0m"
 end
 
-def test_failures(regex, tests)
-	results = []
-	tests.each do |input|
-		result = regex.match(input)
-		error = if result.nil? then nil else
-			"Expected pattern not to match, got #{result.inspect}"
-		end
-		results.push({
-			:passed? => error.nil?,
-			:result => result,
-			:input => input,
-			:error => error,
-		})
-	end
-	results
+def h2(text)
+	puts "\n\e[1;4m#{text}\e[0m\n"
 end
 
-def print_heading(text, huge = false)
-	# Giant letters achieved using a wanky effect
-	if huge
-		puts "\e#3#{text}\n\e#4\e[4m#{text}\e[0m"
-	else
-		puts "\e[1;4m#{text}\e[0m\n"
+$passes   = 0
+$failures = 0
+
+def pass(msg)
+	++$passes
+	puts "\e[32m✓\e[0m \e[38;5;8m#{msg}\e[0m\n"
+end
+
+def fail(msg, detail = nil)
+	++$failures
+	puts "\e[31m✘\e[0m \e[38;5;9m#{msg}\e[0m\n"
+	if detail
+		detail = detail.to_s.gsub /^/m, "  "
+		puts "\e[38;5;9m#{detail}\e[0m\n"
 	end
 end
 
-def print_result(info)
-	# Pass
-	if info[:passed?]
-		puts "\e[32m✓\e[0m \e[38;5;8m#{info[:input]}\e[0m\n"
+def match(regex, input, *captures)
+	result = regex.match(input)
+	failed = false
 	
-	# Failure
+	if result.nil?
+		fail input, "Failed to match"
+		return
 	else
-		puts "\e[31m✘\e[0m \e[38;5;9m#{info[:input]}\e[0m\n"
-		puts "\e[38;5;9m#{info[:error].gsub(/^/m, "  ")}\e[0m\n"
+		pass input
+	end
+
+	captures.each_with_index do |expected, i|
+		next if expected.nil?
+		actual = result[i + 1]
+		unless expected == actual
+			fail input, "Expected $#{i} to be #{expected.inspect}, found #{actual.inspect}"
+		else
+			from, to = result.offset(i + 1)
+			print "\e[A\e[#{2 + from}C\e[48;5;22;38;5;46m#{input[from..(to - 1)]}\e[0m\n"
+		end
+	end
+end
+
+def miss(regex, input)
+	result = regex.match(input)
+	unless result.nil?
+		fail input, "Unexpected match: #{result.inspect}"
 	end
 end
