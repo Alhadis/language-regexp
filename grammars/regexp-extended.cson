@@ -29,6 +29,16 @@ repository:
 			0: name: "punctuation.definition.comment.regexp"
 
 
+	# Rule used by `source.regexp` to improve highlighting on GitHub
+	injection:
+		begin: "(?:\\A|\\G)\\s*(?:/\\s*)?(\\(\\?\\^?[A-Za-wyz]*x[A-Za-z]*[-A-Za-wyz]*\\))"
+		end:   "(?=A)B"
+		beginCaptures:
+			1: patterns: [include: "#group"]
+		contentName: "source.embedded.regexp.extended"
+		patterns: [include: "source.regexp.extended"]
+
+
 	###
 		NOTE: The following patterns are copied from regexp.cson,
 		modified to include the line-comment pattern as appropriate.

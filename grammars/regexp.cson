@@ -1,18 +1,11 @@
 name: "Regular Expression"
 scopeName: "source.regexp"
 fileTypes: ["regexp", "regex"]
-patterns: [{
-	begin: "(?:\\A|\\G)\\s*(?:/\\s*)?(\\(\\?\\^?[A-Za-wyz]*x[A-Za-z]*[-A-Za-wyz]*\\))"
-	end:   "(?=A)B"
-	beginCaptures:
-		1: patterns: [include: "#group"]
-	contentName: "source.embedded.regexp.extended"
-	patterns: [include: "source.regexp.extended"]
-},{
-	begin: "\\A(?:\\xC2\\xAD|\\xAD){2}"
-	end: "(?=A)B"
-	patterns: [include: "source.sy#blockInnards"]
-}, include: "#main"]
+patterns: [
+	{include: "source.regexp.extended#injection"}
+	{include: "source.sy#injection"}
+	{include: "#main"}
+]
 
 repository:
 	main:
