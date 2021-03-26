@@ -175,7 +175,7 @@ repository:
 	# Comments
 	comment:
 		patterns: [{
-			### Block comment ###
+			# ### Block comment ###
 			name:  "comment.block.sy"
 			begin: "(?:\\G|^|(?<=\\s|\\xC2\\xAD|\\xAD))(\#{3,})(?=\\s|$)"
 			end:   "\\1"
@@ -849,17 +849,15 @@ repository:
 				2: patterns: [include: "source.regexp#scopedModifiers"]
 		}]
 
-	###
-		Start-of-file marker (magic number/signature). Used to identify SyON in the absence of
-		a known file extension, which is otherwise required to distinguish SyON from a similar
-		but incompatible format (like YAML). Synapse inserts this signature automatically when
-		saving a SyON file; the number of soft-hyphens identifies the version of the format if
-		future changes make backwards compatibility an issue (though it's unlikely to happen).
-		
-		Signatures are allowed at the beginning of any line (not just the start-of-file); this
-		allows xopts(1) to handle cat(1) output when passed multiple `.sy` files. Soft hyphens
-		found anywhere else are treated normally (as a syntactically-insignificant character).
-	###
+	# Start-of-file marker (magic number/signature). Used to identify SyON in the absence of
+	# a known file extension, which is otherwise required to distinguish SyON from a similar
+	# but incompatible format (like YAML). Synapse inserts this signature automatically when
+	# saving a SyON file; the number of soft-hyphens identifies the version of the format if
+	# future changes make backwards compatibility an issue (though it's unlikely to happen).
+	#	
+	# Signatures are allowed at the beginning of any line (not just the start-of-file); this
+	# allows xopts(1) to handle cat(1) output when passed multiple `.sy` files. Soft hyphens
+	# found anywhere else are treated normally (as a syntactically-insignificant character).
 	signature:
 		name: "punctuation.whitespace.shy-hyphens.signature.sy"
 		match: "^(?:\\xC2\\xAD|\\xAD){2,}"

@@ -39,10 +39,8 @@ repository:
 		patterns: [include: "source.regexp.extended"]
 
 
-	###
-		NOTE: The following patterns are copied from regexp.cson,
-		modified to include the line-comment pattern as appropriate.
-	###
+	# NOTE: The following patterns are copied from regexp.cson,
+	# modified to include the line-comment pattern as appropriate.
 
 	# {{{ Nested bracket pairs in Oniguruma callouts }}}
 	calloutBrackets:
