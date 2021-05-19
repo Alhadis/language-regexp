@@ -453,10 +453,10 @@ repository:
 		}]
 
 	injection:
-		begin: "\\A((?:\\xC2\\xAD|\\xAD){2,})"
+		begin: "\\A(?:\\xC2\\xAD|\\xAD){2}"
 		end:   "(?=A)B"
 		beginCaptures:
-			1: patterns: [include: "#signature"]
+			0: patterns: [include: "#signature"]
 		patterns: [include: "#blockInnards"]
 
 	# Null keyword
