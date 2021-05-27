@@ -13,6 +13,7 @@ This project honours [Semantic Versioning](http://semver.org).
 * __Added:__ Support for codepoint sequences ([Oniguruma 6.9.5+][3])
 * __Added:__ Support for trailing whitespace in `\x{… }` and `\o{… }`
 * __Fixed:__ Typo in `.source.regexp`'s `editor.commentEnd` setting
+* __Fixed:__ Typo in `(?'named')` capturing group pattern
 
 [3]: https://github.com/kkos/oniguruma/releases/tag/v6.9.5
 

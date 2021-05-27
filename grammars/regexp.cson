@@ -199,7 +199,7 @@ repository:
 				{match: "\\Gassert",   name: "keyword.other.assertion.regexp"}
 				{
 					# Named reference (Perl)
-					match: "\\G(?:(<)([^>]+)(>)|(')([^>]+)('))"
+					match: "\\G(?:(<)([^>]+)(>)|(')(['>]+)('))"
 					captures:
 						1: name: "punctuation.definition.group-reference.bracket.angle.begin.regexp"
 						2: name: "entity.group.name.regexp"
