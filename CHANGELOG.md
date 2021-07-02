@@ -4,8 +4,9 @@ Change Log
 This project honours [Semantic Versioning](http://semver.org).
 
 
-[Staged]
+[v1.2.0]
 ------------------------------------------------------------------------
+**July 2nd, 2021**  
 * __Added:__ Dedicated scope for identifying empty capturing groups
 * __Added:__ Grammar for POSIX.2 (IEEE Std 1003.2) “extended” regexes
 * __Added:__ Highlighting of quoted/verbatim characters inside `\Q`…`\E`
@@ -70,7 +71,8 @@ Initial release. Adds syntax highlighting for regular expression data.
 
 
 [Referenced links]:_____________________________________________________
-[Staged]: ../../compare/v1.1.3...HEAD
+[Staged]: ../../compare/v1.2.0...HEAD
+[v1.2.0]: https://github.com/Alhadis/language-regexp/releases/tag/v1.2.0
 [v1.1.2]: https://github.com/Alhadis/language-regexp/releases/tag/v1.1.2
 [v1.1.1]: https://github.com/Alhadis/language-regexp/releases/tag/v1.1.1
 [v1.1.0]: https://github.com/Alhadis/language-regexp/releases/tag/v1.1.0
