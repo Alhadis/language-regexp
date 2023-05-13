@@ -1,0 +1,33 @@
+(?x)
+(?#
+	Regex for matching terminal escape sequences.
+	Source: chalk/ansi-regex@02fa893
+)
+
+[\x1B\x9B]
+[[\]()#;?]*
+(?:
+	(?:
+		(?:
+			(?:
+				; [-\w#%&.\/:=?@~]+
+			)*
+		|
+			[A-Za-z\d]+
+			(?:
+				; [-\w#%&.\/:=?@~]*
+			)*
+		)?
+		\cG
+	)
+|
+	(?:
+		(?:
+			\d{1,4}
+			(?:
+				; \d{0,4}
+			)*
+		)?
+		[A-PR-TZcf-nq-uy\d<=>~]
+	)
+)
