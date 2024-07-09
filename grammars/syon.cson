@@ -548,7 +548,7 @@ repository:
 	# found anywhere else are treated normally (as a syntactically-insignificant character).
 	signature:
 		name: "punctuation.whitespace.shy-hyphens.signature.sy"
-		match: "^(?:\\xC2\\xAD|\\xAD){2,}"
+		match: "^(?:\\xC2\\xAD){2,}"
 
 	# Quoted string literals
 	string:
